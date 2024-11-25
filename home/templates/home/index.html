@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+
+    <script src="{% static 'home/js/script.js' %}" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav class="logo">
+            <!-- <a href="" title="Home">HMS</a> -->
+            <!-- another way -->
+            <!-- but the page will reload everytime -->
+            <a href="{% url 'index' %}" title="Home">HMS</a>
+        </nav>
+
+        <nav class="links">
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="#about">About Us</a>
+        </nav>
+
+        <nav class="auth">
+            <a href="#">Log In</a>
+            <button>Sign Up</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="messages">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %} -->
+
+        <div class="img-intro">
+        </div>
+
+        <section class="intro">
+            <h1>Welcome to HMS</h1>
+            <p>
+                Your reliable platform for seamless hospital management. Explore our services, and let us assist you in
+                managing your healthcare needs effectively.
+            </p>
+            <button onclick="location.href='#services'" class="btn-primary">Learn More</button>
+        </section>
+
+        <section id="services" class="services">
+            <h2>Our Services</h2>
+
+            <div class="service-card">
+                <i class="fa-regular fa-calendar-check size-logo-service"></i>
+                <h3>Appointment Booking</h3>
+                <p>
+                    Schedule and manage appointments with ease.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-regular fa-clipboard size-logo-service"></i>
+                <h3>Patient Records</h3>
+                <p>
+                    Access patient history and medical records securely.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-money-bill size-logo-service"></i>
+                <h3>Billing System</h3>
+                <p>
+                    Efficient billing for patients and healthcare providers.
+                </p>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial">
+                <p>
+                    "The HMS has made our hospital's administrative tasks so much easier!"
+                </p>
+                <span>- Dr. Smith, Administrator</span>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <form action="{% url 'contact' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="name" value="{{ name }}" placeholder="Your Name" required>
+                <input type="email" name="email" value="{{ email }}" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your Message" required
+                    style="resize: none;">{{ message }}</textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Us</h2>
+            <p>
+                Our mission is to streamline hospital operations and improve patient care with advanced technology.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; <span class="time"></span> <span class="company" title="Hospital Management System">HMS</span> all
+            right reserved.
+        </div>
+
+        <div class="social-icons">
+            <a href="#" target="_blank" title="Facebook">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+
+            <a href="#" target="_blank" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a href="#" target="_blank" title="Twitter">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+
+            <a href="#" target="_blank" title="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+        </div>
+    </footer>
+</body>
+
+</html>
