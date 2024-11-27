@@ -31,9 +31,15 @@
         </nav>
 
         <nav class="auth">
-            <a href="#">Log In</a>
-            <button>Sign Up</button>
+            <a href="{% url 'login' %}">Log In</a>
+            <button onclick="signuppage()">Sign Up</button>
         </nav>
+        
+        <script>
+            function signuppage() {
+                window.location.href = "{% url 'signup' %}";
+            }
+        </script>
     </header>
 
     <main>
