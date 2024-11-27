@@ -32,7 +32,8 @@
 
         <nav class="auth">
             <a href="{% url 'login' %}">Log In</a>
-            <button onclick="signuppage()">Sign Up</button>
+            <button>Sign Up</button>
+            <!-- <button onclick="signuppage()">Sign Up</button> -->
         </nav>
         
         <script>
@@ -41,8 +42,29 @@
             }
         </script>
     </header>
-
+    
     <main>
+        <div id="signup-modal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <h2>Sign Up</h2>
+                <div class="signup-options">
+                    <div class="option">
+                        <a href="{% url 'signup' %}">
+                            <i class="fa-solid fa-hospital-user"></i>
+                        </a>
+                        <button onclick="signuppage()">Sign Up as a patient »</button>
+                    </div>
+                    <div class="option">
+                        <a href="{% url 'signup' %}">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </a>
+                        <button onclick="signuppage()">Sign Up as an doctor »</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="messages">
             {% if messages %}
             {% for message in messages %}
