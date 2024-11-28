@@ -120,6 +120,7 @@ main {
     text-align: center;
 }
 
+<<<<<<< HEAD
 /* Modal Styles */
 .modal {
     display: none;
@@ -212,6 +213,8 @@ button.modal-close:hover {
 
 /* IMG-INTRO */
 
+=======
+>>>>>>> abdelrahman
 .img-intro {
     width: 600px;
     height: 600px;
