@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>LogIn</title>
+	{% load static %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" href="{%static 'Accounts/css/loginstyle.css'%}">
+	<!-- <script src="{% static 'Accounts/js/script.js' %}" defer></script> -->
+</head>
+
+<body>
+	<div class="container">
+		<div class="user_card">
+			<div class="form_title">
+				<h2>Login Form</h2>
+			</div>
+
+			<div class="form_container">
+				<form method="POST" action="">
+					<div class="columns">
+						<!-- Left Column -->
+
+						<div class="column">
+                            <div class="input_group">
+								<span class="input_icon"><i class="fas fa-envelope"></i></span>
+								<input type="email" name="email" placeholder="Email" required>
+							</div>
+                            <div class="input_group">
+								<span class="input_icon"><i class="fas fa-key"></i></span>
+								<input type="password" name="password" placeholder="Password" required>
+							</div>
+							
+						</div>
+
+						
+					</div>
+
+					<div class="button_container">
+						<input class="submit_btn" type="submit" value="LOGIN">
+					</div>
+				</form>
+			</div>
+
+			<div class="additional_links">
+				Do Not Have an Account? <a href="{% url 'signup' %}">SignUP</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
