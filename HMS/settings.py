@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "home",  # Add your app here
     "doctor",  # Add your app here 
     "Accounts",  # Add your app here
+    'appointments',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 
 
 # Password validation

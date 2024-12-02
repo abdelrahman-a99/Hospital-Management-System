@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from django.urls import path, include
 
 urlpatterns = [
@@ -7,4 +6,5 @@ urlpatterns = [
     path("", include("home.urls")),
     path("Accounts/", include("Accounts.urls")),
     path("doctor/", include("doctor.urls")),
+    path('appointments/', include('appointments.urls')),  # This should work if appointments.urls exists
 ]
