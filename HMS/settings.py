@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "home",  # Add your app here
     "doctor",  # Add your app here 
     "Accounts",  # Add your app here
+    "appointments",
 ]
 
 MIDDLEWARE = [

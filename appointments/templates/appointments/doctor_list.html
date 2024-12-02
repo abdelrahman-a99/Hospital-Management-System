@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Icons -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">Doctor's Dashboard</div>
+            <ul>
+                <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                <li><a href="#"><i class="fas fa-user-md"></i> Patients</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Stats Section -->
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>8</h3>
+                    <p>Scheduled</p>
+                </div>
+                <div class="stat-item">
+                    <h3>3</h3>
+                    <p>Waiting</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5</h3>
+                    <p>Engaged</p>
+                </div>
+                <div class="stat-item">
+                    <h3>2</h3>
+                    <p>Checkout</p>
+                </div>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="calendar-section">
+                <h3>Doctor's Calendar</h3>
+                <div class="calendar-controls">
+                    <button id="prevYearBtn">← Previous Year</button>
+                    <span id="calendarYear">2024</span>
+                    <button id="nextYearBtn">Next Year →</button>
+                    <button id="prevMonthBtn">← Previous Month</button>
+                    <span id="calendarMonth">December</span>
+                    <button id="nextMonthBtn">Next Month →</button>
+                </div>
+            
+                <div class="calendar">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBody">
+                            <!-- Calendar days will be populated via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Upcoming Appointments Section Below Calendar -->
+            <div class="upcoming-appointments">
+                <h3>Upcoming Appointments</h3>
+                <div id="upcomingPatients">
+                    <!-- List upcoming patients here dynamically -->
+                </div>
+            </div>
+        </div> <!-- End of main content -->
+    </div> <!-- End of container -->
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Modify Appointment</h2>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="appointmentDate">Date:</label>
+                    <input type="date" id="appointmentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentTime">Time:</label>
+                    <input type="time" id="appointmentTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="patientName">Patient Name:</label>
+                    <input type="text" id="patientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentStatus">Status:</label>
+                    <select id="appointmentStatus">
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Waiting">Waiting</option>
+                        <option value="Engaged">Engaged</option>
+                        <option value="Checkout">Checkout</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Save Changes</button>
+                <button type="button" id="deleteBtn" class="delete-btn">Delete Appointment</button>
+            </form>
+        </div>
+    </div>
+    <div id="patientDescription" class="patient-description" style="display: none;">
+        <!-- Patient description will be populated here -->
+    </div>
+    
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>
