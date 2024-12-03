@@ -16,7 +16,6 @@ Including another URLconf
 """
 
 from django.contrib import admin
-
 from django.urls import path, include
 
 urlpatterns = [
@@ -24,5 +23,6 @@ urlpatterns = [
     path("", include("home.urls")),
     path("patient/", include("patient.urls")),
     path("doctor/", include("doctor.urls")),
+    path("patient/", include("patient.urls")),
+    path('appointments/', include('appointments.urls')),  # This should work if appointments.urls exists
 ]
-

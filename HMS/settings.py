@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "home",# Add your app here
-    "patient", 
-    "doctor",
+    "home",  # Add your app here
+    "doctor",  # Add your app here 
+    "Accounts",  # Add your app here
+    'appointments',
+    'patient',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +84,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 
 
 # Password validation
