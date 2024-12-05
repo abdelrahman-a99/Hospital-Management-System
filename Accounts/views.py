@@ -4,7 +4,16 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib import messages
 from .models import CustomUser, Patient, Doctor
 from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.contrib.auth import logout
 
+
+def custom_logout(request):
+    logout(request)
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('login')  
 User = get_user_model()
 
 def signup(request):
@@ -23,6 +32,13 @@ def signup(request):
 
         if pass1 != pass2:
             messages.error(request, "Your password and confirm password are not the same.", extra_tags='password-mismatch')
+            return redirect('signup')
+
+        # Validate password
+        try:
+            validate_password(pass1)
+        except ValidationError as e:
+            messages.error(request, f"Password error: {e.messages[0]}")
             return redirect('signup')
 
         if User.objects.filter(username=uname).exists():
@@ -65,9 +81,9 @@ def login(request):
                 if user is not None:
                     auth_login(request, user)
                     if user.is_doctor:
-                        return redirect('doctor_page')  # Redirect to doctor home page
+                        return redirect('doctor_page')  
                     elif user.is_patient:
-                        return redirect('patient_page')  # Redirect to patient home page
+                        return redirect('patient_page')  
                     else:
                         messages.error(request, "User type not recognized.")
                         return redirect('login')
@@ -79,7 +95,9 @@ def login(request):
     else:
         return render(request, 'Accounts/login.html')
 def doctor_page(request):
-    return render(request, 'doctor/doctor_page.html')
+    user = request.user
+    return render(request, 'doctor/doctor_page.html', {'user': user})
 
 def patient_page(request):
-    return render(request, 'patient/patient_page.html')
+    user = request.user
+    return render(request, 'patient/patient_page.html', {'user': user})

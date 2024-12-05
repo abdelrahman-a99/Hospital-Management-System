@@ -4,6 +4,7 @@
     <title>SignUp</title>
     {% load static %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="{%static 'Accounts/js/script.js'%}"></script>  
     <link rel="stylesheet" href="{% static 'Accounts/css/signupstyle.css' %}">
 </head>
 <body>
@@ -25,7 +26,6 @@
                 <form method="POST" action="">
                     {% csrf_token %}
                     <div class="columns">
-                        <!-- Left Column -->
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
@@ -45,7 +45,6 @@
                             </div>
                         </div>
 
-                        <!-- Right Column -->
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
@@ -88,26 +87,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.querySelector('select[name="user_type"]').addEventListener('change', function() {
-            var specialtyField = document.getElementById('specialty_field');
-            if (this.value === 'doctor') {
-                specialtyField.style.display = 'block';
-            } else {
-                specialtyField.style.display = 'none';
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const messageBox = document.getElementById('message-box');
-            if (messageBox) {
-                setTimeout(() => {
-                    messageBox.style.opacity = '0';
-                    messageBox.style.visibility = 'hidden';
-                }, 5000); // 5 seconds delay
-            }
-        });
-    </script>
 </body>
 </html>

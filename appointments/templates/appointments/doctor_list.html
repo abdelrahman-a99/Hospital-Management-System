@@ -13,22 +13,18 @@
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="logo">Doctor's Dashboard</div>
             <ul>
-                <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                <li><a href="{% url 'doctor_page' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="active"><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
                 <li><a href="#"><i class="fas fa-user-md"></i> Patients</a></li>
                 <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
                 <li><a href="#"><i class="fas fa-chart-line"></i> Reports</a></li>
                 <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
             </ul>
         </div>
-
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Stats Section -->
             <div class="stats">
                 <div class="stat-item">
                     <h3>8</h3>
@@ -47,8 +43,6 @@
                     <p>Checkout</p>
                 </div>
             </div>
-
-            <!-- Calendar Section -->
             <div class="calendar-section">
                 <h3>Doctor's Calendar</h3>
                 <div class="calendar-controls">
@@ -74,23 +68,19 @@
                             </tr>
                         </thead>
                         <tbody id="calendarBody">
-                            <!-- Calendar days will be populated via JavaScript -->
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
             
-            <!-- Upcoming Appointments Section Below Calendar -->
             <div class="upcoming-appointments">
                 <h3>Upcoming Appointments</h3>
                 <div id="upcomingPatients">
-                    <!-- List upcoming patients here dynamically -->
                 </div>
             </div>
-        </div> <!-- End of main content -->
-    </div> <!-- End of container -->
-
-    <!-- Appointment Modal -->
+        </div> 
+    </div> 
     <div id="appointmentModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -123,7 +113,6 @@
         </div>
     </div>
     <div id="patientDescription" class="patient-description" style="display: none;">
-        <!-- Patient description will be populated here -->
     </div>
     
 
