@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SignUp</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="{%static 'Accounts/js/script.js'%}"></script>  
+    <link rel="stylesheet" href="{% static 'Accounts/css/signupstyle.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="user_card">
+            <div class="form_title">
+                <h2>REGISTER ACCOUNT</h2>
+            </div>
+
+            {% if messages %}
+                <div class="message-box" id="message-box">
+                    {% for message in messages %}
+                        <p class="message-content {{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form_container">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="columns">
+                        <div class="column">
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-user"></i></span>
+                                <input type="text" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-genderless"></i></span>
+                                <input type="text" name="gender" placeholder="Gender" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <input type="text" name="address" placeholder="Address" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-phone"></i></span>
+                                <input type="tel" name="phonenumber" placeholder="Phone Number" required>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" name="dob" placeholder="Date of Birth" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-envelope"></i></span>
+                                <input type="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-key"></i></span>
+                                <input type="password" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-user-md"></i></span>
+                                <select name="user_type" required>
+                                    <option value="patient">Patient</option>
+                                    <option value="doctor">Doctor</option>
+                                </select>
+                            </div>
+                            <div class="input_group" id="specialty_field" style="display: none;">
+                                <span class="input_icon"><i class="fas fa-stethoscope"></i></span>
+                                <input type="text" name="specialty" placeholder="Specialty">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button_container">
+                        <input class="submit_btn" type="submit" value="Register Account">
+                    </div>
+                </form>
+            </div>
+
+            <div class="additional_links">
+                Already have an account? <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

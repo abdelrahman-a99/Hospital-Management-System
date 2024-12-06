@@ -1,0 +1,164 @@
+/* General Styles */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-image: url('https://st2.depositphotos.com/36924814/46071/i/450/depositphotos_460713580-stock-photo-medical-health-blue-cross-neon.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    backdrop-filter: blur(2px); 
+}
+
+.user_card {
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -10px 15px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.form_title h2 {
+    text-align: center;
+    color: #f8f8f8;
+    margin-bottom: 20px;
+}
+
+/* Columns */
+.columns {
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.column {
+    flex: 1; 
+    min-width: 250px; 
+    max-width: 400px; 
+}
+
+/* Input Fields */
+.input_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.input_icon {
+    background: #4c8bf5;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+}
+
+.input_group input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    font-size: 14px;
+    width: 100%;
+}
+
+.input_group input:focus {
+    border-color: #4c8bf5;
+    outline: none;
+}
+
+/* Submit Button */
+.submit_btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4c8bf5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit_btn:hover {
+    background-color: #3a72c4;
+}
+
+/* Additional Links */
+.additional_links {
+    text-align: center;
+    margin-top: 15px;
+    color: #f8f8f8;
+}
+
+.additional_links a {
+    text-decoration: none;
+    color: #88b4ff;
+    font-weight: bold;
+}
+
+.additional_links a:hover {
+    color: #3a72c4;
+    text-decoration: underline;
+}
+
+/* Message Box */
+.message-box {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #ff5f6d, #ffc371); /* Red Gradient */
+    border-radius: 25px;
+    padding: 10px 20px;
+    max-width: 500px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: fade-in 0.5s ease-in-out;
+}
+
+.message-content {
+    margin: 0;
+    padding: 5px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Hover Effect */
+.message-box:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    
+}

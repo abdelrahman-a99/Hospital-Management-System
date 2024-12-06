@@ -56,7 +56,7 @@ def contact(request):
         else:
             # Optionally, save this data to the database or send an email
             # Save data to the database if valid
-            # ContactSubmission.objects.create(name=name, email=email, message=message)
+            ContactSubmission.objects.create(name, email, message)
 
             # If all validations pass, proceed with form processing
             print(f"Message received from {name} ({email}): {message}")
