@@ -1,0 +1,19 @@
+# Python cache files
+*.pyc
+__pycache__/
+
+# SQLite database
+db.sqlite3
+
+# Django static files
+staticfiles/
+
+# Environment variables
+.env
+
+# Node modules (if applicable)
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
