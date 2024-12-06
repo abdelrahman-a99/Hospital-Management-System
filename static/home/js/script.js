@@ -158,8 +158,11 @@ time.innerHTML = new Date().getFullYear() // Display current year -> 2024
 //     });
 // });
 
+<<<<<<< HEAD
+=======
 // ================================================================================
 
+>>>>>>> 067bcdb18d365fdd3ece4a8dbf966b70f177c33e
 document.addEventListener('DOMContentLoaded', () => {
     const messages = document.querySelectorAll('.alert');
     messages.forEach(message => {
@@ -171,6 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000); // 3 seconds before fading
     });
 });
+<<<<<<< HEAD
+=======
 
 // ================================================================================
 
@@ -209,3 +214,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+>>>>>>> 067bcdb18d365fdd3ece4a8dbf966b70f177c33e
