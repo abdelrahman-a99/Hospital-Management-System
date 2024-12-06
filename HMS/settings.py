@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "Accounts",  # Add your app here
     'appointments',
     'patient',
-    'patient',
 ]
 
 MIDDLEWARE = [
@@ -130,7 +129,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "home/static"),
     os.path.join(BASE_DIR, "doctor/static"),
-    os.path.join(BASE_DIR, "patient/static"),
+    os.path.join(BASE_DIR, "Accounts/static"),
 ]
 
 
