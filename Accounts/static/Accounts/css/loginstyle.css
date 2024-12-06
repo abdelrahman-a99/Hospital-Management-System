@@ -1,0 +1,214 @@
+/* General Body Styles */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-image: url('https://st2.depositphotos.com/36924814/46071/i/450/depositphotos_460713580-stock-photo-medical-health-blue-cross-neon.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Container and Card Styles */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100%;   /* Full page width */
+    backdrop-filter: blur(2px);
+}
+
+.user_card {
+    width: 50%; /* Narrower form */
+    max-width: 400px; /* Limit the maximum width */
+    max-height: 90vh; /* Limit maximum height */
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -10px 15px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form Title */
+.form_title h2 {
+    text-align: center;
+    color: #f8f8f8;
+    margin-bottom: 20px;
+}
+
+/* Form Input Styles */
+.columns {
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.column {
+    flex: 1; 
+    min-width: 250px; 
+    max-width: 400px; 
+}
+
+.input_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.input_icon {
+    background: #4c8bf5;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+}
+
+.input_group input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    font-size: 14px;
+    width: 100%;
+}
+
+.input_group input:focus {
+    border-color: #4c8bf5;
+    outline: none;
+}
+
+/* Submit Button */
+.submit_btn {
+    width: auto; /* Allows the button size to adapt to its content */
+    padding: 0.5rem 1rem; /* Adjust padding for smaller size */
+    font-size: 16px; /* Smaller font size */
+    background-color: #4c8bf5;
+    color: white; /* Changed to a more legible color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Ensures it's treated as a block-level element */
+    margin: 0 auto;
+}
+
+.submit_btn:hover {
+    background-color: #3a72c4;
+}
+
+/* Additional Links */
+.additional_links {
+    text-align: center;
+    margin-top: 15px;
+    color: #f8f8f8;
+}
+
+.additional_links a {
+    text-decoration: none;
+    color: #88b4ff;
+    font-weight: bold;
+}
+
+.additional_links a:hover {
+    color: #3a72c4;
+    text-decoration: underline;
+}
+
+/* Message Styles */
+.message-box {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #4caf50, #8bc34a); /* Gradient Green */
+    border-radius: 25px;
+    padding: 10px 20px;
+    max-width: 500px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.5s ease;
+    animation: slide-in 0.5s ease-out;
+}
+
+/* Individual Messages */
+.message-content {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+}
+
+/* Hover Effect for Message Box */
+.message-box:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Slide-in Animation */
+@keyframes slide-in {
+    from {
+        transform: translateX(-50%) translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%);
+        opacity: 1;
+    }
+}
+
+.alert {
+    margin: 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Success, Error, Info Message Styles */
+.alert.success {
+    background-color: #4caf50; /* Green */
+    color: white;
+}
+
+.alert.error {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.alert.info {
+    background-color: #2196f3; /* Blue */
+    color: white;
+}
+
+/* Keyframes for Animation */
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+        visibility: visible;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        visibility: visible;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
