@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .models import CustomUser, Patient, Doctor
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
@@ -9,18 +9,22 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib.auth import logout
 
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+
 
 def custom_logout(request):
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
     return redirect('login')  
+
 User = get_user_model()
 
 def signup(request):
     if request.method == 'POST':
         uname = request.POST.get('username')
         email = request.POST.get('email')
-        pass1 = request.POST.get('password')
+        password = request.POST.get('password')
         pass2 = request.POST.get('confirm_password')
         gender = request.POST.get('gender')
         address = request.POST.get('address')
@@ -28,22 +32,22 @@ def signup(request):
         dob = request.POST.get('dob')
         user_type = request.POST.get('user_type')  # 'patient' or 'doctor'
 
-        print(f"Received data: {uname}, {email}, {pass1}, {pass2}, {gender}, {address}, {phone_number}, {dob}, {user_type}")
+        print(f"Received data: {uname}, {email}, {password}, {pass2}, {gender}, {address}, {phone_number}, {dob}, {user_type}")
 
-        if pass1 != pass2:
+        if password != pass2:
             messages.error(request, "Your password and confirm password are not the same.", extra_tags='password-mismatch')
             return redirect('signup')
 
         # Validate password
         try:
-            validate_password(pass1)
+            validate_password(password)
         except ValidationError as e:
             messages.error(request, f"Password error: {e.messages[0]}")
             return redirect('signup')
 
         if User.objects.filter(username=uname).exists():
             user = User.objects.get(username=uname)
-            if user.check_password(pass1):
+            if user.check_password(password):
                 messages.error(request, "You are already registered. Please log in instead.", extra_tags='already-registered')
                 return redirect('login')
 
@@ -55,7 +59,7 @@ def signup(request):
             messages.error(request, "Username already exists. Please choose a different username.")
             return redirect('signup')
 
-        user = User.objects.create_user(username=uname, email=email, password=pass1)
+        user = User.objects.create_user(username=uname, email=email, password=password)
         user.is_patient = (user_type == 'patient')
         user.is_doctor = (user_type == 'doctor')
         user.save()
@@ -70,34 +74,49 @@ def signup(request):
         return redirect('login')
 
     return render(request, 'Accounts/signup.html')
+
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        pass1 = request.POST.get('password')
+        password = request.POST.get('password')
+
         users = CustomUser.objects.filter(email=email)
+
         if users.exists():
             for user in users:
-                user = authenticate(request, username=user.username, password=pass1)
-                if user is not None:
+                user = authenticate(request, username=user.username, password=password)
+                if user:
                     auth_login(request, user)
                     if user.is_doctor:
                         return redirect('doctor_page')  
+
                     elif user.is_patient:
                         return redirect('patient_page')  
+
                     else:
                         messages.error(request, "User type not recognized.")
                         return redirect('login')
-            messages.error(request, "Email or Password is incorrect!!!")
+
+            messages.error(request, "Invalid email or password. Please try again.")
             return redirect('login')
         else:
-            messages.error(request, "Email or Password is incorrect!!!")
+            messages.error(request, "Invalid email or password. Please try again.")
             return redirect('login')
     else:
         return render(request, 'Accounts/login.html')
-def doctor_page(request):
-    user = request.user
-    return render(request, 'doctor/doctor_page.html', {'user': user})
 
+@login_required
+def doctor_page(request):
+    # user = request.user
+    # return render(request, 'doctor/doctor_page.html', {'user': user})
+    if not request.user.is_doctor:
+        return HttpResponseForbidden("You are not authorized to view this page.")
+    return render(request, 'doctor/doctor_page.html', {'user': request.user})
+
+@login_required
 def patient_page(request):
-    user = request.user
-    return render(request, 'patient/patient_page.html', {'user': user})
+    # user = request.user
+    # return render(request, 'patient/patient_page.html', {'user': user})
+    if not request.user.is_patient:
+        return HttpResponseForbidden("You are not authorized to view this page.")
+    return render(request, 'patient/patient_page.html', {'user': request.user})

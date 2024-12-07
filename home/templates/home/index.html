@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
 
     <script src="{% static 'home/js/script.js' %}" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 </head>
 
 <body>
@@ -55,7 +56,7 @@
             <button onclick="location.href='#services'" class="btn-primary">Learn More</button>
         </section>
 
-        <section id="services" class="services">
+        <section id="services" class="services" data-aos="fade-up">
             <h2>Our Services</h2>
 
             <div class="service-card">
@@ -83,7 +84,7 @@
             </div>
         </section>
 
-        <section class="testimonials">
+        <section class="testimonials" data-aos="fade-up">
             <h2>What Our Users Say</h2>
             <div class="testimonial">
                 <p>
@@ -93,7 +94,7 @@
             </div>
         </section>
 
-        <section id="contact" class="contact">
+        <section id="contact" class="contact" data-aos="fade-up">
             <h2>Contact Us</h2>
             <form action="{% url 'contact' %}" method="post">
                 {% csrf_token %}
@@ -105,7 +106,7 @@
             </form>
         </section>
 
-        <section id="about" class="about">
+        <section id="about" class="about" data-aos="fade-up">
             <h2>About Us</h2>
             <p>
                 Our mission is to streamline hospital operations and improve patient care with advanced technology.
@@ -137,5 +138,11 @@
             </a>
         </div>
     </footer>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>
