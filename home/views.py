@@ -29,7 +29,7 @@ def contact(request):
             return render(
                 request,
                 "home/index.html",
-                {"name": name, "email": email, "message": message},
+                {"name": "", "email": email, "message": message},
             )
 
         # Validate email with a stronger regex
@@ -39,7 +39,7 @@ def contact(request):
             return render(
                 request,
                 "home/index.html",
-                {"name": name, "email": email, "message": message},
+                {"name": name, "email": "", "message": message},
             )
 
         # Validate message (at least 10 characters)
@@ -52,7 +52,7 @@ def contact(request):
             return render(
                 request,
                 "home/index.html",
-                {"name": name, "email": email, "message": message},
+                {"name": name, "email": email, "message": ""},
             )
 
         else:

@@ -18,7 +18,6 @@
     <div class="container">
         <div class="user_card">
             <div class="form_title">
-                {% comment %} <h2>Register Account</h2> {% endcomment %}
                 <h2>Sign Up Form</h2>
             </div>
 
@@ -37,30 +36,30 @@
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
-                                <input type="text" id="email" name="username" placeholder="Username" required>
+                                <input type="text" id="email" name="username" placeholder="Username" value="{{ username }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-genderless"></i></span>
-                                <input type="text" id="gender" name="gender" placeholder="Gender" required>
+                                <input type="text" id="gender" name="gender" placeholder="Gender" value="{{ gender }}" required>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" id="dob" name="dob" placeholder="Date of Birth" value="{{ dob }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-map-marker-alt"></i></span>
-                                <input type="text" id="address" name="address" placeholder="Address" required>
-                            </div>
-                            <div class="input_group">
-                                <span class="input_icon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" required>
+                                <input type="text" id="address" name="address" placeholder="Address" value="{{ address }}" required>
                             </div>
                         </div>
-
+                        
                         <div class="column">
                             <div class="input_group">
-                                <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" id="dob" name="dob" placeholder="Date of Birth" required>
+                                <span class="input_icon"><i class="fas fa-phone"></i></span>
+                                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="{{ phone_number }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-envelope"></i></span>
-                                <input type="email" id="email" name="email" placeholder="Email" required>
+                                <input type="email" id="email" name="email" placeholder="Email" value="{{ email }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-key"></i></span>
@@ -73,19 +72,21 @@
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user-md"></i></span>
                                 <select id="user_type" name="user_type" required>
-                                    <option value="patient">Patient</option>
-                                    <option value="doctor">Doctor</option>
+                                    {% comment %} <option value="patient">Patient</option> {% endcomment %}
+                                    {% comment %} <option value="doctor">Doctor</option> {% endcomment %}
+                                    <option value="patient" {% if user_type == "patient" %} selected {% endif %}>Patient</option>
+                                    <option value="doctor" {% if user_type == "doctor" %} selected {% endif %}>Doctor</option>
                                 </select>
                             </div>
+                            <!-- Specialty Input for Doctor -->
                             <div class="input_group" id="specialty_field" style="display: none;">
                                 <span class="input_icon"><i class="fas fa-stethoscope"></i></span>
-                                <input type="text" name="specialty" placeholder="Specialty">
+                                <input type="text" name="specialty" placeholder="Specialty" value="{{ specialty }}">
                             </div>
                         </div>
                     </div>
 
                     <div class="button_container">
-                        {% comment %} <input class="submit_btn" type="submit" value="Register"> {% endcomment %}
                         <input class="submit_btn" type="submit" value="Sign Up">
                     </div>
                 </form>
