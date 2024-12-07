@@ -1,5 +1,4 @@
 /* VARIABLES */
-<<<<<<< HEAD
 :root {
     --primary-color: #1d357d;
     --secondary-color: #4c8bf5;
@@ -16,8 +15,6 @@
     --twitter-color: #1DA1F2;
     --linkedin-color: #0A66C2;
 }
-=======
->>>>>>> 067bcdb18d365fdd3ece4a8dbf966b70f177c33e
 
 /* RESET */
 * {
@@ -425,8 +422,4 @@ footer .social-icons a:hover .fa-twitter {
 
 footer .social-icons a:hover .fa-linkedin {
     color: var(--linkedin-color);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 067bcdb18d365fdd3ece4a8dbf966b70f177c33e
