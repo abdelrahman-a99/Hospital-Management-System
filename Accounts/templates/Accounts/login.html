@@ -1,66 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>LogIn</title>
-    {% load static %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+
+	{% load static %}
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{% static 'Accounts/css/loginstyle.css' %}">
+
+	<script src="{% static 'Accounts/js/script.js' %}" defer></script>
 </head>
 
 <body>
     <div class="container">
 		<div class="user_card">
+				<div class="back_button">
+					<a href="{% url 'index' %}" class="back_icon"><i class="fas fa-arrow-left"></i></a>
+				</div>
+			
 			<div class="form_title">
 				<h2>Login Form</h2>
 			</div>
-	
+
 			<div class="form_container">
 				{% if messages %}
-					<div class="message-box" id="message-box">
+					<div id="message-box">
 						{% for message in messages %}
-							<p class="message-content {{ message.tags }}">{{ message }}</p>
+							<p class="message-box alert {{ message.tags }}">{{ message }}</p>
 						{% endfor %}
 					</div>
 				{% endif %}
-				<form method="POST" action="">
+
+				<form method="POST" action="{% url 'login' %}">
 					{% csrf_token %}
 					<div class="columns">
 						<div class="column">
 							<div class="input_group">
 								<span class="input_icon"><i class="fas fa-envelope"></i></span>
-								<input type="email" name="email" placeholder="Email" required>
+								<input type="email" id="email" name="email" placeholder="Email" required>
 							</div>
+
 							<div class="input_group">
 								<span class="input_icon"><i class="fas fa-key"></i></span>
-								<input type="password" name="password" placeholder="Password" required>
+								<input type="password" id="password" name="password" placeholder="Password" required>
 							</div>
 						</div>
 					</div>
+
 					<div class="button_container">
-						<input class="submit_btn" type="submit" value="LOGIN">
+						<input class="submit_btn" type="submit" value="Login">
 					</div>
 				</form>
 			</div>
-	
+
 			<div class="additional_links">
-				Do Not Have an Account? <a href="{% url 'signup' %}">SignUP</a>
+				Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			const messageBox = document.getElementById('message-box');
-			if (messageBox) {
-				setTimeout(() => {
-					messageBox.style.opacity = '0';
-					messageBox.style.visibility = 'hidden';
-				}, 5000); // 5 seconds delay
-			}
-		});
-	</script>
-	
 </body>
-
 </html>

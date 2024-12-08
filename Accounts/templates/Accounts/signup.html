@@ -1,83 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>SignUp</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
     {% load static %}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="{%static 'Accounts/js/script.js'%}"></script>  
     <link rel="stylesheet" href="{% static 'Accounts/css/signupstyle.css' %}">
+
+    <script src="{%static 'Accounts/js/script.js'%}"></script>  
 </head>
+
 <body>
     <div class="container">
         <div class="user_card">
-            <div class="form_title">
-                <h2>REGISTER ACCOUNT</h2>
+            <div class="back_button">
+                <a href="{% url 'index' %}" class="back_icon"><i class="fas fa-arrow-left"></i></a>
             </div>
 
-            {% if messages %}
-                <div class="message-box" id="message-box">
-                    {% for message in messages %}
-                        <p class="message-content {{ message.tags }}">{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
+            <div class="form_title">
+                <h2>Sign Up Form</h2>
+            </div>
 
             <div class="form_container">
-                <form method="POST" action="">
+                {% if messages %}
+                    <div id="message-box">
+                        {% for message in messages %}
+                            <p class="message-box alert {{ message.tags }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="POST" action="{% url 'signup' %}">
                     {% csrf_token %}
                     <div class="columns">
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
-                                <input type="text" name="username" placeholder="Username" required>
+                                <input type="text" id="email" name="username" placeholder="Username" value="{{ username }}" required>
                             </div>
-                            <div class="input_group">
+                            {% comment %} <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-genderless"></i></span>
-                                <input type="text" name="gender" placeholder="Gender" required>
-                            </div>
+                                <input type="text" id="gender" name="gender" placeholder="Gender" value="{{ gender }}" required>
+                            </div> {% endcomment %}
                             <div class="input_group">
-                                <span class="input_icon"><i class="fas fa-map-marker-alt"></i></span>
-                                <input type="text" name="address" placeholder="Address" required>
+                                <span class="input_icon"><i class="fas fa-venus-mars"></i></span>
+                                <select id="gender" name="gender" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="male" {% if gender == "male" %} selected {% endif %}>Male</option>
+                                    <option value="female" {% if gender == "male" %} selected {% endif %}>Female</option>
+                                </select>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" name="phonenumber" placeholder="Phone Number" required>
+                                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="{{ phone_number }}" required>
                             </div>
-                        </div>
-
-                        <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" name="dob" placeholder="Date of Birth" required>
+                                <input type="date" id="dob" name="dob" placeholder="Date of Birth" value="{{ dob }}" required>
                             </div>
                             <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <input type="text" id="address" name="address" placeholder="Address" value="{{ address }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="column">
+                            <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-envelope"></i></span>
-                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="email" id="email" name="email" placeholder="Email" value="{{ email }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-key"></i></span>
-                                <input type="password" name="password" placeholder="Password" required>
+                                <input type="password" id="password" name="password" placeholder="Password" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-lock"></i></span>
-                                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user-md"></i></span>
-                                <select name="user_type" required>
-                                    <option value="patient">Patient</option>
-                                    <option value="doctor">Doctor</option>
+                                <select id="user_type" name="user_type" required>
+                                    <option value="" disabled selected>Select User Type</option>
+                                    <option value="patient" {% if user_type == "patient" %} selected {% endif %}>Patient</option>
+                                    <option value="doctor" {% if user_type == "doctor" %} selected {% endif %}>Doctor</option>
                                 </select>
                             </div>
+                            <!-- Specialty Input for Doctor -->
                             <div class="input_group" id="specialty_field" style="display: none;">
                                 <span class="input_icon"><i class="fas fa-stethoscope"></i></span>
-                                <input type="text" name="specialty" placeholder="Specialty">
+                                <input type="text" id="specialty" name="specialty" placeholder="Specialty" value="{{ specialty }}">
                             </div>
                         </div>
                     </div>
 
                     <div class="button_container">
-                        <input class="submit_btn" type="submit" value="Register Account">
+                        <input class="submit_btn" type="submit" value="Sign Up">
                     </div>
                 </form>
             </div>

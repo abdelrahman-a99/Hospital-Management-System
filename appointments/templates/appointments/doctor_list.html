@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor's Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Icons -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <link rel="stylesheet" href="{% static 'appointments/css/dashboard.css' %}">
+
+    <script src="{% static 'appointments/js/dashboard.js' %}" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Icons -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="sidebar">
@@ -114,8 +120,5 @@
     </div>
     <div id="patientDescription" class="patient-description" style="display: none;">
     </div>
-    
-
-    <script src="{% static 'js/dashboard.js' %}"></script>
 </body>
 </html>

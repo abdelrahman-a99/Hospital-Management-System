@@ -1,4 +1,4 @@
-/* General Body Styles */
+/* General Styles */
 body,
 html {
     margin: 0;
@@ -11,20 +11,19 @@ html {
     background-position: center;
 }
 
-/* Container and Card Styles */
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    width: 100%;   /* Full page width */
+    height: 100vh;
+    width: 100%;
     backdrop-filter: blur(2px);
 }
 
 .user_card {
-    width: 50%; /* Narrower form */
-    max-width: 400px; /* Limit the maximum width */
-    max-height: 90vh; /* Limit maximum height */
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 8px;
@@ -42,48 +41,34 @@ html {
     font-size: 18px;
     color: #007bff;
     text-decoration: none;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: white;
-    border: 2px solid #007bff;
-    transition: background-color 0.3s, border 0.3s, color 0.3s;
 }
 
 .back_icon:hover {
-    /* text-decoration: underline;
-    color: #0056b3; */
-
-    background-color: #f0f0f0;
-    color: #007bff;
-    border: 2px solid #007bff;
+    text-decoration: underline;
+    color: #0056b3;
 }
 
-/* Form Title */
 .form_title h2 {
     text-align: center;
     color: #f8f8f8;
     margin-bottom: 20px;
 }
 
-/* Form Input Styles */
+/* Columns */
 .columns {
-    display: flex; 
-    gap: 20px; 
-    justify-content: center; 
-    flex-wrap: wrap; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
 
 .column {
-    flex: 1; 
-    min-width: 250px; 
-    max-width: 400px; 
+    flex: 1;
+    min-width: 250px;
+    max-width: 400px;
 }
 
+/* Input Fields */
 .input_group {
     display: flex;
     align-items: center;
@@ -99,10 +84,11 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px; 
+    width: 40px;
 }
 
-.input_group input {
+.input_group input,
+.input_group select {
     flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
@@ -111,23 +97,33 @@ html {
     width: 100%;
 }
 
-.input_group input:focus {
+.input_group select {
+    appearance: none; /* Removes default arrow styles */
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.input_group input:focus,
+.input_group select:focus {
     border-color: #4c8bf5;
     outline: none;
 }
 
+/* Specialty Field */
+#specialty_field {
+    display: none;
+}
+
 /* Submit Button */
 .submit_btn {
-    width: 100%; /* Allows the button size to adapt to its content */
-    padding: 0.5rem 1rem; /* Adjust padding for smaller size */
-    font-size: 16px; /* Smaller font size */
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
     background-color: #4c8bf5;
-    color: white; /* Changed to a more legible color */
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: block; /* Ensures it's treated as a block-level element */
-    margin: 0 auto;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -154,12 +150,13 @@ html {
     text-decoration: underline;
 }
 
-/* Message Styles */
+/* Message Box */
 .message-box {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
+    /* background: linear-gradient(to right, #ff5f6d, #ffc371); */
     /* border-radius: 25px;
     padding: 10px 20px; */
     border-radius: 8px;
@@ -170,17 +167,17 @@ html {
     max-width: 450px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    transition: all 0.5s ease;
+    animation: all 0.5s ease;
     animation: slide-in 0.5s ease-out;
 }
 
-/* Hover Effect for Message Box */
+/* Hover Effect */
 /* .message-box:hover {
     transform: translateX(-50%) scale(1.05);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
 } */
 
-/* Slide-in Animation */
+/* Animations */
 @keyframes slide-in {
     from {
         transform: translateX(-50%) translateY(-20px);
@@ -223,7 +220,6 @@ html {
     border: 1px solid #bee5eb;
 }
 
-/* Keyframes for Animation */
 @keyframes slide-down {
     0% {
         opacity: 0;
