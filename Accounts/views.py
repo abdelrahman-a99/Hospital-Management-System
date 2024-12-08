@@ -297,7 +297,7 @@ def signup(request):
                 phone_number=phone_number,
                 dob=dob,
             )
-            return redirect("patient_page")  # Redirect directly to the patient page
+            # return redirect("patient_page")  # Redirect directly to the patient page
 
         elif user_type == "doctor":
             specialty = request.POST.get("specialty")
@@ -309,10 +309,10 @@ def signup(request):
                 dob=dob,
                 specialty=specialty,
             )
-            return redirect("doctor_page")  # Redirect directly to the doctor page
+            # return redirect("doctor_page")  # Redirect directly to the doctor page
 
         messages.success(request, "Registration completed successfully! Please log in.")
-        return redirect("login")
+        return redirect("login")  # Redirect to the login page for all users
 
     return render(request, "Accounts/signup.html")
 
