@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile Menu</title>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'profilemenu/css/style-profilemenu.css' %}">
+        <script src="{%static 'profilemenu/js/script'%}"></script>
+    </head>
+    
+    <body>
+        {% if messages %}
+        <div class="message-box" id="message-box">
+            {% for message in messages %}
+                <p class="message-content {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        
+        <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <h3 class="title">HMS</h3>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Edit Profile</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Setting</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Messages</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title">Help</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Log out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+            </div>
+
+
+            <!-- ================ Order Details List ================= -->
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Edit Profile</h2>
+                        <a href="{% url 'signup' %}" class="btn">New Account</a>
+                    </div>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="columns">
+                            <div class="column">
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-user"></i></span>
+                                    <input type="text" name="username" value="{{ username }}" placeholder="Username" required>
+                                </div>
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-genderless"></i></span>
+                                    <input type="text" name="gender" value="{{ gender }}" placeholder="Gender" required>
+                                </div>
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-map-marker-alt"></i></span>
+                                    <input type="text" name="address" value="{{ address }}" placeholder="Address" required>
+                                </div>
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-phone"></i></span>
+                                    <input type="tel" name="phonenumber" value="{{ phone_number }}" placeholder="Phone Number" required>
+                                </div>
+                            </div>
+                    
+                            <div class="column">
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
+                                    <input type="date" name="dob" value="{{ dob }}" placeholder="Date of Birth" required>
+                                </div>
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" name="email" value="{{ email }}" placeholder="Email" required>
+                                </div>
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-key"></i></span>
+                                    <input type="password" name="password" placeholder="New Password ">
+                                </div>
+                                <div class="input_group">
+                                    <span class="input_icon"><i class="fas fa-lock"></i></span>
+                                    <input type="password" name="confirm_password" placeholder="Confirm Password ">
+                                </div>
+                                <div class="input_group" id="specialty_field" style="display: none;">
+                                    <span class="input_icon"><i class="fas fa-stethoscope"></i></span>
+                                    <input type="text" name="specialty" value="{{ specialty }}" placeholder="Specialty">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button_container">
+                            <input class="submit_btn" type="submit" value="Update Profile">
+                        </div>
+                    </form>
+                    
+
+
+                <!-- ================= New Customers ================ -->
+                {% comment %} <div class="recentCustomers">
+                    <div class="cardHeader">
+                        <h2>Recent Customers</h2>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+                    </table> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>// add hovered class to selected list item
+        let list = document.querySelectorAll(".navigation li");
+        
+        function activeLink() {
+          list.forEach((item) => {
+            item.classList.remove("hovered");
+          });
+          this.classList.add("hovered");
+        }
+        
+        list.forEach((item) => item.addEventListener("mouseover", activeLink));
+        
+        // Menu Toggle
+        let toggle = document.querySelector(".toggle");
+        let navigation = document.querySelector(".navigation");
+        let main = document.querySelector(".main");
+        
+        toggle.onclick = function () {
+          navigation.classList.toggle("active");
+          main.classList.toggle("active");
+        };
+        document.querySelector('select[name="user_type"]').addEventListener('change', function() {
+            var specialtyField = document.getElementById('specialty_field');
+            if (this.value === 'doctor') {
+                specialtyField.style.display = 'block';
+            } else {
+                specialtyField.style.display = 'none';
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const messageBox = document.getElementById('message-box');
+            if (messageBox) {
+                setTimeout(() => {
+                    messageBox.style.opacity = '0';
+                    messageBox.style.visibility = 'hidden';
+                }, 5000); // 5 seconds delay
+            }
+        });
+        function validatePassword(password) {
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumber = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        
+            if (password.length < 8) {
+                return "Password must be at least 8 characters.";
+            }
+            if (!hasUpperCase) {
+                return "Password must include at least one uppercase letter.";
+            }
+            if (!hasLowerCase) {
+                return "Password must include at least one lowercase letter.";
+            }
+            if (!hasNumber) {
+                return "Password must include at least one number.";
+            }
+            if (!hasSpecialChar) {
+                return "Password must include at least one special character.";
+            }
+        
+            return ""; // Valid password
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirm_password');
+            const passwordError = document.getElementById('password_error');
+            const confirmPasswordError = document.getElementById('confirm_password_error');
+        
+            // Validate password on input
+            passwordField.addEventListener('input', () => {
+                const errorMessage = validatePassword(passwordField.value);
+                passwordError.textContent = errorMessage;
+            });
+        
+            // Validate confirm password
+            confirmPasswordField.addEventListener('input', () => {
+                if (passwordField.value !== confirmPasswordField.value) {
+                    confirmPasswordError.textContent = "Passwords do not match.";
+                } else {
+                    confirmPasswordError.textContent = "";
+                }
+            });
+        
+            // Prevent form submission if passwords are invalid
+            const form = document.querySelector('form');
+            form.addEventListener('submit', (e) => {
+                const passwordErrorMessage = validatePassword(passwordField.value);
+                if (passwordErrorMessage || passwordField.value !== confirmPasswordField.value) {
+                    e.preventDefault();
+                    if (passwordErrorMessage) {
+                        passwordError.textContent = passwordErrorMessage;
+                    }
+                    if (passwordField.value !== confirmPasswordField.value) {
+                        confirmPasswordError.textContent = "Passwords do not match.";
+                    }
+                }
+            });
+        });
+        
+    </script>
+
+    <!-- ====== ionicons ======= -->
+</body>
+
+</html>
