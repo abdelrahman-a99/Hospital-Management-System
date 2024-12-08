@@ -105,7 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const specialtyField = document.getElementById('specialty_field');
             if (specialtyField) {
                 // Show the specialty field only if the user selects 'doctor'
-                specialtyField.style.display = this.value === 'doctor' ? 'block' : 'none';
+                // specialtyField.style.display = this.value === 'doctor' ? 'block' : 'none';
+                specialtyField.style.display = this.value === 'doctor' ? 'inline-block' : 'none';
             }
         });
     }
