@@ -323,14 +323,14 @@ def login(request):
         password = request.POST.get("password")
 
         # Check if the user exists with the provided email
-        # try:
-        #     user = CustomUser.objects.get(email=email)
-        # except CustomUser.DoesNotExist:
-        #     messages.error(request, "Invalid email or password. Please try again.")
-        #     return redirect("login")
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            messages.error(request, "Invalid email or password. Please try again.")
+            return redirect("login")
 
         # Authenticate the user directly
-        user = authenticate(request, username=email, password=password)
+        # user = authenticate(request, username=email, password=password)
         if user is not None:
             # Successful authentication
             auth_login(request, user)
