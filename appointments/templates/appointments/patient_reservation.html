@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Appointment Reservation</title>
+    <link rel="stylesheet" href="{% static 'css/patient_reservation.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>HMS</h2>
+            </div>
+            <ul>
+                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{% url 'patient_reservation' %}" class="active"><i class="fas fa-calendar-alt"></i> Book Appointment</a></li>
+                <li><a href="{% url 'patient_dashboard' %}"><i class="fas fa-user"></i> My Appointments</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Book Your Appointment</h1>
+            <p>Choose a doctor and book an available slot.</p>
+            
+            <!-- Reservation Form -->
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="doctorSelect">Choose Doctor:</label>
+                    <select id="doctorSelect" name="doctor" required>
+                        <option value="" disabled selected>Select a doctor</option>
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dateSelect">Choose Date:</label>
+                    <input type="date" id="dateSelect" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="timeSelect">Choose Time:</label>
+                    <select id="timeSelect" name="time" required>
+                        <option value="" disabled selected>Select a time slot</option>
+                        {% for slot in time_slots %}
+                        <option value="{{ slot }}">{{ slot }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Reserve</button>
+            </form>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="hidden">
+                <i class="fas fa-spinner fa-spin"></i> Booking your appointment...
+            </div>
+
+            <!-- Confirmation Message -->
+            <div id="confirmationMessage" class="hidden">
+                <p>Your appointment has been successfully booked!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/patient_reservation.js' %}"></script>
+</body>
+</html>
