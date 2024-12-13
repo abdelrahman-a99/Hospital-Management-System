@@ -38,10 +38,19 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "home",  # Add your app here
+<<<<<<< HEAD
     "doctor",  # Add your app here 
     "Accounts",  # Add your app here
     'appointments',
     'patient',
+=======
+    "doctor",
+    "patient",
+    "Accounts",
+    "appointments",
+    'profilemenu',
+    
+>>>>>>> b7816dfe861e8d2f2a5f4544f57f4b019ca349c9
 ]
 
 MIDDLEWARE = [
@@ -130,6 +139,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "home/static"),
     os.path.join(BASE_DIR, "doctor/static"),
     os.path.join(BASE_DIR, "patient/static"),
+<<<<<<< HEAD
+=======
+    os.path.join(BASE_DIR, "Accounts/static"),
+    os.path.join(BASE_DIR, "appointments/static"),
+    os.path.join(BASE_DIR, "profilemenu/static"),
+>>>>>>> b7816dfe861e8d2f2a5f4544f57f4b019ca349c9
 ]
 
 
