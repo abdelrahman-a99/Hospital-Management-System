@@ -25,4 +25,5 @@ urlpatterns = [
     path("doctor/", include("doctor.urls")),
     path("patient/", include("patient.urls")),
     path('appointments/', include('appointments.urls')),  # This should work if appointments.urls exists
+    path('profilemenu/', include('profilemenu.urls')),
 ]

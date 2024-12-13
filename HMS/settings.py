@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "patient",
     "Accounts",
     "appointments",
+    'profilemenu',
     
 ]
 
@@ -148,6 +149,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "patient/static"),
     os.path.join(BASE_DIR, "Accounts/static"),
     os.path.join(BASE_DIR, "appointments/static"),
+    os.path.join(BASE_DIR, "profilemenu/static"),
 ]
 
 
