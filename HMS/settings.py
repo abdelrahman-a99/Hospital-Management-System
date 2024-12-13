@@ -10,21 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-# settings.py
-
-# settings.py (for testing purposes in development)
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "boda142004ahmed@gmail.com"  # Replace with your email
-# EMAIL_HOST_PASSWORD = 'boda2021ahmed'  # Replace with your password or app-specific password
-EMAIL_HOST_PASSWORD = (
-    "lcwj yzmd metw iqzy"  # Replace with your password or app-specific password
-)
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,11 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "home",  # Add your app here
-    "doctor",
-    "patient",
-    "Accounts",
-    "appointments",
-    
+    "doctor",  # Add your app here 
+    "Accounts",  # Add your app here
+    'appointments',
+    'patient',
 ]
 
 MIDDLEWARE = [
@@ -70,13 +54,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "HMS.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -88,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+
 WSGI_APPLICATION = "HMS.wsgi.application"
 
 
@@ -100,6 +84,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 
 
 # Password validation
@@ -137,17 +122,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-STATIC_URL = "static/"
+STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "home/static"),
     os.path.join(BASE_DIR, "doctor/static"),
     os.path.join(BASE_DIR, "patient/static"),
-    os.path.join(BASE_DIR, "Accounts/static"),
-    os.path.join(BASE_DIR, "appointments/static"),
 ]
 
 
@@ -155,8 +137,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-]
-AUTH_USER_MODEL = "Accounts.CustomUser"
