@@ -6,12 +6,20 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
 
-class CustomUser(AbstractUser):
-    is_doctor = models.BooleanField(default=False)
-    is_patient = models.BooleanField(default=False)
+from django.contrib.auth.models import AbstractUser
 
-    def __str__(self):
-        return self.username
+class CustomUser(AbstractUser):
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name="customuser_groups",  # Add unique related_name
+        blank=True,
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name="customuser_permissions",  # Add unique related_name
+        blank=True,
+    )
+
 User = get_user_model()
 
 class Patient(models.Model):
