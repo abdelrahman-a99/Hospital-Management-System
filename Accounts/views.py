@@ -297,7 +297,7 @@ def signup(request):
                 phone_number=phone_number,
                 dob=dob,
             )
-            return redirect("patient_page")  # Redirect directly to the patient page
+            # return redirect("patient_page")  # Redirect directly to the patient page
 
         elif user_type == "doctor":
             specialty = request.POST.get("specialty")
@@ -309,10 +309,10 @@ def signup(request):
                 dob=dob,
                 specialty=specialty,
             )
-            return redirect("doctor_page")  # Redirect directly to the doctor page
+            # return redirect("doctor_page")  # Redirect directly to the doctor page
 
         messages.success(request, "Registration completed successfully! Please log in.")
-        return redirect("login")
+        return redirect("login")  # Redirect to the login page for all users
 
     return render(request, "Accounts/signup.html")
 
@@ -323,14 +323,14 @@ def login(request):
         password = request.POST.get("password")
 
         # Check if the user exists with the provided email
-        # try:
-        #     user = CustomUser.objects.get(email=email)
-        # except CustomUser.DoesNotExist:
-        #     messages.error(request, "Invalid email or password. Please try again.")
-        #     return redirect("login")
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            messages.error(request, "Invalid email or password. Please try again.")
+            return redirect("login")
 
         # Authenticate the user directly
-        user = authenticate(request, username=email, password=password)
+        # user = authenticate(request, username=email, password=password)
         if user is not None:
             # Successful authentication
             auth_login(request, user)

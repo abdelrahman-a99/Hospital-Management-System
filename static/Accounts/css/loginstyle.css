@@ -33,6 +33,22 @@ html {
     flex-direction: column;
 }
 
+/* Back Icon */
+.back_button {
+    margin-bottom: 20px;
+}
+
+.back_icon {
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back_icon:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
 /* Form Title */
 .form_title h2 {
     text-align: center;
