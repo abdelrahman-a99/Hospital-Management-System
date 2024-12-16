@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Specialties</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/specialty.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <script>
+        // Function to redirect to the patient reservation page
+        function redirectToReservation() {
+            window.location.href = "{% url 'patient_reservation' %}"; // Replace with your URL name
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>PATIENT'S DASHBOARD</h2>
+            <ul>
+                <li><a href="{% url 'patient_reservation' %}"><i class="fas fa-user-md"></i> Appointments</a></li>
+                <li><a href="#" class="active"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
+                <!-- Directly link to the specialty page -->
+                <li><a href="#"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+    
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Departments Section -->
+            <section class="Department">
+                <div class="container">
+                    <div class="section-title">
+                        <h2><span class="title-icon"><i class="fas fa-clinic-medical"></i></span> Specialties <span class="title-line"></span></h2>
+                    </div>
+                    <div class="row">
+                        <!-- Specialties Cards -->
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                            <h4>Cardiology</h4>
+                            <p>Specialized in heart care.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-brain"></i></div>
+                            <h4>Neurology</h4>
+                            <p>Specialized in brain and nervous system care.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-x-ray"></i></div>
+                            <h4>Radiology</h4>
+                            <p>Diagnostic imaging and radiology services.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-user-nurse"></i></div>
+                            <h4>Oncology</h4>
+                            <p>Cancer diagnosis and treatment.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-bone"></i></div>
+                            <h4>Orthopedics</h4>
+                            <p>Bone and joint care specialists.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-lungs"></i></div>
+                            <h4>Pulmonology</h4>
+                            <p>Focused on respiratory health.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-dna"></i></div>
+                            <h4>Genetics</h4>
+                            <p>Specialized in genetic conditions.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-baby"></i></div>
+                            <h4>Pediatrics</h4>
+                            <p>Healthcare for children and infants.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-eye"></i></div>
+                            <h4>Ophthalmology</h4>
+                            <p>Eye and vision care specialists.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-teeth"></i></div>
+                            <h4>Dental</h4>
+                            <p>Comprehensive dental treatments.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-syringe"></i></div>
+                            <h4>Immunology</h4>
+                            <p>Focusing on immune system health.</p>
+                        </div>
+                        <div class="icon-box" onclick="redirectToReservation()">
+                            <div class="icon"><i class="fas fa-ambulance"></i></div>
+                            <h4>Emergency Medicine</h4>
+                            <p>Quick response and urgent care.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

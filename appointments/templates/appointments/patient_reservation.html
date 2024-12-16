@@ -1,70 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Appointment Reservation</title>
-    <link rel="stylesheet" href="{% static 'css/patient_reservation.css' %}">
+    <title>Patient Reservation</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/patient_reservation.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-                <h2>HMS</h2>
-            </div>
+        <aside class="sidebar">
+            <h2>PATIENT'S DASHBOARD</h2>
             <ul>
-                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="{% url 'patient_reservation' %}" class="active"><i class="fas fa-calendar-alt"></i> Book Appointment</a></li>
-                <li><a href="{% url 'patient_dashboard' %}"><i class="fas fa-user"></i> My Appointments</a></li>
+                <li><a href="#" class="active"><i class="fas fa-user-md"></i> Appointments</a></li>
+                <li><a href="{% url 'specialty_page' %}"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
+                <li><a href="#"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
-        </div>
+        </aside>
 
-        <!-- Main Content -->
         <div class="main-content">
-            <h1>Book Your Appointment</h1>
-            <p>Choose a doctor and book an available slot.</p>
-            
-            <!-- Reservation Form -->
-            <form id="reservationForm">
-                <div class="form-group">
-                    <label for="doctorSelect">Choose Doctor:</label>
-                    <select id="doctorSelect" name="doctor" required>
-                        <option value="" disabled selected>Select a doctor</option>
+            <div class="choose-doctor">
+                <div class="section-title">
+                    <h2><span class="title-icon"><i class="fas fa-user-md"></i></span> Choose Your Doctor <span class="title-line"></span></h2>
+                </div>
+                <form method="GET" action="{% url 'patient_reservation' %}">
+                    <label for="specialty">Select Specialty:</label>
+                    <select id="specialty" name="specialty" onchange="this.form.submit()">
+                        <option value="">All Specialties</option>
+                        {% for specialty in specialties %}
+                            <option value="{{ specialty }}" {% if specialty == selected_specialty %}selected{% endif %}>{{ specialty }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <div class="doctor-dropdown">
+                    <label for="doctor">Select Doctor:</label>
+                    <select id="doctor" name="doctor" required>
+                        <option value="" disabled selected>Choose a doctor</option>
                         {% for doctor in doctors %}
-                        <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+                            <option value="{{ doctor.id }}">
+                                {{ doctor.user.username }} - Rating: {{ doctor.average_rating|default:"No ratings" }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="dateSelect">Choose Date:</label>
-                    <input type="date" id="dateSelect" name="date" required>
-                </div>
-                <div class="form-group">
-                    <label for="timeSelect">Choose Time:</label>
-                    <select id="timeSelect" name="time" required>
-                        <option value="" disabled selected>Select a time slot</option>
-                        {% for slot in time_slots %}
-                        <option value="{{ slot }}">{{ slot }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="submit-btn">Reserve</button>
-            </form>
-
-            <!-- Loading Spinner -->
-            <div id="loadingSpinner" class="hidden">
-                <i class="fas fa-spinner fa-spin"></i> Booking your appointment...
             </div>
 
-            <!-- Confirmation Message -->
-            <div id="confirmationMessage" class="hidden">
-                <p>Your appointment has been successfully booked!</p>
+            <div class="reservation-form">
+                <h3>Book an Appointment</h3>
+                <form id="reservationForm" method="POST" action="{% url 'patient_reservation' %}">
+                    {% csrf_token %}
+                    <label for="date">Select Date:</label>
+                    <input type="date" id="date" name="date" required>
+
+                    <label for="time">Select Time:</label>
+                    <select id="time" name="time" required>
+                        <option value="" disabled selected>Choose a time</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="01:00 PM">01:00 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                    </select>
+
+                    <button type="submit" id="reserveButton">Reserve</button>
+                </form>
+            </div>
+
+            <div class="appointments-summary">
+                <div class="section-title">
+                    <h2><span class="title-icon"><i class="fas fa-calendar-check"></i></span> Upcoming Appointments <span class="title-line"></span></h2>
+                </div>
+                <div id="appointmentCard" class="appointment-card">
+                    <div class="appointment-header">
+                        <h3 id="doctorName">Select a doctor to reserve an appointment</h3>
+                        <span id="appointmentStatus" class="appointment-status pending">Pending Approval</span>
+                    </div>
+                    <div class="appointment-details">
+                        <p><strong>Appointment on:</strong> <span id="appointmentDate">None</span> at <span id="appointmentTime">None</span></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="{% static 'js/patient_reservation.js' %}"></script>
+    <script src="{% static 'appointments/js/patient_reservation.js' %}"></script>
 </body>
 </html>

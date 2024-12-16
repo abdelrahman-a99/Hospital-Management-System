@@ -2,7 +2,7 @@ const appointments = [
     {
         id: 1,
         patientName: 'John Doe',
-        date: '2024-12-01',
+        date: '2024-12-18',
         time: '10:00 AM',
         status: 'Scheduled',
         description: 'John Doe is a 45-year-old male with a history of hypertension.',
@@ -13,7 +13,7 @@ const appointments = [
     {
         id: 2,
         patientName: 'malak ahmed',
-        date: '2024-12-02',
+        date: '2024-12-17',
         time: '11:00 AM',
         status: 'Waiting',
         description: 'Malak Ahmed is a 20-year-old female with a history of asthma.',
