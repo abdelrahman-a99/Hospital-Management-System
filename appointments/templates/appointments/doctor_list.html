@@ -4,33 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor's Dashboard</title>
-    {% load static %}
-
-    <link rel="stylesheet" href="{% static 'appointments/css/dashboard.css' %}">
-
-    <script src="{% static 'appointments/js/dashboard.js' %}" defer></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Icons -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'appointments/css/dashboard.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-
 <body>
     <div class="container">
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="logo">Doctor's Dashboard</div>
             <ul>
-                <li><a href="{% url 'doctor_page' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
                 <li><a href="#"><i class="fas fa-user-md"></i> Patients</a></li>
                 <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
                 <li><a href="#"><i class="fas fa-chart-line"></i> Reports</a></li>
                 <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
             </ul>
         </div>
+
+        <!-- Main Content -->
         <div class="main-content">
+            <!-- Stats Section -->
             <div class="stats">
                 <div class="stat-item">
                     <h3>8</h3>
@@ -49,6 +47,8 @@
                     <p>Checkout</p>
                 </div>
             </div>
+
+            <!-- Calendar Section -->
             <div class="calendar-section">
                 <h3>Doctor's Calendar</h3>
                 <div class="calendar-controls">
@@ -74,19 +74,23 @@
                             </tr>
                         </thead>
                         <tbody id="calendarBody">
-                            
+                            <!-- Calendar days will be populated via JavaScript -->
                         </tbody>
                     </table>
                 </div>
             </div>
             
+            <!-- Upcoming Appointments Section Below Calendar -->
             <div class="upcoming-appointments">
                 <h3>Upcoming Appointments</h3>
                 <div id="upcomingPatients">
+                    <!-- List upcoming patients here dynamically -->
                 </div>
             </div>
-        </div> 
-    </div> 
+        </div> <!-- End of main content -->
+    </div> <!-- End of container -->
+
+    <!-- Appointment Modal -->
     <div id="appointmentModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -119,6 +123,10 @@
         </div>
     </div>
     <div id="patientDescription" class="patient-description" style="display: none;">
+        <!-- Patient description will be populated here -->
     </div>
+    
+
+    <script src="{% static 'appointments/js/dashboard.js' %}"></script>
 </body>
 </html>

@@ -158,6 +158,11 @@ time.innerHTML = new Date().getFullYear() // Display current year -> 2024
 //     });
 // });
 
+<<<<<<< HEAD
+// ================================================================================
+
+=======
+>>>>>>> abdelrahman
 document.addEventListener('DOMContentLoaded', () => {
     const messages = document.querySelectorAll('.alert');
     messages.forEach(message => {
@@ -169,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000); // 3 seconds before fading
     });
 });
+<<<<<<< HEAD
 
 // ================================================================================
 
@@ -207,3 +213,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+=======
+>>>>>>> abdelrahman
