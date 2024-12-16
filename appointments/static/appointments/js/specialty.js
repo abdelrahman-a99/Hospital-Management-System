@@ -1,4 +1,3 @@
-// appointments/static/appointments/js/specialty.js
 document.addEventListener("DOMContentLoaded", function () {
     const specialtyCards = document.querySelectorAll('.icon-box');
 
@@ -9,6 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-function redirectToReservation() {
-    window.location.href = "{% url 'appointments:patient_reservation' %}"; // Replace with your URL name
+function redirectToReservation(specialty) {
+    window.location.href = "{% url 'patient_reservation' %}" + specialty + "/";
 }

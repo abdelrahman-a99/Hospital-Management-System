@@ -27,22 +27,13 @@
                 <div class="section-title">
                     <h2><span class="title-icon"><i class="fas fa-user-md"></i></span> Choose Your Doctor <span class="title-line"></span></h2>
                 </div>
-                <form method="GET" action="{% url 'patient_reservation' %}">
-                    <label for="specialty">Select Specialty:</label>
-                    <select id="specialty" name="specialty" onchange="this.form.submit()">
-                        <option value="">All Specialties</option>
-                        {% for specialty in specialties %}
-                            <option value="{{ specialty }}" {% if specialty == selected_specialty %}selected{% endif %}>{{ specialty }}</option>
-                        {% endfor %}
-                    </select>
-                </form>
                 <div class="doctor-dropdown">
                     <label for="doctor">Select Doctor:</label>
                     <select id="doctor" name="doctor" required>
                         <option value="" disabled selected>Choose a doctor</option>
-                        {% for doctor in doctors %}
+                        {% for doctor in doctor %}
                             <option value="{{ doctor.id }}">
-                                {{ doctor.user.username }} - Rating: {{ doctor.average_rating|default:"No ratings" }}
+                                {{ doctor.first_name }} {{ doctor.last_name }} - Rating: {{ doctor.average_rating|default:"No ratings" }}
                             </option>
                         {% endfor %}
                     </select>

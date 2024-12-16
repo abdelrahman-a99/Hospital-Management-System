@@ -32,23 +32,12 @@ def doctor_list(request):
 
     return render(request, 'appointments/doctor_list.html', context)
 
-def patient_reservation(request):
-    specialties = Doctor.objects.values_list('specialty', flat=True).distinct()  # Get distinct specialties
-    selected_specialty = request.GET.get('specialty', '')  # Get the selected specialty from the query parameters
-
-    # Fetch doctors based on the selected specialty
-    if selected_specialty:
-        doctors = Doctor.objects.filter(specialty=selected_specialty).annotate(average_rating=Avg('reviews__rating')).order_by('user__username')
+def patient_reservation(request, specialty=None):
+    if specialty:
+        doctors = Doctor.objects.filter(specialty=specialty)
     else:
-        doctors = Doctor.objects.all().annotate(average_rating=Avg('reviews__rating')).order_by('user__username')
-
-    context = {
-        'specialties': specialties,  # All specialties to be shown in a dropdown
-        'doctors': doctors,  # Filtered list of doctors based on the selected specialty
-        'selected_specialty': selected_specialty  # Current selected specialty
-    }
-
-    return render(request, 'appointments/patient_reservation.html', context)
+        doctors = Doctor.objects.all()
+    return render(request, 'appointments/patient_reservation.html', {'doctors': doctors})
 
 def specialty_page(request):
     """
