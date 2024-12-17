@@ -12,12 +12,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         {% load static %}
         <link rel="stylesheet" href="{% static 'profilemenu/css/style-profilemenu.css' %}">
-        <script src="{%static 'profilemenu/js/script'%}"></script>
-        {% if request.LANGUAGE_CODE == 'ar' %}
-            <link rel="stylesheet" href="{% static 'css/styles-rtl.css' %}">
-        {% else %}
-            <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        {% endif %}
+        <script src="{%static 'profilemenu/js/scripts.js'%} " defer></script>
 
     </head>
     
@@ -36,47 +31,46 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#editing"> 
+                        <h3 class="title"></h3>
+                </li>
+                <li>
+                    <a href="{% if user.is_patient %}{% url 'patient' %}{% elif user.is_doctor %}{% url 'doctor' %}{% endif %}" class="menu-item">
                         <h3 class="title">HMS</h3>
                     </a>
                 </li>
-
+                
                 <li>
-                    <a href="#Edit Profile">
+                    <a href="#Edit Profile" class="menu-item" data-target="Edit Profile">
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
                         <span class="title">Edit Profile</span>
                     </a>
                 </li>
-                
                 <li>
-                    <a href="#setting">
+                    <a href="#settings" class="menu-item" data-target="Settings">
                         <span class="icon">
                             <ion-icon name="lock-closed-outline"></ion-icon>
                         </span>
-                        <span class="title">Setting</span>
+                        <span class="title">Settings</span>
                     </a>
                 </li>
-                
                 <li>
-                    <a href="#message">
+                    <a href="#message" class="menu-item" data-target="Message">
                         <span class="icon">
                             <ion-icon name="chatbubble-outline"></ion-icon>
                         </span>
                         <span class="title">Messages</span>
                     </a>
                 </li>
-
                 <li>
-                    <a href="#Help & Support">
+                    <a href="#Help & Support" class="menu-item" data-target="Help & Support">
                         <span class="icon">
                             <ion-icon name="help-outline"></ion-icon>
                         </span>
                         <span class="title">Help & Support</span>
                     </a>
                 </li>
-
 
                 <li>
                     <a href="{% url 'logout' %}">
@@ -98,7 +92,7 @@
 
 
             <!-- ================ Order Details List ================= -->
-            <section id="Edit Profile" class="Edit Profile" data-aos="fade-up">
+            <section id="Edit Profile" class="section-content" data-aos="fade-up">
             <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader" >
@@ -143,7 +137,7 @@
                                     <input type="email" name="email" value="{{ email }}" placeholder="Email" required>
                                 </div>
                                 
-                              {% comment %} <div class="input_group">
+                            {% comment %} <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-key"></i></span>
                                 <input type="password" name="password"  placeholder="New Password ">
                             </div>
@@ -161,21 +155,21 @@
                     
                 </div>
             </div>
-             <!-- ================ Order Details List ================= -->
-            <section id="setting" class="setting" data-aos="fade-up">
-             <div class="details">
+            <!-- ================ Order Details List ================= -->
+            <section id="settings" class="section-content" data-aos="fade-up">
+            <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader" >
-                        <h2>Setting</h2>
+                        <h2>Settings</h2>
                         <!-- <a href="{% url 'signup' %}" class="btn">New Account</a> -->
                     </div>
                     <form method="POST" action="">
                         {% csrf_token %}
                         <div class="columns">
-                          <div class="column">
-                              <h3>Change Password</h3>
-                              <br>
-                              {% comment %} <div class="input_group">
+                        <div class="column">
+                            <h3>Change Password</h3>
+                            <br>
+                            {% comment %} <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
                                 <input type="text" name="username"  placeholder="Username" required>
                             </div>
@@ -183,7 +177,7 @@
                                 <span class="input_icon"><i class="fas fa-envelope"></i></span>
                                 <input type="email" name="email" value="{{ email }}" placeholder="Email" required>
                             </div> {% endcomment %}
-                              <div class="input_group">
+                            <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-key"></i></span>
                                 <input type="password" name="password"  placeholder="New Password ">
                             </div>
@@ -192,31 +186,35 @@
                                 <input type="password" name="confirm_password" placeholder="Confirm Password ">
                             </div>
                                 <div class="button_container">
-                                  <input class="submit_btn" type="submit" value="Update ">
-                              </div>
+                                <input class="submit_btn" type="submit" value="Update ">
+                            </div>
                             </div>
                     
                             <div class="column">
-                                {% comment %} <form method="post" action="{% url 'set_language' %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{ request.path }}">
-                                    <select name="language" onchange="this.form.submit()">
-                                        <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-                                        <option value="ar" {% if request.LANGUAGE_CODE == 'ar' %}selected{% endif %}>العربية</option>
-                                    </select>
-                                </form> {% endcomment %}
+                                <div class="button_container">
+                                    <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <h3>Delete Account</h3>
+                                        <br>
+                                        <h6>Delete Your Account Permanently</h6>
+                                        <br>
+                                        <button type="submit" name="delete_account" class="submit_btn2" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
+                                            Delete Account
+                                        </button>
+                                    </form>
+                                </div>
                                 
                             </div>
                         </div>
-                       
+
                     </form>
 
                 </div>
             </div>
         </section>
-             <!-- ================ Order Details List ================= -->
-             <section id="message" class="message" data-aos="fade-up">
-             <div class="details" id "message">
+            <!-- ================ Order Details List ================= -->
+            <section id="message" class="section-content" data-aos="fade-up">
+            <div class="details" id "message">
                 <div class="recentOrders">
                     <div class="cardHeader" >
                         <h2>Message</h2>  
@@ -227,8 +225,8 @@
                     <!--Google map-->
                     <div class="mapouter">
                         <div class="gmap_canvas">
-                            <iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="2" marginwidth="0" 
-                                src="https://maps.google.com/maps?width=670&amp;height=400&amp;hl=en&amp;q=Om El Masryeen Hospital, Egypt&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                            <iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="2" marginwidth="0"
+                                src="https://maps.google.com/maps?width=670&amp;height=400&amp;hl=en&amp;q=Nile University, Egypt&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
                             </iframe>
                         </div>
                         <style>
@@ -237,6 +235,7 @@
                             .gmap_iframe { height: 400px!important; }
                         </style>
                     </div>
+                    
                     
                     <section id="contact" class="contact" data-aos="fade-up">
                         <h2>Send us a message</h2>
@@ -254,9 +253,9 @@
             </div>
         </section>
 
-             <!-- ================ Order Details List ================= -->
-             <section id="Help & Support" class="Help & Support" data-aos="fade-up">
-             <div class="details">
+            <!-- ================ Order Details List ================= -->
+            <section id="Help & Support" class="section-content" data-aos="fade-up">
+            <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
                         <h2>Help & Support</h2>
@@ -285,9 +284,9 @@
                                             <p>Yes, our system is mobile-friendly and can be accessed on any device with an internet connection.</p>
                                         </details>
                                         <details>
-                                          <summary> Does the system support multiple user roles?</summary>
-                                          <p>Yes, the system supports different user roles such as administrators, doctors, nurses, and patients. Each role has specific access to features based on their responsibilities.</p>
-                                      </details>
+                                        <summary> Does the system support multiple user roles?</summary>
+                                        <p>Yes, the system supports different user roles such as administrators, doctors, nurses, and patients. Each role has specific access to features based on their responsibilities.</p>
+                                    </details>
                                         <title>Language Switcher</title>
                                         
                                     </div>
@@ -295,25 +294,21 @@
                             </div>
                     
                             
-                              <div class="cloumsss">
-                                <div class="social-icons">
-                                 
-                                  <a href="#" target="_blank" title="Facebook">
-                                      <i class="fa-brands fa-facebook"></i>
-                                  </a>
-                      
-                                  <a href="#" target="_blank" title="Instagram">
-                                      <i class="fa-brands fa-instagram"></i>
-                                  </a>
-                      
-                                  <a href="#" target="_blank" title="Twitter">
-                                      <i class="fa-brands fa-twitter"></i>
-                                  </a>
-                      
-                                  <a href="#" target="_blank" title="LinkedIn">
-                                      <i class="fa-brands fa-linkedin"></i>
-                                  </a>
-                              </div></div>
+                            <div class="cloumsss">
+                                <div class="social-icons"> 
+                                <a href="#" target="_blank" title="Facebook">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </a>
+                                <a href="#" target="_blank" title="Instagram">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a href="#" target="_blank" title="Twitter">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <a href="#" target="_blank" title="LinkedIn">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                            </div></div>
                             </div>
                             </div>
                         </div>
@@ -323,136 +318,6 @@
         </section>
         </div>
     </div>
-
-
-
-
-    
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script>// add hovered class to selected list item
-        let list = document.querySelectorAll(".navigation li");
-        
-        function activeLink() {
-          list.forEach((item) => {
-            item.classList.remove("hovered");
-          });
-          this.classList.add("hovered");
-        }
-        
-        list.forEach((item) => item.addEventListener("mouseover", activeLink));
-        
-        // Menu Toggle
-        let toggle = document.querySelector(".toggle");
-        let navigation = document.querySelector(".navigation");
-        let main = document.querySelector(".main");
-        
-        toggle.onclick = function () {
-          navigation.classList.toggle("active");
-          main.classList.toggle("active");
-        };
-        document.querySelector('select[name="user_type"]').addEventListener('change', function() {
-            var specialtyField = document.getElementById('specialty_field');
-            if (this.value === 'doctor') {
-                specialtyField.style.display = 'block';
-            } else {
-                specialtyField.style.display = 'none';
-            }
-        });
-        
-        document.addEventListener('DOMContentLoaded', function () {
-            const messageBox = document.getElementById('message-box');
-            if (messageBox) {
-                setTimeout(() => {
-                    messageBox.style.opacity = '0';
-                    messageBox.style.visibility = 'hidden';
-                }, 5000); // 5 seconds delay
-            }
-        });
-        function validatePassword(password) {
-            const hasUpperCase = /[A-Z]/.test(password);
-            const hasLowerCase = /[a-z]/.test(password);
-            const hasNumber = /\d/.test(password);
-            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        
-            if (password.length < 8) {
-                return "Password must be at least 8 characters.";
-            }
-            if (!hasUpperCase) {
-                return "Password must include at least one uppercase letter.";
-            }
-            if (!hasLowerCase) {
-                return "Password must include at least one lowercase letter.";
-            }
-            if (!hasNumber) {
-                return "Password must include at least one number.";
-            }
-            if (!hasSpecialChar) {
-                return "Password must include at least one special character.";
-            }
-        
-            return ""; // Valid password
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const passwordField = document.getElementById('password');
-            const confirmPasswordField = document.getElementById('confirm_password');
-            const passwordError = document.getElementById('password_error');
-            const confirmPasswordError = document.getElementById('confirm_password_error');
-        
-            // Validate password on input
-            passwordField.addEventListener('input', () => {
-                const errorMessage = validatePassword(passwordField.value);
-                passwordError.textContent = errorMessage;
-            });
-        
-            // Validate confirm password
-            confirmPasswordField.addEventListener('input', () => {
-                if (passwordField.value !== confirmPasswordField.value) {
-                    confirmPasswordError.textContent = "Passwords do not match.";
-                } else {
-                    confirmPasswordError.textContent = "";
-                }
-            });
-        
-            // Prevent form submission if passwords are invalid
-            const form = document.querySelector('form');
-            form.addEventListener('submit', (e) => {
-                const passwordErrorMessage = validatePassword(passwordField.value);
-                if (passwordErrorMessage || passwordField.value !== confirmPasswordField.value) {
-                    e.preventDefault();
-                    if (passwordErrorMessage) {
-                        passwordError.textContent = passwordErrorMessage;
-                    }
-                    if (passwordField.value !== confirmPasswordField.value) {
-                        confirmPasswordError.textContent = "Passwords do not match.";
-                    }
-                }
-            });
-        });
-        
-  
-
-    </script>
-
-    <!-- ====== ionicons ======= -->
 </body>
 
 </html>
