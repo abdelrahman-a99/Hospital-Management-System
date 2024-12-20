@@ -900,3 +900,66 @@ footer .social-icons a:hover .fa-twitter {
 footer .social-icons a:hover .fa-linkedin {
     color: var(--linkedin-color);
 }
+.circle{
+    background-color: #f6f6f6;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 10%;
+    right: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.circle:hover{
+    transform: translateX(-10%);
+}
+
+.circle button{
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    border-radius: 80%;
+}
+
+.circle i{
+    color: #333;
+    font-size: 1.25rem;
+}
+
+.window{
+    background-color: #f6f6f6;
+    width: 40%;
+    height: 500px;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 73%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    display: none;
+} 
+.chatHistory{
+    overflow-y: auto;
+    height: 80%;
+    padding: 10px;
+}
+.chatInput{
+    width: 80%; 
+    padding: 5px;
+}
+.sendChat{
+    padding: 5px 10px;
+    color: #f7f7f7;
+}
+.sendChat:hover{
+    transform: translateX(-10%);
+}
+.logoicon{
+    font-size: 50px;
+}
