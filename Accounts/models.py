@@ -9,16 +9,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    groups = models.ManyToManyField(
-        'auth.Group',
-        related_name="customuser_groups",  # Add unique related_name
-        blank=True,
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name="customuser_permissions",  # Add unique related_name
-        blank=True,
-    )
+    is_doctor = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=False)
 
 User = get_user_model()
 

@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.contrib import messages
+from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
@@ -352,30 +353,57 @@ def signup(request):
 #     else:
 #         return render(request, "Accounts/login.html")
 
+# def login(request):
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+#         password = request.POST.get("password")
+
+#         try:
+#             user = CustomUser.objects.get(email=email)
+#         except CustomUser.DoesNotExist:
+#             messages.error(request, "Invalid email or password.")
+#             return redirect("login")
+
+#         # Authenticate using username (linked to email)
+#         user = authenticate(request, username=user.username, password=password)
+#         if user:
+#             auth_login(request, user)
+#             return redirect("patient_page" if user.is_patient else "doctor_page")
+#         else:
+#             messages.error(request, "Invalid email or password.")
+#             return redirect("login")
+#     return render(request, "Accounts/login.html")
+
+CustomUser = get_user_model()
+
 def login(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        pass1 = request.POST.get('password')
-        users = CustomUser.objects.filter(email=email)
-        if users.exists():
-            for user in users:
-                user = authenticate(request, username=user.username, password=pass1)
-                if user is not None:
-                    auth_login(request, user)
-                    if user.is_doctor:
-                        return redirect('doctor_page')  
-                    elif user.is_patient:
-                        return redirect('patient_page')  
-                    else:
-                        messages.error(request, "User type not recognized.")
-                        return redirect('login')
-            messages.error(request, "Email or Password is incorrect!!!")
-            return redirect('login')
-        else:
-            messages.error(request, "Email or Password is incorrect!!!")
-            return redirect('login')
-    else:
-        return render(request, 'Accounts/login.html')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            # Fetch the user with the given email
+            user = CustomUser.objects.get(email=email)
+
+            # Check the provided password against the stored hash
+            if check_password(password, user.password):
+                auth_login(request, user)  # Log in the user
+                # Redirect based on user type
+                if user.is_doctor:
+                    return redirect("doctor_page")
+                elif user.is_patient:
+                    return redirect("patient_page")
+                else:
+                    messages.error(request, "User type not recognized.")
+                    return redirect("login")
+            else:
+                messages.error(request, "Invalid email or password.")
+                return redirect("login")
+        except CustomUser.DoesNotExist:
+            messages.error(request, "Invalid email or password.")
+            return redirect("login")
+
+    return render(request, "Accounts/login.html")
 
 @login_required
 def doctor_page(request):
