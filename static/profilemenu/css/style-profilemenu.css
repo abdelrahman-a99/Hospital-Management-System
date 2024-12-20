@@ -1,0 +1,561 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2a2185;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+  --ss: linear-gradient(135deg, #1e90ff, #87ceeb);
+  --facebook-color: #044ba8;
+  --instagram-color: #E4405F;
+  --twitter-color: #1DA1F2;
+  --linkedin-color: #0A66C2;
+  --icons-color: #1877F2;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+/* =============== Navigation ================ */
+.navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--ss);
+  border-left: 10px solid var(--ss);
+  transition: 0.5s;
+  overflow: hidden;
+}
+.navigation.active {
+  width:71px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: var(--white);
+}
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--blue);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+.navigation ul li a .icon ion-icon {
+  font-size: 1.75rem;
+}
+
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+/* --------- curve outside ---------- */
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+}
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+}
+
+/* ===================== Main ===================== */
+.main {
+  position: absolute;
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  background: var(--white);
+  transition: 0.5s;
+}
+.main.active {
+  width: calc(100% - 80px);
+  left: 80px;
+}
+
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.toggle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+/* ======================= Cards ====================== */
+.cardBox {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.cardBox .card {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+.cardBox .card .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+  font-size: 3.5rem;
+  color: var(--black2);
+}
+
+.cardBox .card:hover {
+  background: var(--blue);
+}
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+  color: var(--white);
+}
+
+/* ================== Order Details List ============== */
+.details {
+  position: relative;
+  width: 100%;
+  max-height: max-content;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 30px;
+  margin-top: 10px;
+}
+
+.details .recentOrders {
+  position: relative;
+  display: grid;
+  min-height: 450px;
+  min-width: 1000px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.details .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cardHeader h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.cardHeader2 h5 {
+  font-weight: 600;
+  color: var(--blue);
+}
+.cardHeader .btn {
+  position: relative;
+  padding: 5px 10px;
+  background: linear-gradient(135deg, #1e90ff, #87ceeb);
+  text-decoration: none;
+  color: var(--white);
+  border-radius: 6px;
+}
+
+/* Columns */
+.columns {
+  display: flex; 
+  gap: 50px; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  min-width: 300px; 
+  max-width: 1000px; 
+}
+
+.column {
+  flex: 1; 
+  min-width: 250px; 
+  max-width: 400px; 
+}
+
+.columnss {
+  flex: 1; 
+  min-width: 900px; 
+  max-width: 700px; 
+  
+}
+.columnsss {
+  display: flex; 
+  gap:10px; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  min-width: 500px; 
+  max-width: 1200px; 
+}
+/* Input Fields */
+.input_group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.input_icon {
+  background: linear-gradient(135deg, #1e90ff, #87ceeb);
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; 
+}
+
+.input_group input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0 5px 5px 0;
+  font-size: 14px;
+  width: 100%;
+}
+
+.input_group input:focus {
+  border-color: #4c8bf5;
+  outline: none;
+}
+
+/* Submit Button */
+.submit_btn {
+  width: 30%; /* Allows the button size to adapt to its content */
+  padding: 0.5rem 1rem; /* Adjust padding for smaller size */
+  font-size: 16px; /* Smaller font size */
+  background: var(--ss);
+  color: white; /* Changed to a more legible color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block; /* Ensures it's treated as a block-level element */
+  margin: 0 auto;
+}
+
+.submit_btn:hover {
+  background-color: #3a72c4;
+}
+
+/* Additional Links */
+.additional_links {
+  text-align: center;
+  margin-top: 15px;
+  color: #f8f8f8;
+}
+
+.additional_links a {
+  text-decoration: none;
+  color: #88b4ff;
+  font-weight: bold;
+}
+
+.additional_links a:hover {
+  color: #3a72c4;
+  text-decoration: underline;
+}
+
+/* Message Box */
+.message-box {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #ff5f6d, #ffc371); /* Red Gradient */
+  border-radius: 25px;
+  padding: 10px 20px;
+  max-width: 500px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.message-content {
+  margin: 0;
+  padding: 5px 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Hover Effect */
+.message-box:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+CONTACT
+#contact {
+    scroll-margin-top: 130px;
+}
+
+.contact {
+    padding: 3rem 1rem;
+    text-align: center;
+    background-color: white;
+}
+
+.contact h2 {
+    color: var(--blue);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.contact form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact input,
+.contact textarea {
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* input:invalid,
+textarea:invalid {
+    border-color: #e3342f;
+}
+
+input:valid,
+textarea:valid {
+    border-color: #38c172;
+} */
+
+.contact button {
+    background: var(--ss);
+    color: var(--ss);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.contact button:hover {
+    background: rgb(50, 50, 204);
+    transform: scale(1.05);
+}
+
+.box{
+  width: 70%;
+  margin: 100px auto;
+  background: white;
+  border-radius: 7px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.box h1{
+  background: var(--ss);
+  border-radius: 7px 7px 0px 0px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.faqs{
+  padding: 0px 20px 20px;
+}
+
+.details{
+  background: white;
+  padding: 10px 20px;
+  border-radius: 7px;
+  margin-top: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.details summary{
+  outline: none;
+  font-size: 15px;
+  padding: 8px;
+  color: rgb(34, 33, 35);
+  font-weight: 500;
+}
+
+.details p{
+  font-size:15px;
+  line-height: 25px;
+  color: black;
+  padding: 8px;
+}
+/* Animations */
+@keyframes fade-in {
+  from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+  .recentOrders {
+    overflow-x: auto;
+  }
+  .status.inProgress {
+    white-space: nowrap;
+  }
+}
+
+.social-icons {
+  display: flex;
+}
+
+.social-icons a {
+  margin-left: 30px;
+}
+
+.social-icons a i {
+  color: var(--icons-color);
+  font-size: 1.5rem;
+  transition: 0.3s;
+}
+.social-icons a:hover .fa-facebook {
+  color: var(--facebook-color);
+}
+
+.social-icons a:hover .fa-instagram {
+  color: var(--instagram-color);
+}
+.social-icons a:hover .fa-twitter {
+  color: var(--twitter-color);
+}
+
+.social-icons a:hover .fa-linkedin {
+  color: var(--linkedin-color);
+}
+.column h3{
+  background: var(--ss);
+  border-radius: 7px 7px 0px 0px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  font-weight:300;
+  font-size:20px;
+}

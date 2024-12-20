@@ -1,91 +1,3 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//     const messageBox = document.getElementById("message-box");
-//     if (messageBox) {
-//         setTimeout(() => {
-//             messageBox.style.opacity = "0";
-//             messageBox.style.transition = "opacity 1s ease";
-//             setTimeout(() => {
-//                 messageBox.style.display = "none";
-//             }, 1000);
-//         }, 5000);
-//     }
-// });
-
-// document.querySelector('select[name="user_type"]').addEventListener('change', function () {
-//     var specialtyField = document.getElementById('specialty_field');
-//     if (this.value === 'doctor') {
-//         specialtyField.style.display = 'block';
-//     } else {
-//         specialtyField.style.display = 'none';
-//     }
-// });
-
-// function validatePassword(password) {
-//     const hasUpperCase = /[A-Z]/.test(password);
-//     const hasLowerCase = /[a-z]/.test(password);
-//     const hasNumber = /\d/.test(password);
-//     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-//     if (password.length < 8) {
-//         return "Password must be at least 8 characters.";
-//     }
-//     if (!hasUpperCase) {
-//         return "Password must include at least one uppercase letter.";
-//     }
-//     if (!hasLowerCase) {
-//         return "Password must include at least one lowercase letter.";
-//     }
-//     if (!hasNumber) {
-//         return "Password must include at least one number.";
-//     }
-//     if (!hasSpecialChar) {
-//         return "Password must include at least one special character.";
-//     }
-
-//     return ""; // Valid password
-// }
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     const passwordField = document.getElementById('password');
-//     const confirmPasswordField = document.getElementById('confirm_password');
-//     const passwordError = document.getElementById('password_error');
-//     const confirmPasswordError = document.getElementById('confirm_password_error');
-
-//     // Validate password on input
-//     passwordField.addEventListener('input', () => {
-//         const errorMessage = validatePassword(passwordField.value);
-//         passwordError.textContent = errorMessage;
-//     });
-
-//     // Validate confirm password
-//     confirmPasswordField.addEventListener('input', () => {
-//         if (passwordField.value !== confirmPasswordField.value) {
-//             confirmPasswordError.textContent = "Passwords do not match.";
-//         } else {
-//             confirmPasswordError.textContent = "";
-//         }
-//     });
-
-//     // Prevent form submission if passwords are invalid
-//     const form = document.querySelector('form');
-//     form.addEventListener('submit', (e) => {
-//         const passwordErrorMessage = validatePassword(passwordField.value);
-//         if (passwordErrorMessage || passwordField.value !== confirmPasswordField.value) {
-//             e.preventDefault();
-//             if (passwordErrorMessage) {
-//                 passwordError.textContent = passwordErrorMessage;
-//             }
-//             if (passwordField.value !== confirmPasswordField.value) {
-//                 confirmPasswordError.textContent = "Passwords do not match.";
-//             }
-//         }
-//     });
-// });
-
-// ==================================================================================
-
-// refactored version
-
 document.addEventListener("DOMContentLoaded", () => {
     const messageBox = document.getElementById("message-box");
     if (messageBox) {
@@ -106,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (specialtyField) {
                 // Show the specialty field only if the user selects 'doctor'
                 // specialtyField.style.display = this.value === 'doctor' ? 'block' : 'none';
-                specialtyField.style.display = this.value === 'doctor' ? 'inline-block' : 'none';
+                specialtyField.style.display = this.value === 'doctor' ? 'flex' : 'none';
             }
         });
     }
@@ -148,18 +60,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check password and confirm password on input
     if (passwordField && confirmPasswordField) {
-        // Check the password input and validate in real-time
-        passwordField.addEventListener('input', () => {
+        // Focus event to hide error message when user focuses on the password field
+        passwordField.addEventListener('focus', () => {
+            if (passwordError) {
+                passwordError.classList.remove('show');
+            }
+        });
+
+        // Blur event to show error message if password is invalid when user leaves the field
+        passwordField.addEventListener('blur', () => {
             const errorMessage = validatePassword(passwordField.value);
-            if (passwordError) passwordError.textContent = errorMessage;
+            if (passwordError) {
+                passwordError.textContent = errorMessage;
+                if (errorMessage) {
+                    passwordError.classList.add('show');
+                } else {
+                    passwordError.classList.remove('show');
+                }
+            }
         });
 
         // Validate that the confirm password matches the password
         confirmPasswordField.addEventListener('input', () => {
             if (passwordField.value !== confirmPasswordField.value) {
                 confirmPasswordError.textContent = "Passwords do not match."; // Display mismatch error
+                confirmPasswordError.classList.add('show');
             } else {
                 confirmPasswordError.textContent = ""; // Clear the error if passwords match
+                confirmPasswordError.classList.remove('show');
             }
         });
 
@@ -169,11 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const passwordErrorMessage = validatePassword(passwordField.value);
                 if (passwordErrorMessage || passwordField.value !== confirmPasswordField.value) {
                     e.preventDefault(); // Prevent form submission
+                    passwordError.classList.add('show');
                     if (passwordErrorMessage) {
                         passwordError.textContent = passwordErrorMessage; // Display password errors
                     }
                     if (passwordField.value !== confirmPasswordField.value) {
                         confirmPasswordError.textContent = "Passwords do not match."; // Display mismatch error
+                        confirmPasswordError.classList.add('show');
                     }
                 }
             });

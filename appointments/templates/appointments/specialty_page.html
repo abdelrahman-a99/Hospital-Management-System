@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Specialties</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/specialty.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script>
+        function redirectToReservation(specialty) {
+            const encodedSpecialty = encodeURIComponent(specialty.trim());
+            window.location.href = "{% url 'patient_reservation' %}" + "?specialty=" + encodedSpecialty;
+        }
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <h2>PATIENT'S DASHBOARD</h2>
+            <ul>
+                <li><a href="{% url 'patient_reservation' %}"><i class="fas fa-user-md"></i> Appointments</a></li>
+                <li><a href="#" class="active"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
+                <li><a href="{% url 'upcoming_appointments' %}"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="{% url 'messages' %}"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <section class="Department">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>
+                            <span class="title-icon"><i class="fas fa-clinic-medical"></i></span>
+                            Specialties
+                            <span class="title-line"></span>
+                        </h2>
+                    </div>
+
+                    <div class="row">
+                        {% for specialty in specialties %}
+                        <div class="icon-box" onclick="redirectToReservation('{{ specialty }}')">
+                            <div class="icon"><i class="fas fa-user-md"></i></div>
+                            <h4>{{ specialty }}</h4>
+                            <p>Explore doctors in {{ specialty }}.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,659 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(135deg, #1e90ff, #87ceeb); /* Gradient background for shine effect */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed; /* Fix the sidebar in place */
+    height: 100%; /* Ensure the sidebar takes the full height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.sidebar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 12px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+}
+
+.sidebar ul li:hover, .sidebar ul li.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.sidebar ul li i {
+    margin-right: 10px;
+}
+
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-left: 250px; /* Adjust for the fixed sidebar */
+    overflow-y: auto;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* Stats Section */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background: linear-gradient(135deg, #1e90ff, #87ceeb);
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin: 0 10px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stat-item h3 {
+    margin: 0;
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stat-item p {
+    margin: 5px 0 0;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+/* Upcoming Appointments Section */
+.upcoming-appointments {
+    margin-top: 30px;
+}
+
+.upcoming-appointments h3 {
+    font-size: 24px;
+    color: #1e90ff;
+    margin-bottom: 10px;
+}
+
+#upcomingPatients {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-appointments .appointment-status {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.upcoming-appointments .appointment {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upcoming-appointments .appointment:hover {
+    background-color: #f0f8ff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar */
+.calendar {
+    margin-top: 30px;
+}
+
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures equal width for all columns */
+}
+
+.calendar table th, .calendar table td {
+    padding: 10px;
+    text-align: center;
+    width: 14.28%; /* Ensures equal width for all columns */
+    height: 100px; /* Adjust the height to match the width */
+    vertical-align: top;
+    position: relative;
+    border: 1px solid #ddd; /* Add border to cells */
+}
+
+.calendar td {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+.calendar td:hover {
+    background-color: #f0f8ff;
+}
+
+/* Highlight past dates */
+.calendar td.past-date {
+    background-color: #e0e0e0; /* Gray background for past dates */
+    cursor: not-allowed; /* Change cursor to indicate no action */
+}
+/* Highlight past dates */
+.calendar td.past-date {
+    background-color: #e0e0e0; /* Gray background for past dates */
+    cursor: not-allowed; /* Change cursor to indicate no action */
+}
+
+/* Calendar cell borders */
+.calendar table th, .calendar table td {
+    padding: 10px;
+    text-align: center;
+    width: 14.28%; /* Ensures equal width for all columns */
+    height: 100px; /* Adjust the height to match the width */
+    vertical-align: top;
+    position: relative;
+    border: 1px solid #ddd; /* Add border to cells */
+}
+
+
+
+.calendar td:hover {
+    background-color: #f0f8ff;
+}
+.calendar td.empty-cell {
+    border: none; /* Hide borders for empty cells */
+}
+
+.calendar td {
+    position: relative;
+    overflow: visible; /* Allow overflow */
+    vertical-align: top; /* Align content to the top */
+}
+
+.sticky-note {
+    position: relative;
+    margin: 5px 0; /* Add margin to separate sticky notes */
+    background-color: #fffa65;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-size: 12px;
+    width: calc(100% - 16px); /* Adjust width to fit within the cell */
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1;
+}
+/* Color-coded Sticky Notes for Importance */
+.sticky-note.scheduled {
+    background-color: #1e90ff;
+}
+
+.sticky-note.waiting {
+    background-color: #ffcc00;
+}
+
+.sticky-note.engaged {
+    background-color: #32cd32;
+}
+
+.sticky-note.checkout {
+    background-color: #ff6347;
+}
+
+/* Hover effects for upcoming patients */
+.upcoming-appointments .appointment {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.upcoming-appointments .appointment:hover {
+    background-color: #f0f8ff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-tooltip {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 110%;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 200px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.appointment:hover .appointment-tooltip {
+    display: block;
+}
+
+/* Styling for the calendar navigation */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.sticky-note {
+    background-color: #fff3cd;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #5a5a5a;
+    position: relative;
+}
+
+.sticky-note .patient-name {
+    font-weight: bold;
+}
+
+.sticky-note .appointment-time {
+    font-size: 10px;
+}
+
+.sticky-note button {
+    font-size: 10px;
+    margin-top: 5px;
+    padding: 2px 5px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.sticky-note button:hover {
+    background-color: #e53935;
+}
+
+.calendar-controls button {
+    background-color: #1e90ff;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calendar-controls button:hover {
+    background-color: #4682b4;
+}
+.appointment {
+    padding: 5px;
+    margin: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    background-color: lightgray; /* Default background */
+}
+/* Adding minimal changes to the existing styles */
+
+/* Style for the modal */
+#appointmentModal .modal-content {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 400px;
+}
+
+/* Base styling for sticky notes */
+.sticky-note {
+    padding: 12px 15px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+}
+
+/* Hover effect to make sticky notes interactive */
+.sticky-note:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Icons inside sticky notes */
+.sticky-note .status-icon {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* Specific styles for each status */
+.sticky-note.scheduled {
+    background-color: #6fd8c0;
+    border-left: 5px solid #3cbf87;
+}
+
+.sticky-note.waiting {
+    background-color: #f4c6c6;
+    border-left: 5px solid #ff7a7a;
+}
+
+.sticky-note.engaged {
+    background-color: #fce78c;
+    border-left: 5px solid #fbbd19;
+}
+
+.sticky-note.checkout {
+    background-color: #c9e6e6;
+    border-left: 5px solid #4bb5b7;
+}
+
+/* Text inside sticky notes */
+.sticky-note p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Patient name styling */
+.sticky-note .patient-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #222;
+}
+
+/* Time and status-specific text styles */
+.sticky-note .appointment-time {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Button styling */
+.sticky-note button {
+    font-size: 12px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sticky-note button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for Edit and Delete buttons */
+.sticky-note .edit-btn,
+.sticky-note .delete-btn {
+    background-color: #007bff;
+    margin-top: 8px;
+}
+
+.sticky-note .edit-btn:hover,
+.sticky-note .delete-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Adjustments for calendar layout to make sticky notes look neat */
+td {
+    padding: 10px;
+    position: relative;
+    vertical-align: top;
+}
+
+.upcoming-appointments {
+    margin-top: 30px;
+}
+
+
+.scheduled-note {
+    background-color: lightgreen;
+}
+
+.waiting-note {
+    background-color: lightyellow;
+}
+
+.completed-note {
+    background-color: lightgray;
+}
+
+#appointmentDetails {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    display: none;
+}
+.appointment {
+    padding: 5px;
+    margin: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    background-color: lightgray; /* Default background */
+}
+
+.scheduled-note {
+    background-color: lightgreen;
+}
+
+.waiting-note {
+    background-color: lightyellow;
+}
+
+.completed-note {
+    background-color: lightgray;
+}
+
+#appointmentDetails {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    display: none;
+}
+
+
+/* Modal close button */
+.close-btn {
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover, .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+form .form-group {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-btn, .delete-btn {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.submit-btn:hover, .delete-btn:hover {
+    background-color: #4682b4;
+}
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px; /* Smaller sidebar */
+    }
+    .sidebar .logo {
+        display: none; /* Hide logo in smaller screen */
+    }
+    .sidebar ul li {
+        font-size: 14px; /* Reduce font size */
+    }
+}
+.sidebar ul li:hover {
+    background-color: #4682b4; /* Darker blue on hover */
+    transform: scale(1.05);
+}
+.calendar td:focus {
+    outline: 2px solid #1e90ff;
+}
+/* Upcoming Appointments Section */
+.upcoming-appointments .appointment {
+    background-color: #e6f7ff; /* Light blue background */
+    border: 1px solid #b3e0ff; /* Light blue border */
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.upcoming-appointments .appointment:hover {
+    background-color: #cceeff; /* Slightly darker blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-appointments .appointment p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.upcoming-appointments .appointment .open-btn {
+    align-self: flex-end;
+    background-color: #1e90ff; /* Blue button */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upcoming-appointments .appointment .open-btn:hover {
+    background-color: #4682b4; /* Darker blue on hover */
+}
+
+.patient-description {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    display: none;
+}
