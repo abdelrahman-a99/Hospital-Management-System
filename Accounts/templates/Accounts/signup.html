@@ -40,7 +40,7 @@
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
-                                <input type="text" id="email" name="username" placeholder="Username" value="{{ username }}" required>
+                                <input type="text" id="username" name="username" placeholder="Username" value="{{ username }}" required>
                             </div>
                             {% comment %} <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-genderless"></i></span>
@@ -51,7 +51,7 @@
                                 <select id="gender" name="gender" required>
                                     <option value="" disabled selected>Select Gender</option>
                                     <option value="male" {% if gender == "male" %} selected {% endif %}>Male</option>
-                                    <option value="female" {% if gender == "male" %} selected {% endif %}>Female</option>
+                                    <option value="female" {% if gender == "female" %} selected {% endif %}>Female</option>
                                 </select>
                             </div>
                             <div class="input_group">
@@ -81,6 +81,7 @@
                                 <span class="input_icon"><i class="fas fa-lock"></i></span>
                                 <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
                             </div>
+                            <div id="password_error" class="error_message"></div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user-md"></i></span>
                                 <select id="user_type" name="user_type" required>
@@ -89,6 +90,7 @@
                                     <option value="doctor" {% if user_type == "doctor" %} selected {% endif %}>Doctor</option>
                                 </select>
                             </div>
+                            <div id="confirm_password_error" class="error_message"></div>
                             <!-- Specialty Input for Doctor -->
                             <div class="input_group" id="specialty_field" style="display: none;">
                                 <span class="input_icon"><i class="fas fa-stethoscope"></i></span>
