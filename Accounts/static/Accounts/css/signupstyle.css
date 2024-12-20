@@ -32,6 +32,36 @@ html {
     flex-direction: column;
 }
 
+/* Back Icon */
+.back_button {
+    margin-bottom: 20px;
+}
+
+.back_icon {
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #007bff;
+    transition: background-color 0.3s, border 0.3s, color 0.3s;
+}
+
+.back_icon:hover {
+    /* text-decoration: underline;
+    color: #0056b3; */
+
+    background-color: #f0f0f0;
+    color: #007bff;
+    border: 2px solid #007bff;
+}
+
 .form_title h2 {
     text-align: center;
     color: #f8f8f8;
@@ -81,6 +111,13 @@ html {
     width: 100%;
 }
 
+.input_group select {
+    appearance: none;
+    /* Removes default arrow styles */
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
 .input_group input:focus,
 .input_group select:focus {
     border-color: #4c8bf5;
@@ -108,11 +145,6 @@ html {
 .submit_btn:hover {
     background-color: #3a72c4;
     transform: scale(1.025);
-}
-
-/* Specialty Field */
-#specialty_field {
-    display: none;
 }
 
 /* Additional Links */
@@ -166,6 +198,7 @@ html {
         transform: translateX(-50%) translateY(-20px);
         opacity: 0;
     }
+
     to {
         transform: translateX(-50%);
         opacity: 1;
@@ -182,24 +215,30 @@ html {
 .alert.success {
     /* background-color: #4caf50;
     color: white; */
-    background-color: #d4edda; /* Light green background */
-    color: #155724; /* Dark green text */
+    background-color: #d4edda;
+    /* Light green background */
+    color: #155724;
+    /* Dark green text */
     border: 1px solid #c3e6cb;
 }
 
 .alert.error {
     /* background-color: #f44336;
     color: white; */
-    background-color: #f8d7da; /* Light red background */
-    color: #721c24; /* Dark red text */
+    background-color: #f8d7da;
+    /* Light red background */
+    color: #721c24;
+    /* Dark red text */
     border: 1px solid #f5c6cb;
 }
 
 .alert.info {
     /* background-color: #2196f3;
     color: white; */
-    background-color: #d1ecf1; /* Light blue background */
-    color: #0c5460; /* Dark blue text */
+    background-color: #d1ecf1;
+    /* Light blue background */
+    color: #0c5460;
+    /* Dark blue text */
     border: 1px solid #bee5eb;
 }
 
@@ -209,6 +248,7 @@ html {
         transform: translate(-50%, -20px);
         visibility: visible;
     }
+
     100% {
         opacity: 1;
         transform: translate(-50%, 0);
@@ -222,9 +262,36 @@ html {
         /* visibility: visible; */
         transform: translateY(0);
     }
+
     100% {
         opacity: 0;
         /* visibility: hidden; */
         transform: translateY(-10px);
     }
+}
+
+/* Password Error Message Styles */
+.error_message {
+    position: fixed;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Initially hidden */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: all 0.5s ease;
+    animation: slide-in 0.5s ease-out;
+}
+
+/* Display error messages */
+.error_message.show {
+    display: block; /* Show error message */
 }

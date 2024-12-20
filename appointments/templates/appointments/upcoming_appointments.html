@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Appointments</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/upcoming_appointments.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <h2>PATIENT'S DASHBOARD</h2>
+            <ul>
+                <li><a href="{% url 'patient_reservation' %}"><i class="fas fa-user-md"></i> Appointments</a></li>
+                <li><a href="{% url 'specialty_page' %}"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
+                <li><a href="#" class="active"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="{% url 'messages' %}"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <div class="section-title upcoming-appointments-title">
+                <span class="title-icon">
+                    <i class="fas fa-calendar-alt"></i> 
+                </span>
+                <h2>Upcoming Appointments</h2>
+                <span class="title-line"></span>
+            </div>
+                       
+            <div class="appointment-container">
+                {% for appointment in appointments %}
+                <div class="appointment-card">
+                    <div class="appointment-header">
+                        <h3><i class="fas fa-user-md"></i> Dr. {{ appointment.doctor.user.username }}</h3>
+                        <span class="status {{ appointment.status|lower }}">{{ appointment.status }}</span>
+                    </div>
+                    <div class="appointment-body">
+                        <p><i class="fas fa-calendar-alt"></i> Date: <span>{{ appointment.date }}</span></p>
+                        <p><i class="fas fa-clock"></i> Time: <span>{{ appointment.time }}</span></p>
+                        <p><i class="fas fa-user-tag"></i> Patient: <span>{{ appointment.patient.user.username }}</span></p>
+                        <p><i class="fas fa-briefcase-medical"></i> Specialty: <span>{{ appointment.doctor.specialty }}</span></p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="no-appointments">No upcoming appointments found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

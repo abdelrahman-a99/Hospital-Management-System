@@ -17,6 +17,10 @@
 <body>
     <div class="container">
         <div class="user_card">
+            <div class="back_button">
+                <a href="{% url 'index' %}" class="back_icon"><i class="fas fa-arrow-left"></i></a>
+            </div>
+
             <div class="form_title">
                 <h2>Sign Up Form</h2>
             </div>
@@ -36,11 +40,23 @@
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
-                                <input type="text" id="email" name="username" placeholder="Username" value="{{ username }}" required>
+                                <input type="text" id="username" name="username" placeholder="Username" value="{{ username }}" required>
                             </div>
-                            <div class="input_group">
+                            {% comment %} <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-genderless"></i></span>
                                 <input type="text" id="gender" name="gender" placeholder="Gender" value="{{ gender }}" required>
+                            </div> {% endcomment %}
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-venus-mars"></i></span>
+                                <select id="gender" name="gender" required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="male" {% if gender == "male" %} selected {% endif %}>Male</option>
+                                    <option value="female" {% if gender == "female" %} selected {% endif %}>Female</option>
+                                </select>
+                            </div>
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-phone"></i></span>
+                                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="{{ phone_number }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
@@ -54,10 +70,6 @@
                         
                         <div class="column">
                             <div class="input_group">
-                                <span class="input_icon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="{{ phone_number }}" required>
-                            </div>
-                            <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-envelope"></i></span>
                                 <input type="email" id="email" name="email" placeholder="Email" value="{{ email }}" required>
                             </div>
@@ -69,19 +81,20 @@
                                 <span class="input_icon"><i class="fas fa-lock"></i></span>
                                 <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
                             </div>
+                            <div id="password_error" class="error_message"></div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user-md"></i></span>
                                 <select id="user_type" name="user_type" required>
-                                    {% comment %} <option value="patient">Patient</option> {% endcomment %}
-                                    {% comment %} <option value="doctor">Doctor</option> {% endcomment %}
+                                    <option value="" disabled selected>Select User Type</option>
                                     <option value="patient" {% if user_type == "patient" %} selected {% endif %}>Patient</option>
                                     <option value="doctor" {% if user_type == "doctor" %} selected {% endif %}>Doctor</option>
                                 </select>
                             </div>
+                            <div id="confirm_password_error" class="error_message"></div>
                             <!-- Specialty Input for Doctor -->
                             <div class="input_group" id="specialty_field" style="display: none;">
                                 <span class="input_icon"><i class="fas fa-stethoscope"></i></span>
-                                <input type="text" name="specialty" placeholder="Specialty" value="{{ specialty }}">
+                                <input type="text" id="specialty" name="specialty" placeholder="Specialty" value="{{ specialty }}">
                             </div>
                         </div>
                     </div>

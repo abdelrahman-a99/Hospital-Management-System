@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Reservation</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/patient_reservation.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <h2>PATIENT'S DASHBOARD</h2>
+            <ul>
+                <li><a href="#" class="active"><i class="fas fa-user-md"></i> Appointments</a></li>
+                <li><a href="{% url 'specialty_page' %}"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
+                <li><a href="{% url 'upcoming_appointments' %}"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="{% url 'messages' %}"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <div class="Department">
+                <div class="section-title">
+                    <span class="title-icon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <h2>Find Doctors in All Specialties</h2>
+                    <span class="title-line"></span>
+                </div>                
+            </div>
+
+            <div class="doctor-container">
+                {% for doctor in doctors %}
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="doctor-info">
+                        <h4>Dr. {{ doctor.user.username }}</h4>
+                        <p><span>Specialty:</span> {{ doctor.specialty }}</p>
+                        <p><span>Status:</span> Available</p>
+                    </div>
+                    <div class="availability">
+                        <span>Morning</span>
+                        <span>Noon</span>
+                        <span>Night</span>
+                    </div>
+            
+                    <button class="reserve-btn" onclick="openReservationForm('{{ doctor.id }}', 'Dr. {{ doctor.user.username }}')">
+                        Reserve Appointment
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            
+        
+    <div id="reservation-modal" class="modal-overlay">
+        <div class="modal-content">
+            {% csrf_token %}
+            <span class="close-btn" onclick="closeReservationForm()">&times;</span>
+            <h3>Book an Appointment with <span id="doctorName"></span></h3>
+            <form id="reservation-form" onsubmit="submitReservation(event)">
+                <input type="hidden" id="doctorId" name="doctorId">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date" required>
+                <label for="time">Select Time:</label>
+                <input type="time" id="time" name="time" required min="08:00" max="18:00" step="1800">
+                <button type="submit" class="reserve-btn">Confirm Appointment</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Appointment Confirmed!</h3>
+            <p>You have successfully booked an appointment with <strong id="confirmedDoctorName"></strong>.</p>
+            <p><strong>Date:</strong> <span id="confirmedDate"></span></p>
+            <p><strong>Time:</strong> <span id="confirmedTime"></span></p>
+            <button onclick="closeConfirmation()" class="reserve-btn">Close</button>
+        </div>
+    </div>
+    
+    <script src="{% static 'appointments/js/patient_reservation.js' %}"></script>
+</body>
+</html>

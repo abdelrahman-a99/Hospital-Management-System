@@ -21,10 +21,13 @@
     <header>
         <nav class="logo">
             <a href="#">HMS</a>
+            <!-- another way -->
+            <!-- but the page will reload everytime -->
+            <!-- <a href="{% url 'index' %}">HMS</a> -->
         </nav>
 
         <nav class="links">
-            <a href="{% url 'doctor_list' %}">Appointments</a>
+            <a href="#Appointments">Appointments</a>
             <a href="#Doctor-Panel">Doctor Panel</a>
             <a href="#Dashboard">Dashboard</a>
             <a href="#Prescriptions">Prescriptions</a>
@@ -39,16 +42,23 @@
             <div class='sub-menu'>
                 <div class='user-info'>
                     <i class="fa-solid fa-circle-user"></i>
-                    <h4>{{ user.username }}</h4>
+                    <h4>your profile</h4>
                 </div>
 
                 <hr>
 
                 <div class="sub-menu-links">
+<<<<<<< HEAD
                     <a href="#">Edit Profile</a>
                     <a href="#">Settings</a>
                     <a href="#">Help & Support</a>
+                    <a href="#">Logout</a>
+=======
+                    <a href="{% url 'profilemenu' %}">Edit Profile</a>
+                    <a href="{% url 'profilemenu' %}">Settings</a>
+                    <a href="{% url 'profilemenu' %}">Help & Support</a>
                     <a href="{% url 'logout' %}">Logout</a>
+>>>>>>> b7816dfe861e8d2f2a5f4544f57f4b019ca349c9
                 </div>
             </div>
         </div>
@@ -61,8 +71,7 @@
         <span class="home-imgHover"></span>
 
         <section class="intro">
-            <!-- <h1>Welcome to Doctor Page</h1> -->
-            <h1>Welcome, {{ user.username }}</h1>
+            <h1>Welcome to Doctor Page</h1>
             <p>We're here to help you manage your patients and appointments effectively.</p>
             <button onclick="location.href='#Appointments'" class="btn-primary">Learn More</button>
         </section>
@@ -91,6 +100,7 @@
             <h2>Your Doctor Panel</h2>
 
             <div class="img-flex">
+                <!-- <img src="../../static/doctor/images/doc-1.jpg" alt="doctor image"> -->
                 <img src="{% static 'doctor/images/doc-1.jpg' %}" alt="doctor image">
                 <div class="img-text">
                     <h3>samuel goe</h3>
