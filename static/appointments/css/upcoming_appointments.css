@@ -1,0 +1,214 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to right, #1977cc, #3fbbc0); /* Degraded Blue */
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1977cc, #3291e6);
+    color: #fff;
+    position: fixed;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+}
+
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+    background-color: #00a5d5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 270px;
+    padding: 30px;
+    background: #f9f9fc; /* Light background */
+    min-height: 100vh;
+    border-top-left-radius: 20px;
+}
+
+.main-content h1 {
+    font-size: 2.5rem;
+    color: #1977cc;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Appointment Container */
+.appointment-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Appointment Card */
+.appointment-card {
+    background: linear-gradient(to bottom, #ffffff, #f4f9ff);
+    border: 1px solid #e3f2fd;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.appointment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Appointment Header */
+.appointment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.appointment-header h3 {
+    color: #1977cc;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.appointment-header h3 i {
+    margin-right: 10px;
+    color: #00a5d5;
+}
+
+.status {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-transform: capitalize;
+    color: #fff;
+}
+
+.status.pending {
+    background-color: #f39c12; /* Orange for pending */
+}
+
+.status.approved {
+    background-color: #28a745; /* Green for approved */
+}
+
+.status.rejected {
+    background-color: #e74c3c; /* Red for rejected */
+}
+
+/* Appointment Body */
+.appointment-body p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+}
+
+.appointment-body p i {
+    margin-right: 10px;
+    color: #00a5d5;
+}
+
+.no-appointments {
+    font-size: 1.2rem;
+    color: #555;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Scrollbar Customization */
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #00a5d5;
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Section Title - Blue Gradient */
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #1977cc, #3fbbc0); /* Blue Gradient */
+    background-clip: text;
+    -webkit-background-clip: text; /* Webkit Compatibility */
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-title .title-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #1977cc, #3fbbc0); /* Blue Gradient */
+    color: #fff;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.section-title .title-line {
+    flex-grow: 1;
+    height: 4px;
+    background: linear-gradient(to right, #3fbbc0, #1977cc); /* Blue Gradient Line */
+    border-radius: 2px;
+}

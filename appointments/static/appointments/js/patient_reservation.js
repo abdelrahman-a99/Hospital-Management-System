@@ -1,61 +1,65 @@
-
-function selectDoctor(doctorName) {
-    const doctorField = document.getElementById("doctor");
-    doctorField.value = doctorName;
+function openReservationForm(doctorId, doctorName) {
+    document.getElementById('doctorName').textContent = doctorName;
+    document.getElementById('doctorId').value = doctorId;
+    document.getElementById('reservation-modal').style.display = 'flex';
 }
 
+function closeReservationForm() {
+    document.getElementById('reservation-modal').style.display = 'none';
+}
 
-const reservationForm = document.getElementById("reservationForm");
-const reserveButton = document.getElementById("reserveButton");
-const appointmentCard = document.getElementById("appointmentCard");
-const doctorNameElement = document.getElementById("doctorName");
-const appointmentDateElement = document.getElementById("appointmentDate");
-const appointmentTimeElement = document.getElementById("appointmentTime");
-const appointmentStatusElement = document.getElementById("appointmentStatus");
+function closeConfirmation() {
+    document.getElementById('confirmation-modal').style.display = 'none';
+    // Optional: Redirect to upcoming appointments after confirmation
+    window.location.href = "/appointments/upcoming_appointments/";
+}
 
-reservationForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+function submitReservation(event) {
+    event.preventDefault(); // Prevent form reload
 
-    const doctorName = document.getElementById("doctor").value;
-    const appointmentDate = document.getElementById("date").value;
-    const appointmentTime = document.getElementById("time").value;
+    const doctorId = document.getElementById('doctorId').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
 
-    doctorNameElement.innerText = doctorName;
-    appointmentDateElement.innerText = appointmentDate;
-    appointmentTimeElement.innerText = appointmentTime;
-    appointmentStatusElement.classList.remove("pending");
-    appointmentStatusElement.classList.add("confirmed");
-    appointmentStatusElement.innerText = "Confirmed";
-});
-document.addEventListener('DOMContentLoaded', function() {
-    const doctorSelect = document.getElementById('doctor');
-    const timeSelect = document.getElementById('time');
+    if (!date || !time) {
+        alert('Please select both a date and a time.');
+        return;
+    }
 
-    doctorSelect.addEventListener('change', function() {
-        const doctorId = this.value;
+    console.log("Submitting reservation: ", { doctorId, date, time }); // Debugging
 
-        
-        const availableTimes = [
-            "09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM"
-        ];
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-        
-        timeSelect.innerHTML = '<option value="" disabled selected>Choose a time</option>';
+    fetch('/appointments/patient_reservation/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({
+            doctorId: doctorId,
+            date: date,
+            time: time,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update confirmation modal with submitted values
+            document.getElementById('confirmedDoctorName').textContent = document.getElementById('doctorName').textContent;
+            document.getElementById('confirmedDate').textContent = date;
+            document.getElementById('confirmedTime').textContent = time;
 
-       
-        availableTimes.forEach(time => {
-            const option = document.createElement('option');
-            option.value = time;
-            option.textContent = time;
-            timeSelect.appendChild(option);
-        });
+            // Hide reservation modal and show confirmation modal
+            closeReservationForm();
+            document.getElementById('confirmation-modal').style.display = 'flex';
+        } else {
+            console.log("Error: ", data); // Log error response
+            alert(data.error || 'Failed to book appointment. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred. Please try again.');
     });
-});
-document.getElementById('doctor').addEventListener('change', function() {
-    var selectedOption = this.options[this.selectedIndex];
-    var doctorName = selectedOption.text;
-    var specialty = selectedOption.getAttribute('data-specialty');
-
-    
-    document.getElementById('doctorName').value = doctorName + " (" + specialty + ")";
-});
+}

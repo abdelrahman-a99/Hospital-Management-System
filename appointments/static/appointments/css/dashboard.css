@@ -17,15 +17,15 @@ body {
 /* Sidebar Styling */
 .sidebar {
     width: 250px;
-    background: linear-gradient(135deg, #1e90ff, #87ceeb); /* Gradient background for shine effect */
+    background: linear-gradient(135deg, #1e90ff, #87ceeb); 
     color: #fff;
     display: flex;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
-    position: fixed; /* Fix the sidebar in place */
-    height: 100%; /* Ensure the sidebar takes the full height */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: fixed; 
+    height: 100%; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .sidebar .logo {
@@ -73,7 +73,7 @@ body {
     flex-grow: 1;
     padding: 20px;
     box-sizing: border-box;
-    margin-left: 250px; /* Adjust for the fixed sidebar */
+    margin-left: 250px; 
     overflow-y: auto;
 }
 
@@ -168,23 +168,23 @@ body {
 .calendar table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; /* Ensures equal width for all columns */
+    table-layout: fixed; 
 }
 
 .calendar table th, .calendar table td {
     padding: 10px;
     text-align: center;
-    width: 14.28%; /* Ensures equal width for all columns */
-    height: 100px; /* Adjust the height to match the width */
+    width: 14.28%; 
+    height: 100px;
     vertical-align: top;
     position: relative;
-    border: 1px solid #ddd; /* Add border to cells */
+    border: 1px solid #ddd;
 }
 
 .calendar td {
     cursor: pointer;
     position: relative;
-    overflow: hidden; /* Ensure content doesn't overflow */
+    overflow: hidden; 
 }
 
 .calendar td:hover {
@@ -193,24 +193,19 @@ body {
 
 /* Highlight past dates */
 .calendar td.past-date {
-    background-color: #e0e0e0; /* Gray background for past dates */
-    cursor: not-allowed; /* Change cursor to indicate no action */
-}
-/* Highlight past dates */
-.calendar td.past-date {
-    background-color: #e0e0e0; /* Gray background for past dates */
-    cursor: not-allowed; /* Change cursor to indicate no action */
+    background-color: #e0e0e0; 
+    cursor: not-allowed; 
 }
 
 /* Calendar cell borders */
 .calendar table th, .calendar table td {
     padding: 10px;
     text-align: center;
-    width: 14.28%; /* Ensures equal width for all columns */
-    height: 100px; /* Adjust the height to match the width */
+    width: 14.28%; 
+    height: 100px;
     vertical-align: top;
     position: relative;
-    border: 1px solid #ddd; /* Add border to cells */
+    border: 1px solid #ddd;
 }
 
 
@@ -219,24 +214,24 @@ body {
     background-color: #f0f8ff;
 }
 .calendar td.empty-cell {
-    border: none; /* Hide borders for empty cells */
+    border: none; 
 }
 
 .calendar td {
     position: relative;
-    overflow: visible; /* Allow overflow */
-    vertical-align: top; /* Align content to the top */
+    overflow: visible;
+    vertical-align: top;
 }
 
 .sticky-note {
     position: relative;
-    margin: 5px 0; /* Add margin to separate sticky notes */
+    margin: 5px 0; 
     background-color: #fffa65;
     padding: 8px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     font-size: 12px;
-    width: calc(100% - 16px); /* Adjust width to fit within the cell */
+    width: calc(100% - 16px);
     color: #333;
     font-weight: bold;
     cursor: pointer;
@@ -351,7 +346,7 @@ body {
     border-radius: 3px;
     font-size: 12px;
     cursor: pointer;
-    background-color: lightgray; /* Default background */
+    background-color: lightgray;
 }
 /* Adding minimal changes to the existing styles */
 
@@ -495,7 +490,7 @@ td {
     border-radius: 3px;
     font-size: 12px;
     cursor: pointer;
-    background-color: lightgray; /* Default background */
+    background-color: lightgray; 
 }
 
 .scheduled-note {
@@ -594,17 +589,17 @@ form input, form select {
 }
 @media (max-width: 768px) {
     .sidebar {
-        width: 70px; /* Smaller sidebar */
+        width: 70px; 
     }
     .sidebar .logo {
-        display: none; /* Hide logo in smaller screen */
+        display: none; 
     }
     .sidebar ul li {
-        font-size: 14px; /* Reduce font size */
+        font-size: 14px;
     }
 }
 .sidebar ul li:hover {
-    background-color: #4682b4; /* Darker blue on hover */
+    background-color: #4682b4;
     transform: scale(1.05);
 }
 .calendar td:focus {
@@ -612,8 +607,8 @@ form input, form select {
 }
 /* Upcoming Appointments Section */
 .upcoming-appointments .appointment {
-    background-color: #e6f7ff; /* Light blue background */
-    border: 1px solid #b3e0ff; /* Light blue border */
+    background-color: #e6f7ff; 
+    border: 1px solid #b3e0ff;
     padding: 15px;
     margin: 10px 0;
     border-radius: 8px;
@@ -624,7 +619,7 @@ form input, form select {
 }
 
 .upcoming-appointments .appointment:hover {
-    background-color: #cceeff; /* Slightly darker blue on hover */
+    background-color: #cceeff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -636,7 +631,7 @@ form input, form select {
 
 .upcoming-appointments .appointment .open-btn {
     align-self: flex-end;
-    background-color: #1e90ff; /* Blue button */
+    background-color: #1e90ff;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -646,7 +641,7 @@ form input, form select {
 }
 
 .upcoming-appointments .appointment .open-btn:hover {
-    background-color: #4682b4; /* Darker blue on hover */
+    background-color: #4682b4;
 }
 
 .patient-description {

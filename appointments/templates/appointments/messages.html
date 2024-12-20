@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/messages.css' %}">
+    <script src="{% static 'appointments/js/messages.js' %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <h2>PATIENT'S DASHBOARD</h2>
+            <ul>
+                <li><a href="{% url 'patient_reservation' %}"><i class="fas fa-user-md"></i> Appointments</a></li>
+                <li><a href="{% url 'specialty_page' %}"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
+                <li><a href="{% url 'upcoming_appointments' %}"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="#" class="active"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <div class="messages-header">
+                <i class="fas fa-comments"></i>
+                <h2>Messages</h2>
+            </div>
+            <div class="chat-container">
+                <div class="messages-container">
+                    {% for message in messages %}
+                    <div class="message {% if message.sender == user %}sent{% else %}received{% endif %}">
+                        <div class="message-info">
+                            <span>{{ message.sender.username }}</span>
+                            <span>{{ message.timestamp|date:"M d, Y H:i" }}</span>
+                        </div>
+                        <p class="message-content">{{ message.content }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="message-input">
+                    <input type="text" id="message-content" placeholder="Type your message..." />
+                    <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

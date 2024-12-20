@@ -1,83 +1,87 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Reservation</title>
     <link rel="stylesheet" href="{% static 'appointments/css/patient_reservation.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="wrapper">
         <aside class="sidebar">
             <h2>PATIENT'S DASHBOARD</h2>
             <ul>
                 <li><a href="#" class="active"><i class="fas fa-user-md"></i> Appointments</a></li>
                 <li><a href="{% url 'specialty_page' %}"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
-                <li><a href="#"><i class="fas fa-calendar"></i> My Reservations</a></li>
-                <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="{% url 'upcoming_appointments' %}"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="{% url 'messages' %}"><i class="fas fa-comments"></i> Messages</a></li>
                 <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </aside>
-
         <div class="main-content">
-            <div class="choose-doctor">
+            <div class="Department">
                 <div class="section-title">
-                    <h2><span class="title-icon"><i class="fas fa-user-md"></i></span> Choose Your Doctor <span class="title-line"></span></h2>
-                </div>
-                <div class="doctor-dropdown">
-                    <label for="doctor">Select Doctor:</label>
-                    <select id="doctor" name="doctor" required>
-                        <option value="" disabled selected>Choose a doctor</option>
-                        {% for doctor in doctor %}
-                            <option value="{{ doctor.id }}">
-                                {{ doctor.first_name }} {{ doctor.last_name }} - Rating: {{ doctor.average_rating|default:"No ratings" }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
+                    <span class="title-icon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <h2>Find Doctors in All Specialties</h2>
+                    <span class="title-line"></span>
+                </div>                
             </div>
 
-            <div class="reservation-form">
-                <h3>Book an Appointment</h3>
-                <form id="reservationForm" method="POST" action="{% url 'patient_reservation' %}">
-                    {% csrf_token %}
-                    <label for="date">Select Date:</label>
-                    <input type="date" id="date" name="date" required>
-
-                    <label for="time">Select Time:</label>
-                    <select id="time" name="time" required>
-                        <option value="" disabled selected>Choose a time</option>
-                        <option value="09:00 AM">09:00 AM</option>
-                        <option value="10:00 AM">10:00 AM</option>
-                        <option value="11:00 AM">11:00 AM</option>
-                        <option value="01:00 PM">01:00 PM</option>
-                        <option value="02:00 PM">02:00 PM</option>
-                        <option value="03:00 PM">03:00 PM</option>
-                    </select>
-
-                    <button type="submit" id="reserveButton">Reserve</button>
-                </form>
-            </div>
-
-            <div class="appointments-summary">
-                <div class="section-title">
-                    <h2><span class="title-icon"><i class="fas fa-calendar-check"></i></span> Upcoming Appointments <span class="title-line"></span></h2>
-                </div>
-                <div id="appointmentCard" class="appointment-card">
-                    <div class="appointment-header">
-                        <h3 id="doctorName">Select a doctor to reserve an appointment</h3>
-                        <span id="appointmentStatus" class="appointment-status pending">Pending Approval</span>
+            <div class="doctor-container">
+                {% for doctor in doctors %}
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <i class="fas fa-user-md"></i>
                     </div>
-                    <div class="appointment-details">
-                        <p><strong>Appointment on:</strong> <span id="appointmentDate">None</span> at <span id="appointmentTime">None</span></p>
+                    <div class="doctor-info">
+                        <h4>Dr. {{ doctor.user.username }}</h4>
+                        <p><span>Specialty:</span> {{ doctor.specialty }}</p>
+                        <p><span>Status:</span> Available</p>
                     </div>
+                    <div class="availability">
+                        <span>Morning</span>
+                        <span>Noon</span>
+                        <span>Night</span>
+                    </div>
+            
+                    <button class="reserve-btn" onclick="openReservationForm('{{ doctor.id }}', 'Dr. {{ doctor.user.username }}')">
+                        Reserve Appointment
+                    </button>
                 </div>
+                {% endfor %}
             </div>
+            
+        
+    <div id="reservation-modal" class="modal-overlay">
+        <div class="modal-content">
+            {% csrf_token %}
+            <span class="close-btn" onclick="closeReservationForm()">&times;</span>
+            <h3>Book an Appointment with <span id="doctorName"></span></h3>
+            <form id="reservation-form" onsubmit="submitReservation(event)">
+                <input type="hidden" id="doctorId" name="doctorId">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date" required>
+                <label for="time">Select Time:</label>
+                <input type="time" id="time" name="time" required min="08:00" max="18:00" step="1800">
+                <button type="submit" class="reserve-btn">Confirm Appointment</button>
+            </form>
         </div>
     </div>
+    
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Appointment Confirmed!</h3>
+            <p>You have successfully booked an appointment with <strong id="confirmedDoctorName"></strong>.</p>
+            <p><strong>Date:</strong> <span id="confirmedDate"></span></p>
+            <p><strong>Time:</strong> <span id="confirmedTime"></span></p>
+            <button onclick="closeConfirmation()" class="reserve-btn">Close</button>
+        </div>
+    </div>
+    
     <script src="{% static 'appointments/js/patient_reservation.js' %}"></script>
 </body>
 </html>
