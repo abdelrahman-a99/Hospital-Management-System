@@ -15,7 +15,23 @@ def profilemenu(request):
     User = get_user_model()  # Get the custom user model
 
     if request.method == 'POST':
-        # Determine if the user is updating their password
+        # Check if the delete account button was clicked
+        if 'delete_account' in request.POST:
+            try:
+                # Logout the user before deleting their account
+                from django.contrib.auth import logout
+                logout(request)
+
+                # Delete the user's account
+                user.delete()
+
+                messages.success(request, "Your account has been deleted successfully.")
+                return redirect('index')  # Redirect to the homepage after deletion
+            except Exception as e:
+                messages.error(request, f"An error occurred while deleting your account: {e}")
+                return redirect('profilemenu')
+
+        # Password update logic
         if 'password' in request.POST or 'confirm_password' in request.POST:
             pass1 = request.POST.get('password')
             pass2 = request.POST.get('confirm_password')
@@ -74,13 +90,13 @@ def profilemenu(request):
             patient.dob = dob
             patient.save()
         elif user.is_doctor:
-            specialty = request.POST.get('specialty')
+            # specialty = request.POST.get('specialty')
             doctor = get_object_or_404(Doctor, user=user)
             doctor.gender = gender
             doctor.address = address
             doctor.phone_number = phone_number
             doctor.dob = dob
-            doctor.specialty = specialty
+            # doctor.specialty = specialty
             doctor.save()
 
         messages.success(request, "Profile updated successfully!")
@@ -118,6 +134,7 @@ def profilemenu(request):
         })
 
     return render(request, 'profilemenu/profilemenu-page.html', context)
+
 
 
 def contact2(request):

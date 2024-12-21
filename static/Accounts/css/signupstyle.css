@@ -269,3 +269,29 @@ html {
         transform: translateY(-10px);
     }
 }
+
+/* Password Error Message Styles */
+.error_message {
+    position: fixed;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Initially hidden */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: all 0.5s ease;
+    animation: slide-in 0.5s ease-out;
+}
+
+/* Display error messages */
+.error_message.show {
+    display: block; /* Show error message */
+}
