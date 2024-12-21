@@ -13,14 +13,12 @@
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
 
     <script src="{% static 'home/js/script.js' %}" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 </head>
 
 <body>
     <header>
         <nav class="logo">
-            <!-- <a href="" title="Home">HMS</a> -->
-            <!-- another way -->
-            <!-- but the page will reload everytime -->
             <a href="{% url 'index' %}" title="Home">HMS</a>
         </nav>
 
@@ -32,6 +30,7 @@
 
         <nav class="auth">
             <a href="{% url 'login' %}">Log In</a>  
+            <!-- Redirect to the Sign-Up page -->
             <a href="{% url 'signup' %}" class="btn-primary">Sign Up</a> 
         </nav>
     </header>
@@ -44,16 +43,6 @@
             {% endfor %}
             {% endif %}
         </div>
-
-        <!-- {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %} -->
 
         <div class="img-intro">
         </div>
@@ -149,5 +138,11 @@
             </a>
         </div>
     </footer>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>

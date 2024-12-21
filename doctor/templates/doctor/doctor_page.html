@@ -21,9 +21,6 @@
     <header>
         <nav class="logo">
             <a href="#">HMS</a>
-            <!-- another way -->
-            <!-- but the page will reload everytime -->
-            <!-- <a href="{% url 'index' %}">HMS</a> -->
         </nav>
 
         <nav class="links">
@@ -64,7 +61,8 @@
         <span class="home-imgHover"></span>
 
         <section class="intro">
-            <h1>Welcome to Doctor Page</h1>
+            {% comment %} <h1>Welcome to Doctor Page</h1> {% endcomment %}
+            <h1>Welcome, {{ user.username }}</h1>
             <p>We're here to help you manage your patients and appointments effectively.</p>
             <button onclick="location.href='#Appointments'" class="btn-primary">Learn More</button>
         </section>
@@ -93,7 +91,6 @@
             <h2>Your Doctor Panel</h2>
 
             <div class="img-flex">
-                <!-- <img src="../../static/doctor/images/doc-1.jpg" alt="doctor image"> -->
                 <img src="{% static 'doctor/images/doc-1.jpg' %}" alt="doctor image">
                 <div class="img-text">
                     <h3>samuel goe</h3>

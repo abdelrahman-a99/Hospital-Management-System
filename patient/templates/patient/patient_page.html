@@ -7,52 +7,49 @@
     {% load static %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'patient/css/style-patient.css' %}">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <script src="{% static 'patient/js/scripts-appointments.js' %}" defer></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
-
-
-<header>
-    <nav class="logo">
-        <a href="#">HMS</a>
-    </nav>
-    <nav class="links">
-        <a href="#Appointments">Appointments</a>
-        <a href="#doctors">Doctors</a>
-        <a href="#Departments">Departments</a>
-        <a href="#Receptionist">Receptionist</a>
-    </nav>
-    <nav class="profile">
-        <i class="fa-solid fa-circle-user"></i>
-    </nav>
-    <div class="sub-menu-wrap" id='subMenu'>
-        <div class='sub-menu'>
-            <div class='user-info'>
-                <i class="fa-solid fa-circle-user"></i>
-                <h4>Your Profile</h4>
-            </div>
-            <hr>
-            <div class="sub-menu-links">
-                <a href="#">Edit Profile</a>
-                <a href="#">Settings</a>
-                <a href="#">Help & Support</a>
-                <a href="#">Logout</a>
+<body>
+    <header>
+        <nav class="logo">
+            <a href="#">HMS</a>
+        </nav>
+        <nav class="links">
+            <a href="#Appointments">Appointments</a>
+            <a href="#doctors">Doctors</a>
+            <a href="#Departments">Departments</a>
+            <a href="#Receptionist">Receptionist</a>
+        </nav>
+        <nav class="profile">
+            <i class="fa-solid fa-circle-user"></i>
+        </nav>
+        <div class="sub-menu-wrap" id='subMenu'>
+            <div class='sub-menu'>
+                <div class='user-info'>
+                    <i class="fa-solid fa-circle-user"></i>
+                    <h4>{{ user.username }}</h4>
+                </div>
+                <hr>
+                <div class="sub-menu-links">
+                    <a href="{% url 'profilemenu' %}">Edit Profile</a>
+                    <a href="{% url 'profilemenu' %}">Settings</a>
+                    <a href="{% url 'profilemenu' %}">Help & Support</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-
-<body>
     <main>
         <div class="img-intro"></div>
         <span class="home-imgHover"></span>
         <section class="intro">
-            <h1>Welcome to Patient Home Page</h1>
+            <!-- <h1>Welcome to Patient Home Page</h1> -->
+            <h1>Welcome, {{ user.username }}</h1>
             <p>We're here to make managing your health easier and more accessible.</p>
             <button onclick="location.href='#Appointments'" class="btn-primary">Learn More</button>
         </section>
-
 
         <div class="container">
             <div class="image">
@@ -79,7 +76,6 @@
                 </div>
             </div>
         </div>
-
 
         <section class="section__container" id="Appointments">
             <div class="Appointment__header">
@@ -109,7 +105,6 @@
                 </div>
             </div>
         </section>
-
 
         <section class="section__containerdoctors__container" id="doctors">
             <div class="doctors__header">
@@ -154,7 +149,6 @@
                 </div>
             </div>
         </section>
-
 
         <section id="Departments" class="Department">
             <div class="container">
@@ -209,13 +203,11 @@
             </div>
         </section>
 
-
         <section id="about" class="about">
             <h2>About Us</h2>
             <p>Our mission is to streamline hospital operations and improve patient care with advanced technology.</p>
         </section>
     </main>
-
 
     <footer>
         <div class="copyright">
@@ -229,5 +221,37 @@
         </div>
     </footer>
 
+    <script>
+        // When the user scrolls down, the header will change the background color
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Copyright Date
+        let time = document.querySelector(".time");
+        time.innerHTML = new Date().getFullYear(); // 2024
+
+        // Profile Icon Click Toggle
+        document.querySelector('.profile i').addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling to document
+            document.getElementById('subMenu').classList.toggle('open');
+        });
+
+        // Close the submenu anywhere
+        document.addEventListener('click', function (e) {
+            const subMenu = document.getElementById('subMenu');
+            const profileIcon = document.querySelector('.profile i');
+
+            // If the click is outside the profile icon and submenu, close the submenu
+            if (!subMenu.contains(e.target) && e.target !== profileIcon) {
+                subMenu.classList.remove('open');
+            }
+        });
+    </script>
 </body>
 </html>
