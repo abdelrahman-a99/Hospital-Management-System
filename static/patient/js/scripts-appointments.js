@@ -8,9 +8,13 @@ window.addEventListener('scroll', function () {
     }
 });
 
+// ==============================================================================
+
 // Copyright Date
 let time = document.querySelector(".time")
 time.innerHTML = new Date().getFullYear() // 2024
+
+// ==============================================================================
 
 // Profile Icon Click Toggle
 document.querySelector('.profile i').addEventListener('click', function (e) {
@@ -30,3 +34,5 @@ document.addEventListener('click', function (e) {
         subMenu.classList.remove('open');
     }
 });
+
+// ==============================================================================
