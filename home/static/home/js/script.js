@@ -172,38 +172,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ================================================================================
 
-document.addEventListener("DOMContentLoaded", () => {
-    const doctoricon = document.querySelector('.signup-options .option i');
-    const patienticon = document.querySelector('.signup-options .option i');
+// document.addEventListener("DOMContentLoaded", () => {
+//     const doctoricon = document.querySelector('.signup-options .option i');
+//     const patienticon = document.querySelector('.signup-options .option i');
 
 
-    doctoricon.addEventListener("click", () => {
-        window.location.href = "{% url 'signup' %}";
-    });
+//     doctoricon.addEventListener("click", () => {
+//         window.location.href = "{% url 'signup' %}";
+//     });
 
-    patienticon.addEventListener("click", () => {
-        window.location.href = "{% url 'signup' %}";
-    });
+//     patienticon.addEventListener("click", () => {
+//         window.location.href = "{% url 'signup' %}";
+//     });
 
-    const signUpButton = document.querySelector("header .auth button");
-    const modal = document.getElementById("signup-modal");
-    const closeModal = document.querySelector(".modal-close");
+//     const signUpButton = document.querySelector("header .auth button");
+//     const modal = document.getElementById("signup-modal");
+//     const closeModal = document.querySelector(".modal-close");
 
-    // Open modal on sign-up button click
-    signUpButton.addEventListener("click", () => {
-        modal.style.display = "block";
-    });
+//     // Open modal on sign-up button click
+//     signUpButton.addEventListener("click", () => {
+//         modal.style.display = "block";
+//     });
 
-    // Close modal when clicking the close button
-    closeModal.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
+//     // Close modal when clicking the close button
+//     closeModal.addEventListener("click", () => {
+//         modal.style.display = "none";
+//     });
 
-    // Close modal when clicking outside the modal content
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
-});
+//     // Close modal when clicking outside the modal content
+//     window.addEventListener("click", (event) => {
+//         if (event.target === modal) {
+//             modal.style.display = "none";
+//         }
+//     });
+// });
 

@@ -10,6 +10,8 @@
 
     --icons-color: #fff;
 
+    --hover-scrollbar-color: #0056b3;
+
     --facebook-color: #1877F2;
     --instagram-color: #E4405F;
     --twitter-color: #1DA1F2;
@@ -32,6 +34,26 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: var(--text-color);
     background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-scrollbar-color);
 }
 
 /* HEADER */
@@ -63,6 +85,7 @@ header .logo {
 }
 
 header .logo:hover {
+    cursor: pointer;
     transform: scale(1.15);
 }
 
@@ -383,8 +406,8 @@ footer .social-icons a:hover .fa-instagram {
     color: var(--instagram-color);
 }
 
-footer .social-icons a:hover .fa-twitter {
-    color: var(--twitter-color);
+footer .social-icons a:hover .fa-x-twitter {
+    color: var(--x-twitter-color);
 }
 
 footer .social-icons a:hover .fa-linkedin {
