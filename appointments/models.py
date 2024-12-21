@@ -26,3 +26,17 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.sender.username} to {self.receiver.username}"
+
+class ExtendedPatient(Patient):
+    age = models.IntegerField()
+    admission_date = models.DateField()
+    department = models.CharField(max_length=100)
+
+class MedicalRecord(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    diagnosis = models.TextField()
+    treatments = models.TextField()
+    medications = models.TextField()
+    test_results = models.TextField()
+
+

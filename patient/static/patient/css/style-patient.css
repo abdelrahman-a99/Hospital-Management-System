@@ -944,22 +944,58 @@ footer .social-icons a:hover .fa-linkedin {
     border-radius: 5px;
     display: none;
 } 
-.chatHistory{
+.chat-container {
+    width: 60%;
+    margin: 50px auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.chat-history {
+    height: 400px;
     overflow-y: auto;
-    height: 80%;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
     padding: 10px;
 }
-.chatInput{
-    width: 80%; 
-    padding: 5px;
+.message {
+    margin: 10px 0;
 }
-.sendChat{
-    padding: 5px 10px;
-    color: #f7f7f7;
+.user-message {
+    text-align: right;
 }
-.sendChat:hover{
-    transform: translateX(-10%);
+.user-message .content {
+    background: #d1e7dd;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
 }
-.logoicon{
-    font-size: 50px;
+.assistant-message .content {
+    background: #f8d7da;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+.input-container {
+    display: flex;
+    gap: 10px;
+}
+.input-container input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.input-container button {
+    padding: 10px 20px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.input-container button:hover {
+    background: #0056b3;
 }

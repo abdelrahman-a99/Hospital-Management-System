@@ -13,7 +13,6 @@
     <script src="{% static 'patient/js/scripts-appointments.js' %}" defer></script>
 </head>
 
-
 <header>
     <nav class="logo">
         <a href="#">HMS</a>
@@ -54,11 +53,14 @@
         <div class="window" id="chatWindow">
             <div id="chatHistory">
             </div>
-            <div>
-                <input type="text" id="chatInput" placeholder="What is up?" >
-                <button id="sendChat" ><i class="fa-solid fa-paper-plane-top"></i></button>
-                <i id="logoIcon" class="fas fa-user" ></i>
-            </div>
+            <div class="chat-container">
+        <h1>Niles Care Chatbot</h1>
+        <div id="chat-history" class="chat-history"></div>
+        <div class="input-container">
+            <input id="user-input" type="text" placeholder="What is up?">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
         </div>
         <div class="img-intro"></div>
         <span class="home-imgHover"></span>

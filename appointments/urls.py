@@ -7,4 +7,5 @@ urlpatterns = [
     path('specialty_page/', views.specialty_page, name='specialty_page'),
     path('upcoming_appointments/', views.upcoming_appointments, name='upcoming_appointments'),
     path('messages/', views.messages_view, name='messages'),
+    path('api/patient-reports/', views.patient_reports, name='patient_reports'),
 ]

@@ -30,16 +30,14 @@
 
         <div class="main-content">
             <section class="Department">
-                <div class="container">
                     <div class="section-title">
-                        <h2>
-                            <span class="title-icon"><i class="fas fa-clinic-medical"></i></span>
-                            Specialties
-                            <span class="title-line"></span>
-                        </h2>
-                    </div>
+                        <span class="title-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <h2>SPECIALTIES</h2>
+                    </div>    
 
-                    <div class="row">
+                    <div class="Department-container">
                         {% for specialty in specialties %}
                         <div class="icon-box" onclick="redirectToReservation('{{ specialty }}')">
                             <div class="icon"><i class="fas fa-user-md"></i></div>

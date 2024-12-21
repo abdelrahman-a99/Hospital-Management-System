@@ -652,3 +652,6 @@ form input, form select {
     margin-top: 10px;
     display: none;
 }
+.patient-reports {
+    display: block; 
+}

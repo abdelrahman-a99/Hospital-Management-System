@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Appointment, Message
+from .models import Appointment, Message,MedicalRecord,ExtendedPatient
 from .forms import AppointmentForm
 from Accounts.models import Doctor, Patient
 from django.contrib.auth.decorators import login_required
@@ -99,3 +99,25 @@ def messages_view(request):
     messages = Message.objects.filter(sender=user) | Message.objects.filter(receiver=user)
     messages = messages.order_by('timestamp')
     return render(request, 'appointments/messages.html', {'messages': messages, 'user': user})
+
+#Doctor Reports
+def patient_reports(request):
+    patients = ExtendedPatient.objects.all().prefetch_related('medicalrecord_set')
+    patient_reports = []
+
+    for ExtendedPatient in patients:
+        medical_records = ExtendedPatient.medicalrecord_set.all()
+        medical_record_details = [record.diagnosis for record in medical_records]
+        next_visit = ExtendedPatient.nextvisit_set.first()  # Adjust if necessary
+
+        report = {
+            'name': ExtendedPatient.name,
+            'age': ExtendedPatient.age,
+            'gender': ExtendedPatient.gender,
+            'lastVisit': ExtendedPatient.admission_date,
+            'medicalRecords': ", ".join(medical_record_details),  # Ensure it's a string
+            'nextVisit': next_visit.date if next_visit else 'N/A'
+        }
+        patient_reports.append(report)
+
+    return JsonResponse(patient_reports, safe=False)

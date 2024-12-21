@@ -36,8 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleButton = document.getElementById("toggleChat");
     const chatWindow = document.getElementById("chatWindow");
     const chatHistory = document.getElementById("chatHistory");
-    const chatInput = document.getElementById("chatInput");
-    const sendChat = document.getElementById("sendChat");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
+    const history = [];
 
     toggleButton.addEventListener("click", () => {
         if (chatWindow.style.display === "none" || chatWindow.style.display === "") {
@@ -47,41 +48,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const appendMessage = (author, content) => {
+    function appendMessage(author, content) {
         const messageDiv = document.createElement("div");
-        messageDiv.innerHTML = `<strong>${author}:</strong> ${content}`;
+        messageDiv.className = `message ${author}-message`;
+        const messageContent = document.createElement("div");
+        messageContent.className = "content";
+        messageContent.textContent = content;
+        messageDiv.appendChild(messageContent);
         chatHistory.appendChild(messageDiv);
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-    };
+        chatHistory.scrollTop = chatHistory.scrollHeight; 
+    }
 
-    sendChat.addEventListener("click", () => {
-        const userInput = chatInput.value.trim();
-        if (userInput) {
-            appendMessage("user", userInput);
-            chatInput.value = "";
+    async function sendMessage() {
+        const prompt = userInput.value.trim();
+        if (!prompt) return;
 
-            // Simulate backend call
-            fetch("/api/getResponse", {
+        // Add user message to chat
+        history.push({ author: "user", content: prompt });
+        appendMessage("user", prompt);
+
+        // Clear input
+        userInput.value = "";
+
+        // Send message to backend (replace with actual API call)
+        try {
+            const response = await fetch("/api/get_response", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ userInput })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    appendMessage("Assistant", data.response);
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    appendMessage("Assistant", "Sorry, something went wrong.");
-                });
+                body: JSON.stringify({ history, prompt })
+            });
+            const data = await response.json();
+            const assistantResponse = data.response;
+            history.push({ author: "model", content: assistantResponse });
+            appendMessage("assistant", assistantResponse);
+        } catch (error) {
+            console.error("Error:", error);
+            appendMessage("assistant", "Sorry, there was an error!");
         }
-    });
+    }
 
-    chatInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-            sendChat.click();
+    sendButton.addEventListener("click", sendMessage);
+
+    userInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            sendMessage();
         }
     });
 });
