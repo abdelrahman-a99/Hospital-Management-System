@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Appointment, Message
+from .models import Appointment, Message,Notification
 from .forms import AppointmentForm
 from Accounts.models import Doctor, Patient
 from django.contrib.auth.decorators import login_required
@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from .observers import Subject, NotificationObserver  
 
 def doctor_dashboard(request):
     if request.method == 'POST':
@@ -50,11 +51,11 @@ def patient_reservation(request):
                     status="Pending"
                 )
 
-                
+                # Send a message to the doctor
                 Message.objects.create(
                     sender=request.user, 
-                    receiver=doctor.user,  
-                    content=f"New appointment request from {patient.user.username} for {date} at {time}.",
+                    receiver=doctor.user, 
+                    content=f"A new appointment request from {patient.user.username} for {date} at {time}.",
                     appointment=appointment  
                 )
 
@@ -84,18 +85,85 @@ def specialty_page(request):
 def messages_view(request):
     user = request.user
 
+    if not user.is_authenticated:
+        return JsonResponse({'success': False, 'error': 'User not authenticated.'}, status=401)
+
     if request.method == 'POST':
-        data = json.loads(request.body)
-        content = data.get('content')
-        receiver_id = data.get('receiver_id')
+        try:
+            data = json.loads(request.body)
+            content = data.get('content')
 
-        if content and receiver_id:
-            receiver = User.objects.get(id=receiver_id)
-            Message.objects.create(sender=user, receiver=receiver, content=content)
-            return JsonResponse({'success': True, 'message': 'Message sent successfully.'})
+            if not content:
+                return JsonResponse({'success': False, 'error': 'Content cannot be empty.'})
 
-        return JsonResponse({'success': False, 'error': 'Missing fields.'}, status=400)
+            # Assuming doctor is the recipient for patient messages
+            patient = Patient.objects.get(user=user)
+            latest_appointment = patient.appointment_set.latest('date')
+            doctor_user = latest_appointment.doctor.user
 
-    messages = Message.objects.filter(sender=user) | Message.objects.filter(receiver=user)
-    messages = messages.order_by('timestamp')
-    return render(request, 'appointments/messages.html', {'messages': messages, 'user': user})
+            # Create a new message
+            Message.objects.create(sender=user, receiver=doctor_user, content=content)
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+    elif request.method == 'GET':
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            # Fetch messages for the logged-in user
+            messages = Message.objects.filter(sender=user) | Message.objects.filter(receiver=user)
+            messages = messages.order_by('timestamp')
+
+            # Fetch notifications for the logged-in user
+            notifications = Notification.objects.filter(user=user).order_by('-created_at')
+
+            # Structure the response
+            return JsonResponse({
+                'success': True,
+                'messages': [
+                    {
+                        'sender': msg.sender.username,
+                        'receiver': msg.receiver.username,
+                        'content': msg.content,
+                        'timestamp': msg.timestamp,
+                    }
+                    for msg in messages
+                ],
+                'notifications': [
+                    {
+                        'content': notification.content,
+                        'timestamp': notification.created_at,
+                        'is_read': notification.is_read,
+                    }
+                    for notification in notifications
+                ],
+            })
+
+        # Render template for HTML requests
+        messages = Message.objects.filter(sender=user) | Message.objects.filter(receiver=user)
+        messages = messages.order_by('timestamp')
+        notifications = Notification.objects.filter(user=user).order_by('-created_at')
+        return render(request, 'appointments/messages.html', {
+            'messages': messages,
+            'notifications': notifications,
+            'user': user
+        })
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+def doctor_messages(request):
+    if not request.user.is_authenticated:
+        return redirect('login')  # Redirect unauthenticated users to login
+    
+    try:
+        doctor = Doctor.objects.get(user=request.user)
+    except Doctor.DoesNotExist:
+        return render(request, 'appointments/error.html', {'error': 'Only doctors can access this page.'})
+
+    # Fetch messages where the doctor is the receiver
+    messages = Message.objects.filter(receiver=request.user).order_by('timestamp')
+    
+    return render(request, 'appointments/doctor_messages.html', {
+        'messages': messages,
+        'user': request.user,
+    })

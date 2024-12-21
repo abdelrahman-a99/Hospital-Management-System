@@ -80,7 +80,6 @@ def profilemenu(request):
             doctor.address = address
             doctor.phone_number = phone_number
             doctor.dob = dob
-            doctor.specialty = specialty
             doctor.save()
 
         messages.success(request, "Profile updated successfully!")

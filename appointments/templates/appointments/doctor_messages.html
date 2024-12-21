@@ -4,34 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages</title>
-    <link rel="stylesheet" href="{% static 'appointments/css/messages.css' %}">
-    <script src="{% static 'appointments/js/messages.js' %}" defer></script>
+    <title>Doctor Messages</title>
+    <link rel="stylesheet" href="{% static 'appointments/css/doctor_messages.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar Section -->
+        <!-- Sidebar -->
         <aside class="sidebar">
-            <h2>PATIENT'S DASHBOARD</h2>
+            <h2>DOCTOR'S DASHBOARD</h2>
             <ul>
-                <li><a href="{% url 'patient_reservation' %}"><i class="fas fa-user-md"></i> Appointments</a></li>
-                <li><a href="{% url 'specialty_page' %}"><i class="fas fa-calendar-plus"></i> Specialties</a></li>
-                <li><a href="{% url 'upcoming_appointments' %}"><i class="fas fa-calendar"></i> My Reservations</a></li>
+                <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="#" class="active"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-calendar"></i> Appointments</a></li>
                 <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </aside>
 
-        <!-- Main Content Section -->
+        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header Section -->
             <div class="messages-header">
                 <i class="fas fa-comments"></i>
                 <h2>Messages</h2>
             </div>
 
-            <!-- Chat Container -->
             <div class="chat-container">
                 <!-- Messages Display -->
                 <div class="messages-container" id="messages-container">
@@ -39,13 +35,7 @@
                         {% for message in messages %}
                             <div class="message {% if message.sender == user %}sent{% else %}received{% endif %}">
                                 <div class="message-info">
-                                    <span>
-                                        {% if message.sender %}
-                                            {{ message.sender.username }}
-                                        {% else %}
-                                            System
-                                        {% endif %}
-                                    </span>
+                                    <span>{{ message.sender.username }}</span>
                                     <span>{{ message.timestamp|date:"M d, Y H:i" }}</span>
                                 </div>
                                 <p class="message-content">{{ message.content }}</p>
@@ -56,13 +46,44 @@
                     {% endif %}
                 </div>
 
-                <!-- Message Input Section -->
+                <!-- Message Input -->
                 <div class="message-input">
-                    <input type="text" id="message-content" placeholder="Type your message..." autocomplete="off">
+                    <input type="text" id="message-content" placeholder="Type your message..." />
                     <button id="send-message-button"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('send-message-button').addEventListener('click', async () => {
+            const content = document.getElementById('message-content').value.trim();
+            if (!content) {
+                alert('Please type a message.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/appointments/doctor_messages/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ content }),
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('message-content').value = '';
+                    location.reload();
+                } else {
+                    alert('Failed to send message: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
+        });
+    </script>
 </body>
 </html>
