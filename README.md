@@ -25,4 +25,4 @@ The **Hospital Management System** is a web-based application designed to stream
 ### Prerequisites
 - Python 3.9+
 - Django 4.0+
-- DB.sqlite
+- db.sqlite3
