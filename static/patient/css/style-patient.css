@@ -8,108 +8,95 @@
     --background-light: #f5f5f5;
     --background-light-alt: #eef2f7;
 
-    --icon-color: #fff;
+    --icons-color: #fff;
+
+    --hover-scrollbar-color: #0056b3;
 
     --facebook-color: #1877F2;
     --instagram-color: #E4405F;
-    --twitter-color: #1DA1F2;
+    --x-twitter-color: #000000;
     --linkedin-color: #0A66C2;
 }
 
 /* RESET */
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html{
+html {
     scroll-behavior: smooth;
 }
 
-body{
+body {
     min-height: 100%;
     font-family: Arial, Helvetica, sans-serif;
     color: var(--text-color);
     background: linear-gradient(to right, #4c8bf5, #1d357d);
 }
 
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-scrollbar-color);
+}
+
 /* HEADER */
-header{
-    color: rgb(3, 1, 1);
+header {
     display: flex;
     align-items: center;
     justify-content: space-around;
     padding: 1.5rem 2rem;
-    z-index: 999;
     position: sticky;
     top: 0;
-}
-header .profile i{
-    font-size: 2.75rem;
-    color: #eee;
-    transition: 0.3s;
-}
-header .profile i:hover{
-    cursor: pointer;
-    color: #eeeeeecc;
-}
-
-header .logo a{
-    text-decoration: none;
-    color: white;
-    font-size: 1.75rem;
-}
-
-header .logo{
-    transition: transform 0.5s ease;
-}
-
-header .logo:hover{
-    cursor: pointer;
-    transform: scale(1.15);
-}
-
-header .links a{
-    text-decoration: none;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-left: 2rem;
-    transition: 0.3s ease;
-}
-
-header .auth button {
-    background-color: inherit;
-    color: white;
-
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-
-    border: none;
-    border: 1px solid white;
-
-    border-radius: 5px;
-    margin-left: 1.5rem;
-    transition: 0.5s ease;
-}
-
-header .auth button:hover {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    transform: scale(1.05);
+    z-index: 999;
+    transition: background-color 0.5s, box-shadow 0.3s;
 }
 
 header.scrolled {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    background-color: #1d357d;
-    transition: background-color 0.5s ease, box-shadow 0.3s ease;
+    background-color: var(--primary-color);
+}
+
+/* Logo and Links */
+header .logo a {
+    color: var(--icons-color);
+    font-size: 1.75rem;
+    text-decoration: none;
+}
+
+header .logo {
+    transition: transform 0.5s ease;
+}
+
+header .logo:hover {
+    cursor: pointer;
+    transform: scale(1.15);
 }
 
 header .links a {
+    color: var(--icons-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-left: 2rem;
+    text-decoration: none;
     position: relative;
+    transition: 0.3s ease;
 }
 
 header .links a::after {
@@ -117,7 +104,7 @@ header .links a::after {
     height: 3px;
     width: 0px;
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--icons-color);
     position: absolute;
     left: 0px;
     bottom: -10px;
@@ -128,10 +115,9 @@ header .links a:hover::after {
     width: 100%;
 }
 
-/* Profile Icon */
 header .profile i {
-    font-size: 2.75rem;
-    color: var(--icon-color);
+    font-size: 2.5rem;
+    color: var(--icons-color);
     cursor: pointer;
     transition: color 0.3s;
 }
@@ -157,7 +143,7 @@ header .profile i:hover {
 }
 
 .sub-menu {
-    background-color: var(--icon-color);
+    background-color: var(--icons-color);
     padding: 0.5rem 1rem;
     margin: 15px;
     border-radius: 10px;
@@ -208,7 +194,7 @@ header .profile i:hover {
 .sub-menu-links a:hover {
     margin-left: 1rem;
 }
- 
+
 /* MAIN */
 main {
     max-width: 80%;
@@ -217,6 +203,63 @@ main {
     text-align: center;
 }
 
+.img-intro {
+    width: 290px;
+    height: 324px;
+    background: url("doc-1.jpg") right/contain no-repeat;
+    position: absolute;
+    top: 150px;
+    right: 180px;
+    /* border-radius: 10%; */
+    border-radius: 50%;
+}
+
+/* INTRO */
+.intro {
+    color: var(--icons-color);
+    text-align: left;
+    padding: 5rem 1rem;
+    margin-bottom: 7rem;
+    position: relative;
+}
+
+.intro h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.intro p {
+    font-size: 1.25rem;
+    line-height: 2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+.intro .btn-primary {
+    background-color: inherit;
+    color: var(--icons-color);
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+    transition: 0.5s ease;
+}
+
+/* if the link will be a button */
+.intro .btn-primary {
+    border: 1px solid var(--icons-color);
+    cursor: pointer;
+}
+
+.intro .btn-primary:hover {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    transform: scale(1.1);
+}
+
+/* IMAGE CLASS */
 .image {
     position: absolute;
     top: 140px;
@@ -225,7 +268,7 @@ main {
     width: 300px;
     height: 300px;
 }
-  
+
 .image__bg {
     position: absolute;
     top: 50%;
@@ -237,12 +280,12 @@ main {
     border-radius: 100%;
     z-index: -1;
 }
-  
+
 .image img {
     width: 100%;
-    max-width: 475px;  
+    max-width: 475px;
 }
-  
+
 .image__content {
     position: absolute;
     top: 50%;
@@ -256,11 +299,11 @@ main {
     border-radius: 5px;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
 }
-  
+
 .image__content__1 {
     transform: translate(calc(-50% - 12rem), calc(-50% - 8rem));
 }
-  
+
 .image__content__1 span {
     padding: 10px 10px;
     font-size: 1.5rem;
@@ -268,28 +311,28 @@ main {
     background-color: white;
     border-radius: 100%;
 }
-  
+
 .image__content__1 h4 {
     font-size: 1.0rem;
     font-weight: 600;
     color: black;
 }
-  
+
 .image__content__1 p {
     color: black;
     font-size: 0.9rem;
 }
-  
+
 .image__content__2 {
     transform: translate(calc(-50% + 8rem), calc(-50% + 10rem));
 }
-  
+
 .image__content__2 ul {
     list-style: none;
     display: grid;
     gap: 1rem;
 }
-  
+
 .image__content__2 li {
     display: flex;
     align-items: flex-start;
@@ -297,186 +340,28 @@ main {
     color: black;
     font-size: 1rem;
     font-weight: 600;
-    
 }
-  
+
 .image__content__2 span {
     font-size: 1.3rem;
     color: black;
-   
-}
-
-/* HERO */
-.intro {
-    text-align: left;
-    padding: 4rem 1rem;
-    margin-bottom: 6rem;
-    position: relative;
-}
-
-.intro h1 {
-    text-align: left;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    margin-bottom: 5;
-    color: white;
-}
-
-.intro p {
-    text-align: left;
-    font-size: 1.0rem;
-    line-height: 2rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    color: white;
-   
-}
-
-.intro .btn-primary {
-    background-color: var(--background-light);
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    transition: 0.5s ease;
-    display: inline-block;
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
-}
-
-/* if the link will be a button */
-.intro .btn-primary {
-    border: 1px solid white;
-    cursor: pointer;
-}
-
-.intro .btn-primary:hover {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    transform: scale(1.1);
 }
 
 /* AppAppointments */
-
-button.addMemberBtn {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+#Appointments{
+    scroll-margin-top: 120px;
 }
 
-button.addMemberBtn:hover {
-  background-color: #45a049;
-}
-
-input#search {
-  margin: 10px;
-  padding: 8px;
-  width: 300px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-table th {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.dark_bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: none;
-  filter: blur(8px);
-  outline-style: none;
-  box-shadow: none;
-  border-color: transparent;
-}
-
-.dark_bg.active {
-  display: block;
-}
-
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  background: white;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  display: none;
-  border-radius: 8px;
-  z-index: 999;
-}
-
-.popup.active {
-  display: block;
-}
-
-.form_control {
-  margin: 10px 0;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input, select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  text-align: left;
-}
-
-.popupFooter {
-  text-align: right;
-}
-
-button {
-  padding: 10px 15px;
-  margin: 5px;
-  border: none;
-  cursor: pointer;
-}
-
-button.submitBtn {
-  background-color: #4CAF50;
-  color: white;
-}
-
-button.closeBtn {
-  background-color: #ec2011;
-  color: white;
-}
-
-.section__container  {
-    margin-top: 3rem;
+.section__container {
+    /* margin-top: 3rem; */
     display: grid;
     gap: 1rem;
     text-align: center;
     padding: 1rem 1rem;
     background-color: var(--background-light);
 }
-.Appointment__header h2{
+
+.Appointment__header h2 {
     color: var(--primary-color);
     font-size: 2rem;
     gap: 1rem;
@@ -485,9 +370,8 @@ button.closeBtn {
     background-color: var(--background-light);
     font-weight: 800;
     margin-bottom: 1.25rem;
-  }
- 
-  
+}
+
 .Appointment__headerp {
     max-width: 600px;
     color: var(--text-light);
@@ -495,14 +379,14 @@ button.closeBtn {
     padding: 2rem 1rem;
     background-color: var(--background-light);
 }
-  
+
 .Appointment__card .btn-appointment {
     display: none;
     border: 1px solid black;
     cursor: pointer;
 }
-.Appointment__card .btn-appointment:hover{
-      
+
+.Appointment__card .btn-appointment:hover {
     background-color: white;
     padding: 1rem 1.5rem;
     text-decoration: none;
@@ -512,16 +396,16 @@ button.closeBtn {
     display: inline-block;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
     background-color: var(--secondary-color);
-    border: 1px solid var(--secondary-color); 
+    border: 1px solid var(--secondary-color);
 }
-  
+
 .Appointment__grid {
-    margin-top: 4rem;
+    margin-top: 2.5rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
-  
+
 .Appointment__card {
     padding: 2rem;
     text-align: center;
@@ -529,7 +413,7 @@ button.closeBtn {
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
-  
+
 .Appointment__card span {
     display: inline-block;
     margin-bottom: 1rem;
@@ -540,19 +424,19 @@ button.closeBtn {
     border-radius: 100%;
     transition: 0.3s;
 }
-  
+
 .Appointment__card h4 {
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-dark);
 }
-  
+
 .Appointment__card p {
     margin-bottom: 1rem;
     color: var(--text-light);
 }
-  
+
 .Appointment__card a {
     position: relative;
     isolation: isolate;
@@ -562,7 +446,7 @@ button.closeBtn {
     color: var(--text-dark);
     transition: 0.3s;
 }
-  
+
 .Appointment__card a::before {
     position: absolute;
     content: "";
@@ -574,50 +458,45 @@ button.closeBtn {
     border-radius: 100%;
     z-index: -1;
 }
-  
+
 .Appointment__card a:hover {
     padding-left: 2.5rem;
 }
 
-
-
 /* doctors */
+#doctors{
+    scroll-margin-top: 75px;
+}
 
 .section__containerdoctors__container {
-    margin-top: 2rem;
     display: grid;
-    gap: 1rem;
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 1rem;
     background-color: var(--background-light);
 }
-
-.doctors__header__content h2 { 
-    color: var(--primary-color);
-    font-size: 2rem;
-    gap: 1rem;
-    text-align: center;
-    padding: 1rem 1rem;
-    background-color: var(--background-light);
-    font-weight: 800;
-    margin-bottom: 1.25rem;
-}
-
-
 
 .doctors__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    justify-content: center;
 }
-  
+
+.doctors__header__content h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    text-align: center;
+    background-color: var(--background-light);
+    font-weight: 800;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+
 .doctors__nav {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-  
+
 .doctors__nav span {
     padding: 5px 15px;
     font-size: 1.5rem;
@@ -625,28 +504,27 @@ button.closeBtn {
     background-color: var(--primary-color-light);
     cursor: pointer;
 }
-  
+
 .doctors__grid {
-    margin-top: 4rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
-  
+
 .doctors__card {
     text-align: center;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
     overflow: hidden;
 }
-  
+
 .doctors__card__image {
     position: relative;
     overflow: hidden;
-    height: 400px;
+    height: 312px;
 }
-  
+
 .doctors__socials {
     position: absolute;
     left: 0;
@@ -658,61 +536,53 @@ button.closeBtn {
     gap: 1rem;
     transition: 0.5s;
 }
-  
+
 .doctors__card .btn {
     display: none;
     border: 1px solid black;
     cursor: pointer;
 }
-  
-.doctors__card:hover .btn {
 
-     background-color: white;
-     padding: 1rem 1.5rem;
-     text-decoration: none;
-     border-radius: 3px;
-     font-size: 0.9rem;
-     transition: 0.5s ease;
-     display: inline-block;
-     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
-     background-color: var(--secondary-color);
-     border: 1px solid var(--secondary-color);   
-      
+.doctors__card:hover .btn {
+    background-color: white;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    transition: 0.5s ease;
+    display: inline-block;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
 }
-  
-  
+
 .doctors__socials span:hover {
     color: var(--primary-color);
 }
-  
+
 .doctors__card:hover .doctors__socials {
     bottom: 2rem;
 }
-  
+
 .doctors__card h4 {
     margin-top: 1rem;
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-dark);
 }
-  
+
 .doctors__card p {
     margin-bottom: 1rem;
     color: var(--text-light);
 }
-  
 /* end doctors */
 
-
-/*departments*/ 
-.Department .row {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Each box is at least 200px wide */
-    gap: 1rem;
+/*departments*/
+#Departments{
+    scroll-margin-top: 70px;
 }
 
-.Department .container{
-    margin-top: 3rem;
+.Department .container {
     display: grid;
     gap: 1rem;
     text-align: center;
@@ -720,21 +590,28 @@ button.closeBtn {
     background-color: var(--background-light);
 }
 
-.Department .section-title h2{
+.Department .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.Department .section-title h2 {
     color: var(--primary-color);
     font-size: 2rem;
     gap: 1rem;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
     background-color: var(--background-light);
     font-weight: 800;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
 }
-  
+
 .Department .icon-box {
     text-align: center;
     border: 1px solid #d5e1ed;
-    padding: 50px 10px;
+    padding: 30px 0px 0 10px;
     transition: all ease-in-out 0.3s;
     max-width: 300px;
     flex: 1 1 200px;
@@ -742,9 +619,9 @@ button.closeBtn {
     border-radius: 10px;
 }
 
-.Department .icon-box:hover{
-    cursor: pointer;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+.Department .icon-box:hover {
+    /* cursor: pointer; */
+    box-shadow: -5px 10px 20px rgba(0, 0, 0, 0.3);
     transform: scale(1.025);
 }
 
@@ -761,12 +638,12 @@ button.closeBtn {
     margin-bottom: 20px;
     transform-style: preserve-3d;
 }
-  
+
 .Department .icon-box .icon i {
     color: #fff;
     font-size: 28px;
 }
-  
+
 .Department .icon-box .icon::before {
     position: absolute;
     content: '';
@@ -779,73 +656,49 @@ button.closeBtn {
     transition: all .3s ease-out 0s;
     transform: translateZ(-1px);
 }
-  
+
 .Department .icon-box h4 {
     font-weight: 700;
     margin-bottom: 15px;
     font-size: 24px;
 }
-  
+
 .Department .icon-box h4 a {
     color: #2c4964;
 }
-  
+
 .Department .icon-box p {
     line-height: 24px;
     font-size: 14px;
     margin-bottom: 0;
 }
-  
+
 .Department .icon-box:hover {
     background: #3fbbc0;
     border-color: #3fbbc0;
 }
-  
+
 .Department .icon-box:hover .icon {
     background: #fff;
 }
-  
+
 .Department .icon-box:hover .icon i {
     color: #1977cc;
 }
-  
+
 .Department .icon-box:hover .icon::before {
     background: #3291e6;
 }
-  
-.Department .icon-box:hover h4 a, .Department .icon-box:hover p {
+
+.Department .icon-box:hover h4 a,
+.Department .icon-box:hover p {
     color: #fff;
 }
 /* end department */
 
-/* ABOUT US */
-.about {    
-    padding: 3rem 1rem;
-    background-color: #ffffff;
-    text-align: center;
-}
-
-.about h2 {
-    color: var(--primary-color);
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.25rem;
-}
-
-.about p {
-    color: var(--text-color);
-    font-size: 1.15rem;
-    line-height: 1.5;
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-
-
 /* FOOTER */
-footer{
-    color: white;
+footer {
+    color: var(--icons-color);
     padding-bottom: 1rem;
     text-align: center;
     font-size: 1.25rem;
@@ -856,17 +709,16 @@ footer{
     display: flex;
     text-align: center;
     justify-content: space-between;
-    
 }
 
-footer .company{
+footer .company {
     color: #001c6e;
     font-size: 1.5rem;
     font-weight: 600;
     transition: 0.5s ease;
 }
 
-footer .company:hover{
+footer .company:hover {
     cursor: pointer;
     text-decoration: underline;
 }
@@ -893,8 +745,8 @@ footer .social-icons a:hover .fa-instagram {
     color: var(--instagram-color);
 }
 
-footer .social-icons a:hover .fa-twitter {
-    color: var(--twitter-color);
+footer .social-icons a:hover .fa-x-twitter {
+    color: var(--x-twitter-color);
 }
 
 footer .social-icons a:hover .fa-linkedin {

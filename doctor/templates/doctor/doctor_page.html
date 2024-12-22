@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Management System</title>
 
     {% load static %}
+    
+    <title>Nile's Care | Doctor</title>
+    <link rel="icon" href="{% static "doctor/images/favicon.ico" %}" type="image/x-icon">
 
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <link rel="stylesheet" href="{% static 'doctor/css/style_doctor_page.css' %}">
 
     <script src="{% static 'doctor/js/script_doctor_page.js' %}" defer></script>
@@ -20,13 +20,11 @@
 <body>
     <header>
         <nav class="logo">
-            <a href="#">HMS</a>
-            <!-- another way -->
-            <!-- but the page will reload everytime -->
-            <!-- <a href="{% url 'index' %}">HMS</a> -->
+            <a href="#">Nile's Care</a>
         </nav>
 
         <nav class="links">
+            <!-- <a href="{% url 'doctor_list' %}">Appointments</a> -->
             <a href="#Appointments">Appointments</a>
             <a href="#Doctor-Panel">Doctor Panel</a>
             <a href="#Dashboard">Dashboard</a>
@@ -42,7 +40,7 @@
             <div class='sub-menu'>
                 <div class='user-info'>
                     <i class="fa-solid fa-circle-user"></i>
-                    <h4>your profile</h4>
+                    <h4>{{ user.username }}</h4>
                 </div>
 
                 <hr>
@@ -64,7 +62,7 @@
         <span class="home-imgHover"></span>
 
         <section class="intro">
-            <h1>Welcome to Doctor Page</h1>
+            <h1>Welcome, {{ user.username }}</h1>
             <p>We're here to help you manage your patients and appointments effectively.</p>
             <button onclick="location.href='#Appointments'" class="btn-primary">Learn More</button>
         </section>
@@ -73,33 +71,54 @@
             <h2>Your Appointments</h2>
 
             <div class="Appointments-card">
+                <i class="fa-solid fa-calendar-check"></i>
+                <h3>View Appointments</h3>
+                <p>
+                    Check the doctor's schedule and available slots effortlessly.
+                </p>
+                <a href="{% url 'doctor_list' %}"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            {% comment %} <div class="Appointments-card">
                 <i class="fa-solid fa-repeat"></i>
                 <h3>change appointment</h3>
                 <p>
                     Access patient history and medical records securely.
                 </p>
-            </div>
+            </div> {% endcomment %}
 
-            <div class="Appointments-card">
+            {% comment %} <div class="Appointments-card">
                 <i class="fa-solid fa-ban"></i>
                 <h3>cancel appointment</h3>
                 <p>
                     Efficient billing for patients and healthcare providers.
                 </p>
-            </div>
+                <a href="{% url 'doctor_list' %}"><i class="fa-solid fa-arrow-right"></i></a>
+            </div> {% endcomment %}
         </section>
 
         <section id="Doctor-Panel" class="doc-panel">
             <h2>Your Doctor Panel</h2>
 
             <div class="img-flex">
-                <!-- <img src="../../static/doctor/images/doc-1.jpg" alt="doctor image"> -->
                 <img src="{% static 'doctor/images/doc-1.jpg' %}" alt="doctor image">
                 <div class="img-text">
-                    <h3>samuel goe</h3>
+                    {% comment %} <h3>samuel goe</h3> {% endcomment %}
+                    <h3>{{ user.username }}</h3>
                     <p class="doctor-specialization">Medicine</p>
-                    <p class="doctor-description">
+                    {% comment %} <p class="doctor-specialization">{{ doctor.specialty }}</p> {% endcomment %}
+                    {% comment %} <p class="doctor-description">
                         Dr. Samuel Goe is an experienced medical professional specializing in
+                        internal medicine. Dedicated to providing high-quality patient care, he strives to stay
+                        up-to-date with the latest advancements in medical treatment.
+                    </p> {% endcomment %}
+                    {% comment %} <p class="doctor-description">
+                        Dr. {{ user.username }} is an experienced {{ doctor.specialty }} professional specializing in
+                        internal {{ doctor.specialty }}. Dedicated to providing high-quality patient care, he strives to stay
+                        up-to-date with the latest advancements in medical treatment.
+                    </p> {% endcomment %}
+                    <p class="doctor-description">
+                        Dr. {{ user.username }} is an experienced medical professional specializing in
                         internal medicine. Dedicated to providing high-quality patient care, he strives to stay
                         up-to-date with the latest advancements in medical treatment.
                     </p>
@@ -115,23 +134,28 @@
         </div>
 
         <div class="social-icons">
-            <a href="#" target="_blank" title="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61570642747617" target="_blank" title="Facebook">
                 <i class="fa-brands fa-facebook"></i>
             </a>
 
-            <a href="#" target="_blank" title="Instagram">
+            <a href="https://www.instagram.com/nilescare?igsh=MXM4bmNvYzdjd3libA==" target="_blank" title="Instagram">
                 <i class="fa-brands fa-instagram"></i>
             </a>
 
-            <a href="#" target="_blank" title="Twitter">
-                <i class="fa-brands fa-twitter"></i>
+            <a href="https://www.x.com/NilesCare" target="_blank" title="X">
+                <i class="fa-brands fa-x-twitter"></i>
             </a>
 
-            <a href="#" target="_blank" title="LinkedIn">
-                <i class="fa-brands fa-linkedin"></i>
+            <a href="https://eg.linkedin.com/in/niles-care-b13679301" target="_blank" title="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i> 
             </a>
         </div>
     </footer>
-</body>
 
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        AOS.init();
+    </script>
+</body>
 </html>
