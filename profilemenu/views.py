@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from Accounts.models import CustomUser, Patient, Doctor
+from Accounts.models import Patient, Doctor
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 import re
@@ -12,7 +12,7 @@ import re
 @login_required
 def profilemenu(request):
     user = request.user
-    User = get_user_model()  # Get the custom user model
+    # User = get_user_model()  # Not needed, using default User
 
     if request.method == 'POST':
         # Check if the delete account button was clicked
@@ -82,21 +82,19 @@ def profilemenu(request):
         user.save()
 
         # Update Patient or Doctor model based on user type
-        if user.is_patient:
+        if Patient.objects.filter(user=user).exists():
             patient = get_object_or_404(Patient, user=user)
             patient.gender = gender
             patient.address = address
             patient.phone_number = phone_number
             patient.dob = dob
             patient.save()
-        elif user.is_doctor:
-            # specialty = request.POST.get('specialty')
+        elif Doctor.objects.filter(user=user).exists():
             doctor = get_object_or_404(Doctor, user=user)
             doctor.gender = gender
             doctor.address = address
             doctor.phone_number = phone_number
             doctor.dob = dob
-            # doctor.specialty = specialty
             doctor.save()
 
         messages.success(request, "Profile updated successfully!")
@@ -110,12 +108,12 @@ def profilemenu(request):
         'address': '',
         'phone_number': '',
         'dob': '',
-        'user_type': 'patient' if user.is_patient else 'doctor',
+        'user_type': 'patient' if Patient.objects.filter(user=user).exists() else 'doctor',
         'specialty': '',
     }
 
     # Fetch related data for Patient or Doctor models if available
-    if user.is_patient:
+    if Patient.objects.filter(user=user).exists():
         patient = get_object_or_404(Patient, user=user)
         context.update({
             'gender': patient.gender,
@@ -123,7 +121,7 @@ def profilemenu(request):
             'phone_number': patient.phone_number,
             'dob': patient.dob,
         })
-    elif user.is_doctor:
+    elif Doctor.objects.filter(user=user).exists():
         doctor = get_object_or_404(Doctor, user=user)
         context.update({
             'gender': doctor.gender,

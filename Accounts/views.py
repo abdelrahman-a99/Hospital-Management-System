@@ -10,7 +10,7 @@ from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-from .models import CustomUser, Patient, Doctor
+from .models import Patient, Doctor
 from django.contrib.auth import logout
 import re
 
@@ -27,157 +27,20 @@ def render_signup_form(request, error_message=None, **kwargs):
 
 def signup(request):
     if request.method == "POST":
-        # Retrieve the form data
         uname = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        pass2 = request.POST.get("confirm_password")
         gender = request.POST.get("gender")
         address = request.POST.get("address")
-        phone_number = request.POST.get("phonenumber")
+        phone_number = request.POST.get("phone_number")
         dob = request.POST.get("dob")
-        user_type = request.POST.get("user_type")  # 'patient' or 'doctor'
-        specialty = request.POST.get("specialty")  # For doctor only
-
-        print(
-            f"Received data: {uname}, {email}, {password}, {pass2}, {gender}, {address}, {phone_number}, {dob}, {user_type}"
-        )
-
-        # Validate password matching
-        if password != pass2:
-            messages.error(
-                request,
-                "Your password and confirm password are not the same.",
-                extra_tags="password-mismatch",
-            )
-
-            # return redirect('signup')
-
-            return render(
-                request,
-                "Accounts/signup.html",
-                {
-                    "username": uname,
-                    "email": email,
-                    "gender": gender,
-                    "address": address,
-                    "phone_number": phone_number,
-                    "dob": dob,
-                    "user_type": user_type,
-                },
-            )
-
-        # Validate password strength using Django's built-in validator
-        try:
-            validate_password(password)
-        except ValidationError as e:
-            messages.error(request, f"Password error: {e.messages[0]}")
-
-            # return redirect("signup")
-
-            return render(
-                request,
-                "Accounts/signup.html",
-                {
-                    "username": uname,
-                    "email": email,
-                    "gender": gender,
-                    "address": address,
-                    "phone_number": phone_number,
-                    "dob": dob,
-                    "user_type": user_type,
-                },
-            )
-
-        # Username validation (allow only letters and numbers)
-        if not re.match("^[a-zA-Z0-9]+$", uname):
-            messages.error(request, "Username can only contain letters and numbers.")
-
-            return render(
-                request,
-                "Accounts/signup.html",
-                {
-                    "username": "",
-                    "email": email,
-                    "gender": gender,
-                    "address": address,
-                    "phone_number": phone_number,
-                    "dob": dob,
-                    "user_type": user_type,
-                },
-            )
-
-        # Validate email format
-        try:
-            validate_email(email)
-        except ValidationError:
-            messages.error(request, "Please enter a valid email address.")
-            return render(
-                request,
-                "Accounts/signup.html",
-                {
-                    "username": uname,
-                    "email": "",
-                    "gender": gender,
-                    "address": address,
-                    "phone_number": phone_number,
-                    "dob": dob,
-                    "user_type": user_type,
-                },
-            )
-
-        # Validate phone number using regex (for Egypt)
-        # phone_regex = r"^\+20[1-9][0-9]{8}$|^\+20[2-9][0-9]{7}$"
-        # phone_regex = r"^\+20(10|11|12|15)[0-9]{8}$"
-        phone_regex = r"^(010|011|012|015)[0-9]{8}$"
-
-        if not re.match(phone_regex, phone_number):
-            messages.error(request, "Please enter a valid Egyptian phone number.")
-
-            return render(
-                request,
-                "Accounts/signup.html",
-                {
-                    "username": uname,
-                    "email": email,
-                    "gender": gender,
-                    "address": address,
-                    "phone_number": "",
-                    "dob": dob,
-                    "user_type": user_type,
-                },
-            )
+        user_type = request.POST.get("user_type")
 
         # Check if username already exists
-        # if User.objects.filter(username=uname).exists():
-        #     user = User.objects.get(username=uname)
-        #     if user.check_password(password):
-        #         messages.error(
-        #             request,
-        #             "You are already registered. Please log in instead.",
-        #             extra_tags="already-registered",
-        #         )
-        #         return redirect("login")
-
-        # another way
-        # if User.objects.filter(username=uname).exists():
-        #     messages.error(
-        #         request,
-        #         "You are already registered. Please log in instead.",
-        #         extra_tags="already-registered",
-        #     )
-
-        #     # Redirect to login page
-        #     return redirect(
-        #         "login"
-        #     )  # Redirecting to the login page after informing the user
-
-        # another logical way
         if User.objects.filter(username=uname).exists():
             messages.error(
                 request, "Username already exists. Please choose a different username."
             )
-
             return render(
                 request,
                 "Accounts/signup.html",
@@ -197,24 +60,7 @@ def signup(request):
             messages.error(
                 request, "This email is already registered. Please log in instead."
             )
-
-            # return render(
-            #     request,
-            #     "Accounts/signup.html",
-            #     {
-            #         "username": uname,
-            #         "email": email,
-            #         "gender": gender,
-            #         "address": address,
-            #         "phone_number": phone_number,
-            #         "dob": dob,
-            #         "user_type": user_type,
-            #     },
-            # )
-
-            return redirect(
-                "login"
-            )  # Redirecting to the login page after informing the user
+            return redirect("login")
 
         # Validate date of birth and age
         if not dob:
@@ -235,12 +81,8 @@ def signup(request):
 
         # Check if age is >= 12 (validate dob)
         try:
-            dob_date = datetime.strptime(
-                dob, "%Y-%m-%d"
-            )  # Parse DOB to a datetime object
-
+            dob_date = datetime.strptime(dob, "%Y-%m-%d")
             today = datetime.today()
-
             age = (
                 today.year
                 - dob_date.year
@@ -249,7 +91,6 @@ def signup(request):
 
             if age < 12:
                 messages.error(request, "You must be at least 12 years old to sign up.")
-
                 return render(
                     request,
                     "Accounts/signup.html",
@@ -265,10 +106,7 @@ def signup(request):
                 )
 
         except ValueError:
-            messages.error(
-                request, "Invalid date of birth format. Please use YYYY-MM-DD."
-            )
-
+            messages.error(request, "Invalid date of birth format. Please use YYYY-MM-DD.")
             return render(
                 request,
                 "Accounts/signup.html",
@@ -285,10 +123,7 @@ def signup(request):
 
         # Create user and save to database
         user = User.objects.create_user(username=uname, email=email, password=password)
-        user.is_patient = user_type == "patient"
-        user.is_doctor = user_type == "doctor"
-        user.save()
-
+        
         # Handle patient/doctor specific data
         if user_type == "patient":
             Patient.objects.create(
@@ -298,8 +133,6 @@ def signup(request):
                 phone_number=phone_number,
                 dob=dob,
             )
-            # return redirect("patient_page")  # Redirect directly to the patient page
-
         elif user_type == "doctor":
             specialty = request.POST.get("specialty")
             Doctor.objects.create(
@@ -310,10 +143,9 @@ def signup(request):
                 dob=dob,
                 specialty=specialty,
             )
-            # return redirect("doctor_page")  # Redirect directly to the doctor page
 
         messages.success(request, "Registration completed successfully! Please log in.")
-        return redirect("login")  # Redirect to the login page for all users
+        return redirect("login")
 
     return render(request, "Accounts/signup.html")
 
@@ -374,33 +206,37 @@ def signup(request):
 #             return redirect("login")
 #     return render(request, "Accounts/login.html")
 
-CustomUser = get_user_model()
-
 def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
 
+        # First try to find the user by email
         try:
-            # Fetch the user with the given email
-            user = CustomUser.objects.get(email=email)
-
-            # Check the provided password against the stored hash
-            if check_password(password, user.password):
-                auth_login(request, user)  # Log in the user
-                # Redirect based on user type
-                if user.is_doctor:
+            user = User.objects.get(email=email)
+            # Then authenticate using the username and password
+            user = authenticate(request, username=user.username, password=password)
+            
+            if user is not None:
+                # Successful authentication
+                auth_login(request, user)
+                
+                # Check if user is a doctor or patient
+                try:
+                    doctor = Doctor.objects.get(user=user)
                     return redirect("doctor_page")
-                elif user.is_patient:
-                    return redirect("patient_page")
-                else:
-                    messages.error(request, "User type not recognized.")
-                    return redirect("login")
+                except Doctor.DoesNotExist:
+                    try:
+                        patient = Patient.objects.get(user=user)
+                        return redirect("patient_page")
+                    except Patient.DoesNotExist:
+                        messages.error(request, "User type not recognized.")
+                        return redirect("login")
             else:
-                messages.error(request, "Invalid email or password.")
+                messages.error(request, "Invalid email or password. Please try again.")
                 return redirect("login")
-        except CustomUser.DoesNotExist:
-            messages.error(request, "Invalid email or password.")
+        except User.DoesNotExist:
+            messages.error(request, "Invalid email or password. Please try again.")
             return redirect("login")
 
     return render(request, "Accounts/login.html")
@@ -408,27 +244,26 @@ def login(request):
 @login_required
 def doctor_page(request):
     # Ensure that the user is a doctor
-    if not request.user.is_doctor:
+    try:
+        doctor = Doctor.objects.get(user=request.user)
+        return render(request, "doctor/doctor_page.html", {"user": request.user})
+    except Doctor.DoesNotExist:
         return HttpResponseForbidden("You are not authorized to view this page.")
-
-    return render(request, "doctor/doctor_page.html", {"user": request.user})
 
 
 @login_required
 def patient_page(request):
     # Ensure that the user is a patient
-    if not request.user.is_patient:
+    try:
+        patient = Patient.objects.get(user=request.user)
+        return render(request, "patient/patient_page.html", {"user": request.user})
+    except Patient.DoesNotExist:
         return HttpResponseForbidden("You are not authorized to view this page.")
-
-    return render(request, "patient/patient_page.html", {"user": request.user})
 
 
 # Custom logout view
 @login_required
 def custom_logout(request):
-    logout(request)  # Logs out the user and clears the session
+    auth_logout(request)
     messages.success(request, "You have been logged out successfully.")
-
-    # return redirect("login")  # Redirects the user to the login page after logging out
-
-    return redirect("index")  # Redirect to home page after logging out
+    return redirect("index")
