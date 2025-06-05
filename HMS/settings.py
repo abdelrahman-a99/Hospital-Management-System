@@ -14,12 +14,26 @@ import os
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import pymysql
+import environ
 
-# Configure PyMySQL to be used instead of mysqlclient
-pymysql.install_as_MySQLdb()
+# Initialize environ
+env = environ.Env(
+    DEBUG=(bool, False),
+    DB_NAME=(str, 'hospital'),
+    DB_USER=(str, 'hospital_user'),
+    DB_PASSWORD=(str, ''),
+    DB_HOST=(str, 'localhost'),
+    DB_PORT=(str, '3306'),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# Configure PyMySQL to be used instead of mysqlclient
+pymysql.install_as_MySQLdb()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -59,10 +73,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'simple_history',
     'axes',
-    'django_otp',
-    'django_otp.plugins.otp_totp',
-    'django_otp.plugins.otp_static',
-    'two_factor',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +82,6 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -106,11 +115,11 @@ WSGI_APPLICATION = "HMS.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'hospital_management'),
-        'USER': os.getenv('DB_USER', 'hospital_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '3306'),
+        'NAME': env('DB_NAME', default='hospital'),
+        'USER': env('DB_USER', default='hospital_user'),
+        'PASSWORD': env('DB_PASSWORD', default=''),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
@@ -216,8 +225,3 @@ AXES_FAILURE_LIMIT = 5
 AXES_LOCK_OUT_AT_FAILURE = True
 AXES_COOLOFF_TIME = 1  # hours
 AXES_LOCKOUT_TEMPLATE = 'account/lockout.html'
-
-# Two-Factor Authentication
-LOGIN_URL = 'two_factor:login'
-LOGIN_REDIRECT_URL = 'two_factor:profile'
-LOGOUT_REDIRECT_URL = 'home'
