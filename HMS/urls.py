@@ -32,7 +32,7 @@ urlpatterns = [
     
     # Authentication URLs
     path('accounts/', include('allauth.urls')),
-    path('two-factor/', include('two_factor.urls', 'two_factor')),
+    path('two-factor/', include('two_factor.urls')),
     path('two-factor/setup/', TemplateView.as_view(template_name='two_factor/setup.html'), name='setup'),
     
     # Debug Toolbar

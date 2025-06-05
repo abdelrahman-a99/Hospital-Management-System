@@ -38,6 +38,9 @@ The **Hospital Management System** is a comprehensive web-based application desi
 - Django 4.2.6
 - Django REST Framework
 - Django AllAuth
+- PyMySQL (MySQL database connector, no C headers needed)
+- django-axes (login attempt limiting)
+- phonenumbers (phone number validation)
 
 ### Database
 - MySQL 8.0+
@@ -76,6 +79,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
+> **Note:** On Windows, you do NOT need to install MySQL C/C++ headers. The project uses PyMySQL, a pure Python MySQL client.
 
 4. Set up MySQL database:
 ```bash
@@ -88,9 +92,27 @@ FLUSH PRIVILEGES;
 
 5. Set up environment variables:
 ```bash
-cp .env.example .env
-# Edit .env with your MySQL configuration:
-# DATABASE_URL=mysql://hospital_user:your_password@localhost:3306/hospital_management
+# Create a .env file in the project root with the following content:
+DJANGO_SECRET_KEY=your-secret-key-here
+DJANGO_DEBUG=True
+DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
+
+DB_NAME=hospital
+DB_USER=hospital_user
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=3306
+
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_app_password
+
+# Security settings (for production, set these to True)
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+SECURE_SSL_REDIRECT=False
 ```
 
 6. Run migrations:
