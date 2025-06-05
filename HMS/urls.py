@@ -17,6 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,4 +29,17 @@ urlpatterns = [
     path("patient/", include("patient.urls")),
     path('appointments/', include('appointments.urls')),  
     path('profilemenu/', include('profilemenu.urls')),
+    
+    # Authentication URLs
+    path('accounts/', include('allauth.urls')),
+    path('two-factor/', include('two_factor.urls', 'two_factor')),
+    path('two-factor/setup/', TemplateView.as_view(template_name='two_factor/setup.html'), name='setup'),
+    
+    # Debug Toolbar
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
+
+# Serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
