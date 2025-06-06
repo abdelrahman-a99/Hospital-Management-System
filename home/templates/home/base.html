@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+
+    <title>{% block title %}Nile's Care{% endblock %}</title>
+    <link rel="icon" href="{% static "home/images/favicon.ico" %}" type="image/x-icon">
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="{% static 'home/js/script.js' %}" defer></script>
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <header>
+        <nav class="logo">
+            <a href="{% url 'index' %}" title="Home" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Nile's Care</a>
+        </nav>
+
+        <nav class="links">
+            <a href="{% url 'departments' %}" {% if request.resolver_match.url_name == 'departments' %}class="active"{% endif %}>Departments</a>
+            <a href="{% url 'services' %}" {% if request.resolver_match.url_name == 'services' %}class="active"{% endif %}>Services</a>
+            <a href="{% url 'news' %}" {% if request.resolver_match.url_name == 'news' %}class="active"{% endif %}>News</a>
+            <a href="{% url 'testimonials' %}" {% if request.resolver_match.url_name == 'testimonials' %}class="active"{% endif %}>Testimonials</a>
+            <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>About Us</a>
+            <a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>Contact</a>
+        </nav>
+
+        <nav class="auth">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profilemenu' %}" {% if request.resolver_match.url_name == 'profilemenu' %}class="active"{% endif %}>Profile</a>
+                <a href="{% url 'logout' %}">Log Out</a>
+            {% else %}
+                <a href="{% url 'login' %}" {% if request.resolver_match.url_name == 'login' %}class="active"{% endif %}>Log In</a>
+                <a href="{% url 'signup' %}" {% if request.resolver_match.url_name == 'signup' %}class="active"{% endif %}><button>Sign Up</button></a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; <span class="time"></span> <span class="company" title="Nile's Care">Nile's Care</span> all
+            right reserved.
+        </div>
+
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61570642747617" target="_blank" title="Facebook">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+
+            <a href="https://www.instagram.com/nilescare?igsh=MXM4bmNvYzdjd3libA==" target="_blank" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a href="https://www.x.com/NilesCare" target="_blank" title="X">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+
+            <a href="https://eg.linkedin.com/in/niles-care-b13679301" target="_blank" title="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        AOS.init();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

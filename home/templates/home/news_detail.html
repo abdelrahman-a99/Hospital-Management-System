@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+
+{% block title %}{{ article.title }} - Nile's Care{% endblock %}
+
+{% block content %}
+<section id="services" class="services">
+    <article class="service-card">
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        {% endif %}
+
+        <h2>{{ article.title }}</h2>
+        <div class="about-meta">
+            <span>By {{ article.author }}</span>
+            <span>{{ article.published_date|date:"F j, Y" }}</span>
+        </div>
+
+        <div class="about-content">
+            {{ article.content|linebreaks }}
+        </div>
+    </article>
+</section>
+{% endblock %} 

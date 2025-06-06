@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(to right, #1977cc, #3fbbc0); /* Degraded Blue */
+    background: linear-gradient(to right, #1977cc, #3fbbc0);
     color: #2c3e50;
     line-height: 1.6;
 }
@@ -60,7 +60,7 @@ body {
 .main-content {
     margin-left: 270px;
     padding: 30px;
-    background: #f9f9fc; /* Light background */
+    background: #f9f9fc; 
     min-height: 100vh;
     border-top-left-radius: 20px;
 }
@@ -127,15 +127,15 @@ body {
 }
 
 .status.pending {
-    background-color: #f39c12; /* Orange for pending */
+    background-color: #f39c12;
 }
 
 .status.approved {
-    background-color: #28a745; /* Green for approved */
+    background-color: #28a745;
 }
 
 .status.rejected {
-    background-color: #e74c3c; /* Red for rejected */
+    background-color: #e74c3c; 
 }
 
 /* Appointment Body */
@@ -172,7 +172,7 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
-/* Section Title - Blue Gradient */
+/* Section Title */
 .section-title {
     display: flex;
     align-items: center;
@@ -186,9 +186,9 @@ body::-webkit-scrollbar-track {
     font-size: 2.5rem;
     font-weight: bold;
     text-transform: uppercase;
-    background: linear-gradient(to right, #1977cc, #3fbbc0); /* Blue Gradient */
+    background: linear-gradient(to right, #1977cc, #3fbbc0);
     background-clip: text;
-    -webkit-background-clip: text; /* Webkit Compatibility */
+    -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
 }
@@ -197,7 +197,7 @@ body::-webkit-scrollbar-track {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, #1977cc, #3fbbc0); /* Blue Gradient */
+    background: linear-gradient(to bottom, #1977cc, #3fbbc0);
     color: #fff;
     border-radius: 50%;
     height: 60px;
@@ -209,6 +209,6 @@ body::-webkit-scrollbar-track {
 .section-title .title-line {
     flex-grow: 1;
     height: 4px;
-    background: linear-gradient(to right, #3fbbc0, #1977cc); /* Blue Gradient Line */
+    background: linear-gradient(to right, #3fbbc0, #1977cc);
     border-radius: 2px;
 }

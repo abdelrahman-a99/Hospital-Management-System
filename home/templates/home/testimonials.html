@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Testimonials - Nile's Care{% endblock %}
+
+{% block content %}
+<section class="services">
+    <h2>What Our Patients Say</h2>
+
+    {% for testimonial in testimonials %}
+    <div class="testimonial">
+        {% if testimonial.patient_image %}
+        <img src="{{ testimonial.patient_image.url }}" alt="{{ testimonial.patient_name }}">
+        {% endif %}
+
+        <p>{{ testimonial.content }}</p>
+        <span>- {{ testimonial.patient_name }}, {{ testimonial.patient_role }}</span>
+    </div>
+
+        {% empty %}
+        <p>No testimonials available.</p>
+
+        {% endfor %}
+    </div>
+</section>
+{% endblock %} 

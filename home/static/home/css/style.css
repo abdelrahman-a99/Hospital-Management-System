@@ -99,6 +99,24 @@ header .auth a {
     transition: 0.3s ease;
 }
 
+header .links a.active,
+header .auth a.active {
+    color: green;
+    font-weight: 700;
+}
+
+header .links a.active::after {
+    content: '';
+    height: 3px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: yellow;
+    position: absolute;
+    left: 0px;
+    bottom: -10px;
+    box-shadow: 0 0 10px yellow;
+}
+
 header .auth button {
     background-color: inherit;
     color: var(--icons-color);
@@ -201,10 +219,6 @@ main {
 }
 
 /* SERVICES */
-#services {
-    scroll-margin-top: 40px;
-}
-
 .services {
     text-align: center;
     padding: 3rem 1rem;
@@ -271,10 +285,6 @@ main {
 }
 
 /* CONTACT */
-#contact {
-    scroll-margin-top: 130px;
-}
-
 .contact {
     padding: 3rem 1rem;
     text-align: center;
@@ -368,10 +378,6 @@ textarea:valid {
 }
 
 /* ABOUT US */
-#about{
-    scroll-margin-top: 70px;
-}
-
 .about {
     padding: 3rem 1rem;
     background-color: #fff;

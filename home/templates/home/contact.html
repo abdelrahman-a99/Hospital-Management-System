@@ -1,0 +1,35 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Contact Us - Nile's Care{% endblock %}
+
+{% block content %}
+<section class="contact">
+    <h2>Contact Us</h2>
+
+    <div class="service-card">
+        <i class="fas fa-map-marker-alt size-logo-service"></i>
+        <h3>Address</h3>
+        <p>Nile University, Egypt</p>
+    </div>
+
+    <div class="service-card">
+        <i class="fas fa-phone size-logo-service"></i>
+        <h3>Phone</h3>
+        <p>+20 120 035 1201</p>
+    </div>
+
+    <div class="service-card">
+        <i class="fas fa-envelope size-logo-service"></i>
+        <h3>Email</h3>
+        <p>info@nilescare.com</p>
+    </div>
+
+    <form action="{% url 'contact' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="name" value="{{ name }}" placeholder="Your Name" required>
+        <input type="email" name="email" value="{{ email }}" placeholder="Your Email" required>
+        <textarea name="message" rows="5" placeholder="Your Message" required style="resize: none;">{{ message }}</textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+{% endblock %} 
