@@ -13,27 +13,27 @@ class Command(BaseCommand):
             {
                 'name': 'Cardiology',
                 'description': 'Specialized in heart and cardiovascular system treatment.',
-                'icon': 'fa-heartbeat',
+                'icon': 'fas fa-heartbeat',
             },
             {
                 'name': 'Neurology',
                 'description': 'Expert care for brain and nervous system disorders.',
-                'icon': 'fa-brain',
+                'icon': 'fas fa-brain',
             },
             {
                 'name': 'Pediatrics',
                 'description': 'Comprehensive care for children from birth to adolescence.',
-                'icon': 'fa-baby',
+                'icon': 'fas fa-baby',
             },
             {
                 'name': 'Orthopedics',
                 'description': 'Specialized in musculoskeletal system and sports injuries.',
-                'icon': 'fa-bone',
+                'icon': 'fas fa-bone',
             },
             {
                 'name': 'Dermatology',
                 'description': 'Expert care for skin, hair, and nail conditions.',
-                'icon': 'fa-allergies',
+                'icon': 'fas fa-allergies',
             },
         ]
 
@@ -42,8 +42,7 @@ class Command(BaseCommand):
             dept = Department.objects.create(
                 name=dept_data['name'],
                 description=dept_data['description'],
-                icon=dept_data['icon'],
-                is_active=True
+                icon=dept_data['icon']
             )
             departments.append(dept)
             self.stdout.write(f'Created department: {dept.name}')
@@ -51,29 +50,29 @@ class Command(BaseCommand):
         # Create Services for each Department
         services_data = {
             'Cardiology': [
-                {'name': 'Heart Check-up', 'price': 150.00, 'duration': '1 hour'},
-                {'name': 'ECG Test', 'price': 75.00, 'duration': '30 minutes'},
-                {'name': 'Stress Test', 'price': 200.00, 'duration': '1.5 hours'},
+                {'name': 'Heart Check-up', 'price': 150.00},
+                {'name': 'ECG Test', 'price': 75.00},
+                {'name': 'Stress Test', 'price': 200.00},
             ],
             'Neurology': [
-                {'name': 'Brain MRI', 'price': 500.00, 'duration': '45 minutes'},
-                {'name': 'Neurological Consultation', 'price': 180.00, 'duration': '1 hour'},
-                {'name': 'Sleep Study', 'price': 350.00, 'duration': '8 hours'},
+                {'name': 'Brain MRI', 'price': 500.00},
+                {'name': 'Neurological Consultation', 'price': 180.00},
+                {'name': 'Sleep Study', 'price': 350.00},
             ],
             'Pediatrics': [
-                {'name': 'Child Wellness Check', 'price': 100.00, 'duration': '45 minutes'},
-                {'name': 'Vaccination', 'price': 50.00, 'duration': '30 minutes'},
-                {'name': 'Growth Monitoring', 'price': 80.00, 'duration': '1 hour'},
+                {'name': 'Child Wellness Check', 'price': 100.00},
+                {'name': 'Vaccination', 'price': 50.00},
+                {'name': 'Growth Monitoring', 'price': 80.00},
             ],
             'Orthopedics': [
-                {'name': 'Joint Pain Consultation', 'price': 120.00, 'duration': '1 hour'},
-                {'name': 'Sports Injury Treatment', 'price': 200.00, 'duration': '1.5 hours'},
-                {'name': 'Physical Therapy', 'price': 90.00, 'duration': '1 hour'},
+                {'name': 'Joint Pain Consultation', 'price': 120.00},
+                {'name': 'Sports Injury Treatment', 'price': 200.00},
+                {'name': 'Physical Therapy', 'price': 90.00},
             ],
             'Dermatology': [
-                {'name': 'Skin Consultation', 'price': 100.00, 'duration': '45 minutes'},
-                {'name': 'Acne Treatment', 'price': 150.00, 'duration': '1 hour'},
-                {'name': 'Skin Allergy Test', 'price': 200.00, 'duration': '1.5 hours'},
+                {'name': 'Skin Consultation', 'price': 100.00},
+                {'name': 'Acne Treatment', 'price': 150.00},
+                {'name': 'Skin Allergy Test', 'price': 200.00},
             ],
         }
 
@@ -83,10 +82,8 @@ class Command(BaseCommand):
                     name=service_data['name'],
                     department=dept,
                     description=f'Professional {service_data["name"].lower()} service in our {dept.name} department.',
-                    icon='fa-stethoscope',
-                    price=service_data['price'],
-                    duration=service_data['duration'],
-                    is_active=True
+                    icon='fas fa-stethoscope',
+                    price=service_data['price']
                 )
                 self.stdout.write(f'Created service: {service.name} for {dept.name}')
 
@@ -97,30 +94,35 @@ class Command(BaseCommand):
                 'role': 'Patient',
                 'content': 'The cardiology department provided excellent care during my heart surgery. The staff was professional and caring.',
                 'rating': 5,
+                'is_featured': True
             },
             {
                 'name': 'Sarah Johnson',
                 'role': 'Patient',
                 'content': 'The pediatric team was amazing with my child. They made the hospital stay comfortable and stress-free.',
                 'rating': 5,
+                'is_featured': True
             },
             {
                 'name': 'Michael Brown',
                 'role': 'Family Member',
                 'content': 'The neurology department\'s expertise and care helped my father recover from his stroke. We\'re grateful for their support.',
                 'rating': 4,
+                'is_featured': True
             },
             {
                 'name': 'Emily Davis',
                 'role': 'Patient',
                 'content': 'The dermatology team helped me overcome my skin condition. Their treatment was effective and the follow-up care was excellent.',
                 'rating': 5,
+                'is_featured': False
             },
             {
                 'name': 'Robert Wilson',
                 'role': 'Patient',
                 'content': 'The orthopedic team helped me recover from my sports injury. Their rehabilitation program was well-structured and effective.',
                 'rating': 4,
+                'is_featured': False
             },
         ]
 
@@ -130,7 +132,7 @@ class Command(BaseCommand):
                 role=testimonial_data['role'],
                 content=testimonial_data['content'],
                 rating=testimonial_data['rating'],
-                is_active=True
+                is_featured=testimonial_data['is_featured']
             )
             self.stdout.write(f'Created testimonial from: {testimonial.name}')
 
@@ -168,13 +170,12 @@ class Command(BaseCommand):
             },
         ]
 
-        for news_data in news_data:
+        for news_item in news_data:
             news = News.objects.create(
-                title=news_data['title'],
-                content=news_data['content'],
-                author=news_data['author'],
-                is_active=True,
-                is_featured=news_data['is_featured']
+                title=news_item['title'],
+                content=news_item['content'],
+                author=news_item['author'],
+                is_featured=news_item['is_featured']
             )
             self.stdout.write(f'Created news: {news.title}')
 
