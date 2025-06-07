@@ -35,8 +35,13 @@
 
         <nav class="auth">
             {% if user.is_authenticated %}
-                <a href="{% url 'profilemenu' %}" {% if request.resolver_match.url_name == 'profilemenu' %}class="active"{% endif %}>Profile</a>
-                <a href="{% url 'logout' %}">Log Out</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'login' %}" {% if request.resolver_match.url_name == 'login' %}class="active"{% endif %}>Log In</a>
+                    <a href="{% url 'signup' %}" {% if request.resolver_match.url_name == 'signup' %}class="active"{% endif %}><button>Sign Up</button></a>
+                {% else %}
+                    <a href="{% url 'profilemenu' %}" {% if request.resolver_match.url_name == 'profilemenu' %}class="active"{% endif %}>Profile</a>
+                    <a href="{% url 'logout' %}">Log Out</a>
+                {% endif %}
             {% else %}
                 <a href="{% url 'login' %}" {% if request.resolver_match.url_name == 'login' %}class="active"{% endif %}>Log In</a>
                 <a href="{% url 'signup' %}" {% if request.resolver_match.url_name == 'signup' %}class="active"{% endif %}><button>Sign Up</button></a>

@@ -18,59 +18,76 @@
 <section class="services">
     <h2>Featured Departments</h2>
 
-    {% for department in departments %}
-    <div class="service-card">
-        <i class="{{ department.icon }} size-logo-service"></i>
-        <h3>{{ department.name }}</h3>
-        <p>{{ department.description|truncatewords:20 }}</p>
-        <a href="{% url 'department_detail' department.id %}" class="btn-primary">Learn More</a>
+    <div class="news-cards">
+        {% for department in departments %}
+        <div class="service-card">
+            <i class="{{ department.icon }} size-logo-service"></i>
+            <h3>{{ department.name }}</h3>
+            <p>{{ department.description|truncatewords:20 }}</p>
+            <a href="{% url 'department_detail' department.id %}" class="btn-primary">Learn More</a>
+        </div>
+
+        {% empty %}
+        <p>No departments available at the moment.</p>
+
+        {% endfor %}
     </div>
 
-    {% empty %}
-    <p>No departments available at the moment.</p>
-
-    {% endfor %}
+    <div class="view-all">
+        <a href="{% url 'departments' %}" class="btn-primary">View All Departments</a>
+    </div>
 </section>
 
 <section class="services">
     <h2>Latest News</h2>
 
-    {% for news in featured_news %}
-    <div class="service-card">
-        {% if news.image %}
-        <img src="{{ news.image.url }}" alt="{{ news.title }}">
-        {% endif %}
+    <div class="news-cards">
+        {% for news in featured_news %}
+        <div class="service-card">
+            {% if news.image %}
+            <img src="{{ news.image.url }}" alt="{{ news.title }}">
+            {% endif %}
 
-        <h3>{{ news.title }}</h3>
-        <p>{{ news.content|truncatewords:20 }}</p>
-        <div class="about-meta">
-            <span>By {{ news.author }}</span>
-            <span>{{ news.published_at|date:"F j, Y" }}</span>
+            <h3>{{ news.title }}</h3>
+            <p>{{ news.content|truncatewords:20 }}</p>
+            {% comment %} <div class="about-meta">
+                <span>By {{ news.author }}</span>
+                <span>{{ news.published_at|date:"F j, Y" }}</span>
+            </div> {% endcomment %}
+
+            <a href="{% url 'news_detail' news.id %}" class="btn-primary">Read More</a>
         </div>
 
-        <a href="{% url 'news_detail' news.id %}" class="btn-primary">Read More</a>
+        {% empty %}
+        <p>No news articles available at the moment.</p>
+
+        {% endfor %}
     </div>
 
-    {% empty %}
-    <p>No news articles available at the moment.</p>
-
-    {% endfor %}
-    <a href="{% url 'news' %}" class="btn-primary">View All News</a>
+    <div class="view-all">
+        <a href="{% url 'news' %}" class="btn-primary">View All News</a>
+    </div>
 </section>
 
 <section class="services">
     <h2>What Our Patients Say</h2>
 
-    {% for testimonial in testimonials %}
-    <div class="testimonial">
-        <p>{{ testimonial.content }}</p>
-        <span>- {{ testimonial.name }}, {{ testimonial.role }}</span>
+    <div class="news-cards">
+        {% for testimonial in testimonials %}
+        <div class="testimonial">
+            <p>{{ testimonial.content }}</p>
+            <span>- {{ testimonial.name }}, {{ testimonial.role }}</span>
+        </div>
+
+        {% empty %}
+        <p>No testimonials available at the moment.</p>
+
+        {% endfor %}
     </div>
 
-    {% empty %}
-    <p>No testimonials available at the moment.</p>
-
-    {% endfor %}
+    <div class="view-all">
+        <a href="{% url 'testimonials' %}" class="btn-primary">View All Testimonials</a>
+    </div>
 </section>
 
 <section class="contact">
@@ -90,6 +107,10 @@
     <p>
         Our mission is to streamline hospital operations and improve patient care with advanced technology.
     </p>
+
+    <div class="view-all View-about">
+        <a href="{% url 'about' %}" class="btn-primary">View All abouts</a>
+    </div>
 
     <div class="mapouter">
         <div class="gmap_canvas">

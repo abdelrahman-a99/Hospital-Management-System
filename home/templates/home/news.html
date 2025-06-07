@@ -6,19 +6,20 @@
 <section class="services">
     <h2>Latest News</h2>
 
-    {% for article in news_list %}
+    {% for news in news_list %}
     <div class="service-card">
-        {% if article.image %}
-        <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        {% if news.image %}
+        <img src="{{ news.image.url }}" alt="{{ news.title }}">
         {% endif %}
 
-        <h3>{{ article.title }}</h3>
-        <p>{{ article.content|truncatewords:30 }}</p>
-        <div class="about-meta">
-            <span>By {{ article.author }}</span>
-            <span>{{ article.published_date|date:"F j, Y" }}</span>
-        </div>
-        <a href="{% url 'news_detail' article.id %}" class="btn-primary">Read More</a>
+        <h3>{{ news.title }}</h3>
+        <p>{{ news.content|truncatewords:30 }}</p>
+        {% comment %} <div class="about-meta">
+            <span>By {{ news.author }}</span>
+            <span>{{ news.published_at|date:"F j, Y" }}</span>
+        </div> {% endcomment %}
+
+        <a href="{% url 'news_detail' news.id %}" class="btn-primary">Read More</a>
     </div>
 
     {% empty %}

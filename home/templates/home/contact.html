@@ -6,23 +6,29 @@
 <section class="contact">
     <h2>Contact Us</h2>
 
-    <div class="service-card">
-        <i class="fas fa-map-marker-alt size-logo-service"></i>
-        <h3>Address</h3>
-        <p>Nile University, Egypt</p>
-    </div>
+    <a href="https://www.google.com/maps?q=Nile+University,+Egypt" class="contact-card" target="_blank">
+        <div class="service-card contact-card">
+            <i class="fas fa-map-marker-alt size-logo-service"></i>
+            <h3>Address</h3>
+            <p>Nile University, Egypt</p>
+        </div>
+    </a>
 
-    <div class="service-card">
-        <i class="fas fa-phone size-logo-service"></i>
-        <h3>Phone</h3>
-        <p>+20 120 035 1201</p>
-    </div>
+    <a href="https://wa.me/+201200351201" class="contact-card" target="_blank">
+        <div class="service-card contact-card">
+            <i class="fas fa-phone size-logo-service"></i>
+            <h3>Phone</h3>
+            <p>+20 120 035 1201</p>
+        </div>
+    </a>
 
-    <div class="service-card">
-        <i class="fas fa-envelope size-logo-service"></i>
-        <h3>Email</h3>
-        <p>info@nilescare.com</p>
-    </div>
+    <a href="mailto:nfo@nilescare.com" class="contact-card" target="_blank">
+        <div class="service-card contact-card">
+            <i class="fas fa-envelope size-logo-service"></i>
+            <h3>Email</h3>
+            <p>info@nilescare.com</p>
+        </div>
+    </a>
 
     <form action="{% url 'contact' %}" method="post">
         {% csrf_token %}

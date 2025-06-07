@@ -101,7 +101,7 @@ header .auth a {
 
 header .links a.active,
 header .auth a.active {
-    color: green;
+    color: var(--icons-color);
     font-weight: 700;
 }
 
@@ -110,7 +110,6 @@ header .links a.active::after {
     height: 3px;
     width: 100%;
     border-radius: 5px;
-    background-color: yellow;
     position: absolute;
     left: 0px;
     bottom: -10px;
@@ -230,6 +229,37 @@ main {
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 2rem;
+}
+
+.news-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.news-p {
+    margin-top: 1rem;
+}
+
+.view-all {
+    margin-top: 2rem;
+}
+
+.View-about {
+    margin-bottom: 1rem;
+}
+
+.contact-card:active i,
+.contact-card:active h3,
+.contact-card:active p {
+    color: var(--primary-color);
+}
+
+.contact-card:visited i,
+.contact-card:visited h3,
+.contact-card:visited p {
+    color: var(--primary-color);
 }
 
 .service-card {
