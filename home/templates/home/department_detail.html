@@ -1,0 +1,34 @@
+{% extends 'home/base.html' %}
+
+{% block title %}{{ department.name }} - Nile's Care{% endblock %}
+
+{% block content %}
+<section id="services" class="services">
+    <h2>{{ department.name }}</h2>
+
+    <div class="service-card">
+        <i class="{{ department.icon }} size-logo-service"></i>
+        <p>{{ department.description }}</p>
+    </div>
+
+    <h3>Our Services</h3>
+
+    {% for service in services %}
+    <div class="service-card">
+        <i class="{{ service.icon }} size-logo-service"></i>
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.description|truncatewords:20 }}</p>
+
+        {% if service.price %}
+        <p>Price: ${{ service.price }}</p>
+        {% endif %}
+
+        <a href="{% url 'service_detail' service.id %}" class="btn-primary">Learn More</a>
+    </div>
+
+    {% empty %}
+    <p>No services available for this department.</p>
+
+    {% endfor %}
+</section>
+{% endblock %} 

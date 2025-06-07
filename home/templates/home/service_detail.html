@@ -1,0 +1,27 @@
+{% extends 'home/base.html' %}
+
+{% block title %}{{ service.name }} - Nile's Care{% endblock %}
+
+{% block content %}
+<section id="services" class="services">
+    <h2>{{ service.name }}</h2>
+
+    <div class="service-card">
+        <i class="{{ service.icon }} size-logo-service"></i>
+        <p>{{ service.description }}</p>
+
+        {% if service.price %}
+        <p>Price: ${{ service.price }}</p>
+        {% endif %}
+    </div>
+
+    <h3>Department</h3>
+
+    <div class="service-card">
+        <i class="{{ service.department.icon }} size-logo-service"></i>
+        <h3>{{ service.department.name }}</h3>
+        <p>{{ service.department.description|truncatewords:30 }}</p>
+        <a href="{% url 'department_detail' service.department.id %}" class="btn-primary">View Department</a>
+    </div>
+</section>
+{% endblock %} 

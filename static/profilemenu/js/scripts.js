@@ -1,10 +1,10 @@
 let list = document.querySelectorAll(".navigation li");
         
         function activeLink() {
-          list.forEach((item) => {
+        list.forEach((item) => {
             item.classList.remove("hovered");
-          });
-          this.classList.add("hovered");
+        });
+        this.classList.add("hovered");
         }
         
         list.forEach((item) => item.addEventListener("mouseover", activeLink));
@@ -15,8 +15,8 @@ let list = document.querySelectorAll(".navigation li");
         let main = document.querySelector(".main");
         
         toggle.onclick = function () {
-          navigation.classList.toggle("active");
-          main.classList.toggle("active");
+        navigation.classList.toggle("active");
+        main.classList.toggle("active");
         };
         document.querySelector('select[name="user_type"]').addEventListener('change', function() {
             var specialtyField = document.getElementById('specialty_field');
@@ -27,15 +27,15 @@ let list = document.querySelectorAll(".navigation li");
             }
         });
         
-        document.addEventListener('DOMContentLoaded', function () {
-            const messageBox = document.getElementById('message-box');
-            if (messageBox) {
-                setTimeout(() => {
-                    messageBox.style.opacity = '0';
-                    messageBox.style.visibility = 'hidden';
-                }, 5000); // 5 seconds delay
-            }
-        });
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const messageBox = document.getElementById('message-box');
+        //     if (messageBox) {
+        //         setTimeout(() => {
+        //             messageBox.style.opacity = '0';
+        //             messageBox.style.visibility = 'hidden';
+        //         }, 5000); // 5 seconds delay
+        //     }
+        // });
         function validatePassword(password) {
             const hasUpperCase = /[A-Z]/.test(password);
             const hasLowerCase = /[a-z]/.test(password);
@@ -81,7 +81,17 @@ let list = document.querySelectorAll(".navigation li");
                     confirmPasswordError.textContent = "";
                 }
             });
-        
+            
+            const messageBox = document.getElementById("message-box");
+            if (messageBox) {
+                setTimeout(() => {
+                    messageBox.style.opacity = "0";
+                    messageBox.style.transition = "opacity 1s ease";
+                    setTimeout(() => {
+                        messageBox.style.display = "none";
+                        }, 1000); // Hide the message box after 5 seconds
+                }, 5000);
+            }
             // Prevent form submission if passwords are invalid
             const form = document.querySelector('form');
             form.addEventListener('submit', (e) => {
@@ -97,4 +107,5 @@ let list = document.querySelectorAll(".navigation li");
                 }
             });
         });
-
+        
+    

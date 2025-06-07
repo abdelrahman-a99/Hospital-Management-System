@@ -1,0 +1,22 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Departments - Nile's Care{% endblock %}
+
+{% block content %}
+<section class="services">
+    <h2>Our Departments</h2>
+
+    {% for department in departments %}
+    <div class="service-card">
+        <i class="{{ department.icon }} size-logo-service"></i>
+        <h3>{{ department.name }}</h3>
+        <p>{{ department.description|truncatewords:30 }}</p>
+        <a href="{% url 'department_detail' department.id %}" class="btn-primary">Learn More</a>
+    </div>
+
+    {% empty %}
+    <p>No departments available at the moment.</p>
+
+    {% endfor %}
+</section>
+{% endblock %} 
