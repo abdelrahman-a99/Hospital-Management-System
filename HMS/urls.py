@@ -28,10 +28,10 @@ urlpatterns = [
     path("patient/", include("patient.urls")),
     path('appointments/', include('appointments.urls')),  
     path('profilemenu/', include('profilemenu.urls')),
-    
+
     # Authentication URLs
     path('accounts/', include('allauth.urls')),
-    
+
     # Debug Toolbar
     path('__debug__/', include('debug_toolbar.urls')),
 ]
