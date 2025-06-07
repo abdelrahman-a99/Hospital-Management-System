@@ -2,12 +2,12 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 import re
-from .models import ContactSubmission, Department, Service, Testimonial, News
+from .models import ContactSubmission, Department, Service, Testimonial, News, About
 
 
 def index(request):
     """Home page view with featured content"""
-    departments = Department.objects.all()[:6]
+    departments = Department.objects.all()[:3]
     featured_news = News.objects.filter(is_featured=True)[:3]
     testimonials = Testimonial.objects.filter(is_featured=True)[:3]
 
@@ -20,7 +20,8 @@ def index(request):
 
 def about(request):
     """About page view"""
-    return render(request, "home/about.html")
+    abouts = About.objects.all()
+    return render(request, "home/about.html", {'abouts': abouts})
 
 def departments(request):
     """List all departments"""

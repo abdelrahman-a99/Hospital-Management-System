@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactSubmission, Department, Service, Testimonial, News
+from .models import ContactSubmission, Department, Service, Testimonial, News, About
 
 
 @admin.register(ContactSubmission)
@@ -36,3 +36,19 @@ class NewsAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content', 'author')
     list_filter = ('is_featured', 'published_at')
     prepopulated_fields = {'slug': ('title',)}
+
+@admin.register(About)
+class AboutAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon', 'created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at')
+    search_fields = ('title', 'description')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Content', {
+            'fields': ('icon', 'title', 'description')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )

@@ -101,3 +101,18 @@ class News(models.Model):
         ordering = ['-published_at']
         verbose_name = 'News'
         verbose_name_plural = 'News'
+
+class About(models.Model):
+    icon = models.CharField(max_length=50, help_text="Font Awesome icon class")
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['created_at']
+        verbose_name = 'About'
+        verbose_name_plural = 'About'
