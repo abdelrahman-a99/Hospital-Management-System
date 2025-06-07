@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import ContactSubmission, Department, Service, Testimonial, News
 
+
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'submitted_at')

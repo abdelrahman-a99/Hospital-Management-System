@@ -134,7 +134,7 @@ python manage.py runserver
 
 1. Install development dependencies:
 ```bash
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
 2. Run tests:
