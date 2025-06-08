@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+
+{% block title %}News - Nile's Care{% endblock %}
+
+{% block content %}
+<section class="services">
+    <h2>Latest News</h2>
+
+    {% for news in news_list %}
+    <div class="service-card">
+        {% if news.image %}
+        <img src="{{ news.image.url }}" alt="{{ news.title }}">
+        {% endif %}
+
+        <h3>{{ news.title }}</h3>
+        <p>{{ news.content|truncatewords:30 }}</p>
+        {% comment %} <div class="about-meta">
+            <span>By {{ news.author }}</span>
+            <span>{{ news.published_at|date:"F j, Y" }}</span>
+        </div> {% endcomment %}
+
+        <a href="{% url 'news_detail' news.id %}" class="btn-primary">Read More</a>
+    </div>
+
+    {% empty %}
+    <p>No news articles available.</p>
+
+    {% endfor %}
+</section>
+{% endblock %} 

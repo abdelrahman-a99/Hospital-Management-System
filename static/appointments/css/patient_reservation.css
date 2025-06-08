@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(to right, #1977cc, #3fbbc0); /* Degraded Blue */
+    background: linear-gradient(to right, #1977cc, #3fbbc0);
     color: #2c3e50;
     line-height: 1.6;
     min-height: 100vh;
@@ -66,7 +66,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem; /* Space between elements */
+    gap: 1rem;
     text-align: center;
     margin: 20px 0;
     position: relative;
@@ -81,10 +81,10 @@ body {
     justify-content: center;
     background: linear-gradient(135deg, #3fbbc0, #1977cc);
     color: #fff;
-    border-radius: 50%; /* Makes it circular */
+    border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-size: 1.8rem;
-    flex-shrink: 0; /* Keeps the icon from shrinking */
+    flex-shrink: 0;
 }
 
 /* Gradient Text with Compatibility */
@@ -94,11 +94,11 @@ body {
     text-transform: uppercase;
     background: linear-gradient(to right, #1977cc, #3fbbc0);
     background-clip: text;
-    -webkit-background-clip: text; /* Webkit compatibility */
-    -moz-background-clip: text;    /* Firefox compatibility (older versions) */
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
     color: transparent;
-    -webkit-text-fill-color: transparent; /* Ensures the text is transparent for Webkit browsers */
-    -moz-text-fill-color: transparent;    /* Ensures transparency for Firefox */
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
     text-align: center;
     margin: 0;
 }
@@ -127,10 +127,10 @@ body {
 /* Doctor Card */
 .doctor-card {
     background: #ffffff;
-    border: 1px solid rgba(25, 119, 204, 0.3); /* Soft border */
+    border: 1px solid rgba(25, 119, 204, 0.3); 
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    overflow: hidden; /* Ensures content stays within card */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
     text-align: center;
     padding: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -140,8 +140,8 @@ body {
 }
 
 .doctor-card:hover {
-    transform: translateY(-8px); /* Lift on hover */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Deep shadow on hover */
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Doctor Profile Info */
@@ -162,7 +162,6 @@ body {
     color: #1977cc;
 }
 
-/* Availability Section */
 .availability {
     display: flex;
     justify-content: center;
@@ -186,7 +185,6 @@ body {
     color: #fff;
 }
 
-/* Reserve Button */
 .reserve-btn {
     background: linear-gradient(135deg, #1977cc, #3291e6);
     color: #fff;
@@ -204,7 +202,7 @@ body {
     background: linear-gradient(135deg, #3291e6, #1977cc);
 }
 
-/* Optional Doctor Image Placeholder */
+
 .doctor-image {
     width: 80px;
     height: 80px;
@@ -218,7 +216,6 @@ body {
     color: #1977cc;
 }
 
-/* Modal Styling */
 .modal-overlay {
     display: none;
     position: fixed;

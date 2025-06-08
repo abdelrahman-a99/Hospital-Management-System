@@ -99,6 +99,23 @@ header .auth a {
     transition: 0.3s ease;
 }
 
+header .links a.active,
+header .auth a.active {
+    color: var(--icons-color);
+    font-weight: 700;
+}
+
+header .links a.active::after {
+    content: '';
+    height: 3px;
+    width: 100%;
+    border-radius: 5px;
+    position: absolute;
+    left: 0px;
+    bottom: -10px;
+    box-shadow: 0 0 10px yellow;
+}
+
 header .auth button {
     background-color: inherit;
     color: var(--icons-color);
@@ -201,10 +218,6 @@ main {
 }
 
 /* SERVICES */
-#services {
-    scroll-margin-top: 40px;
-}
-
 .services {
     text-align: center;
     padding: 3rem 1rem;
@@ -216,6 +229,37 @@ main {
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 2rem;
+}
+
+.news-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.news-p {
+    margin-top: 1rem;
+}
+
+.view-all {
+    margin-top: 2rem;
+}
+
+.View-about {
+    margin-bottom: 1rem;
+}
+
+.contact-card:active i,
+.contact-card:active h3,
+.contact-card:active p {
+    color: var(--primary-color);
+}
+
+.contact-card:visited i,
+.contact-card:visited h3,
+.contact-card:visited p {
+    color: var(--primary-color);
 }
 
 .service-card {
@@ -271,10 +315,6 @@ main {
 }
 
 /* CONTACT */
-#contact {
-    scroll-margin-top: 130px;
-}
-
 .contact {
     padding: 3rem 1rem;
     text-align: center;
@@ -368,10 +408,6 @@ textarea:valid {
 }
 
 /* ABOUT US */
-#about{
-    scroll-margin-top: 70px;
-}
-
 .about {
     padding: 3rem 1rem;
     background-color: #fff;

@@ -367,6 +367,29 @@ body {
 	background-color: #3a72c4;
 }
 
+.submit_btn2 {
+	width: 50%;
+    /* height: 100%; */
+	/* Allows the button size to adapt to its content */
+	padding: 0.5rem 1rem;
+	/* Adjust padding for smaller size */
+	font-size: 16px;
+	/* Smaller font size */
+	background: var(--ss);
+	color: white;
+	/* Changed to a more legible color */
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	display: block;
+	/* Ensures it's treated as a block-level element */
+	margin: 0 auto;
+}
+
+.submit_btn2:hover {
+	background-color: #3a72c4;
+}
+
 /* Additional Links */
 .additional_links {
 	text-align: center;
@@ -649,4 +672,11 @@ textarea:valid {
 	text-align: center;
 	font-weight: 300;
 	font-size: 20px;
+}
+
+.column h6{
+    /* font-weight: 5000; */
+	color: var(--blue);
+    font-size: 15px;
+	text-align: center;
 }

@@ -26,6 +26,8 @@ function submitReservation(event) {
         return;
     }
 
+    console.log("Submitting reservation: ", { doctorId, date, time }); // Debugging
+
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     fetch('/appointments/patient_reservation/', {
@@ -52,7 +54,8 @@ function submitReservation(event) {
             closeReservationForm();
             document.getElementById('confirmation-modal').style.display = 'flex';
         } else {
-            alert(data.message || 'Failed to book appointment. Please try again.');
+            console.log("Error: ", data); // Log error response
+            alert(data.error || 'Failed to book appointment. Please try again.');
         }
     })
     .catch(error => {
