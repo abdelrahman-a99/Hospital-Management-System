@@ -81,6 +81,7 @@ html {
 }
 
 .input_group {
+    position: relative;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
@@ -110,6 +111,26 @@ html {
 .input_group input:focus {
     border-color: #4c8bf5;
     outline: none;
+}
+
+.password_toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+    z-index: 2;
+}
+
+.password_toggle:hover {
+    color: #333;
+}
+
+.input_group input[type="password"],
+.input_group input[type="text"] {
+    padding-right: 40px;
 }
 
 /* Submit Button */
