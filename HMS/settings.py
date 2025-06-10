@@ -157,16 +157,8 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "home/static"),
-    os.path.join(BASE_DIR, "doctor/static"),
-    os.path.join(BASE_DIR, "patient/static"),
-    os.path.join(BASE_DIR, "Accounts/static"),
-    os.path.join(BASE_DIR, "appointments/static"),
-    os.path.join(BASE_DIR, "profilemenu/static"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
 # Media files
 MEDIA_URL = '/media/'
