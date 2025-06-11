@@ -169,7 +169,6 @@ def signup(request):
             )
             user.groups.add(Group.objects.get(name='Doctors'))
 
-        # Show success message and redirect to login
         messages.success(request, 'Registration successful! Please login to continue.')
         return redirect('login')
 
