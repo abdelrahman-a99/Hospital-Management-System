@@ -106,11 +106,13 @@ html {
     border-radius: 0 5px 5px 0;
     font-size: 14px;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .input_group input:focus {
     border-color: #4c8bf5;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 139, 245, 0.2);
 }
 
 .password_toggle {
@@ -133,19 +135,57 @@ html {
     padding-right: 40px;
 }
 
+/* Form Options */
+.form_options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.remember_me {
+    display: flex;
+    align-items: center;
+    color: #f8f8f8;
+    cursor: pointer;
+}
+
+.remember_me input[type="checkbox"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.remember_me span {
+    margin-left: 5px;
+}
+
+.forgot_password {
+    color: #88b4ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot_password:hover {
+    color: #3a72c4;
+    text-decoration: underline;
+}
+
 /* Submit Button */
 .submit_btn {
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 12px;
     font-size: 16px;
     background-color: #4c8bf5;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: block;
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    position: relative;
 }
 
 .submit_btn:hover {
@@ -153,17 +193,35 @@ html {
     transform: scale(1.025);
 }
 
+.button_text {
+    transition: opacity 0.3s ease;
+}
+
+.button_loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button_loader i {
+    color: white;
+    font-size: 20px;
+}
+
 /* Additional Links */
 .additional_links {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
     color: #f8f8f8;
+    font-size: 14px;
 }
 
 .additional_links a {
     text-decoration: none;
     color: #88b4ff;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 .additional_links a:hover {
@@ -177,95 +235,67 @@ html {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    /* border-radius: 25px;
-    padding: 10px 20px; */
     border-radius: 8px;
     padding: 10px 15px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    max-width: 450px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    transition: all 0.5s ease;
-    animation: slide-in 0.5s ease-out;
+    animation: slide-in 0.5s ease-out forwards;
 }
 
-/* Hover Effect for Message Box */
-/* .message-box:hover {
-    transform: translateX(-50%) scale(1.05);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-} */
-
-/* Slide-in Animation */
-@keyframes slide-in {
-    from {
-        transform: translateX(-50%) translateY(-20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(-50%);
-        opacity: 1;
-    }
-}
-
-/* .alert {
+.alert {
     margin: 0;
-    padding: 10px;
-    font-size: 16px;
-} */
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-/* Success, Error, Info Message Styles */
 .alert.success {
-    /* background-color: #4caf50;
-    color: white; */
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
 }
 
 .alert.error {
-    /* background-color: #f44336;
-    color: white; */
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
 
 .alert.info {
-    /* background-color: #2196f3;
-    color: white; */
-    background-color: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
+    background-color: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
 }
 
-/* Keyframes for Animation */
-@keyframes slide-down {
-    0% {
+@keyframes slide-in {
+    from {
+        transform: translate(-50%, -100%);
         opacity: 0;
-        transform: translate(-50%, -20px);
-        visibility: visible;
     }
-
-    100% {
-        opacity: 1;
+    to {
         transform: translate(-50%, 0);
-        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -100%);
+        opacity: 0;
     }
 }
 
 @keyframes fade-out {
-    0% {
+    from {
         opacity: 1;
-        /* visibility: visible; */
-        transform: translateY(0);
     }
-
-    100% {
+    to {
         opacity: 0;
-        /* visibility: hidden; */
-        transform: translateY(-10px);
     }
 }

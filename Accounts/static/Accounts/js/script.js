@@ -112,15 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Password toggle functionality
     function togglePassword(inputId) {
-        const passwordInput = document.getElementById(inputId);
-        const icon = passwordInput.nextElementSibling.querySelector('i');
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling.querySelector('i');
         
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
+        if (input.type === 'password') {
+            input.type = 'text';
             icon.classList.remove('fa-eye');
             icon.classList.add('fa-eye-slash');
         } else {
-            passwordInput.type = 'password';
+            input.type = 'password';
             icon.classList.remove('fa-eye-slash');
             icon.classList.add('fa-eye');
         }
@@ -128,4 +128,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Make togglePassword function globally available
     window.togglePassword = togglePassword;
+
+    // Form submission handling
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            const button = document.getElementById('loginButton');
+            const buttonText = button.querySelector('.button_text');
+            const buttonLoader = button.querySelector('.button_loader');
+            
+            // Show loading state
+            button.disabled = true;
+            buttonText.style.opacity = '0';
+            buttonLoader.style.display = 'block';
+        });
+    }
+
+    // Auto-hide messages after 5 seconds
+    const messages = document.querySelectorAll('.message-box');
+    messages.forEach(message => {
+        setTimeout(() => {
+            message.style.animation = 'slide-down 0.5s ease-out forwards';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 500);
+        }, 5000);
+    });
 });
