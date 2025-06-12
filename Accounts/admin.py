@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django import forms
 from .models import Patient, Doctor, Review
+from allauth.account.models import EmailAddress
 
 User = get_user_model()
 
@@ -59,6 +60,9 @@ class CustomUserAdmin(UserAdmin):
             fieldsets.insert(2, ('Role Information', {'fields': [], 'description': f'This user is a {role}'}))
         return fieldsets
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('doctor', 'patient')
+
 # Unregister the default UserAdmin and register our custom one
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
@@ -98,6 +102,15 @@ class PatientCreationForm(forms.ModelForm):
         patient.user = user
         if commit:
             patient.save()
+
+        # Create EmailAddress for allauth
+        EmailAddress.objects.create(
+            user=user,
+            email=user.email,
+            primary=True,
+            verified=True
+        )
+
         return patient
 
 @admin.register(Patient)
@@ -174,6 +187,15 @@ class DoctorCreationForm(forms.ModelForm):
         doctor.user = user
         if commit:
             doctor.save()
+        
+        # Create EmailAddress for allauth
+        EmailAddress.objects.create(
+            user=user,
+            email=user.email,
+            primary=True,
+            verified=True
+        )
+
         return doctor
 
 @admin.register(Doctor)
