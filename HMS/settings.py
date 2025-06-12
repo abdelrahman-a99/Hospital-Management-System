@@ -233,3 +233,15 @@ AXES_LOCKOUT_TEMPLATE = 'account/lockout.html'
 # Site settings
 SITE_NAME = "Nile's Care"
 SITE_DOMAIN = "127.0.0.1:8000"
+
+# Twilio Settings
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID', '')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN', '')
+TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER', '')
+
+# Cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}

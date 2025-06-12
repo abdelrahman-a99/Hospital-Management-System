@@ -1,0 +1,51 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Phone Verification{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Accounts/css/signupstyle.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="user_card">
+        <div class="form_title">
+            <h2>Phone Number Verification</h2>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message-box">
+                    <div class="alert {% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" action="{% url 'verify_phone' %}">
+            {% csrf_token %}
+            <div class="input_group">
+                <div class="input_icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <input type="text" id="verification_code" name="verification_code" placeholder="Enter verification code" required>
+            </div>
+            
+            <button type="submit" class="submit_btn">
+                <span class="button_text">Verify Phone Number</span>
+            </button>
+        </form>
+        
+        <div class="additional_links">
+            <form method="POST" action="{% url 'resend_phone_code' %}">
+                {% csrf_token %}
+                <button type="submit" class="submit_btn" style="background-color: #6c757d;">
+                    <span class="button_text">Resend Verification Code</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -200,13 +200,19 @@ def login_view(request):
             user.backend = 'Accounts.backends.EmailBackend'
             login(request, user)
 
-            # Check if user is a doctor or patient
+            # Check if phone number is verified
             try:
                 doctor = Doctor.objects.get(user=user)
+                if not doctor.phone_number_verified:
+                    messages.info(request, "Please verify your phone number to continue.")
+                    return redirect("verify_phone")
                 return redirect("doctor_page")
             except Doctor.DoesNotExist:
                 try:
                     patient = Patient.objects.get(user=user)
+                    if not patient.phone_number_verified:
+                        messages.info(request, "Please verify your phone number to continue.")
+                        return redirect("verify_phone")
                     return redirect("patient_page")
                 except Patient.DoesNotExist:
                     messages.error(request, "User type not recognized.")

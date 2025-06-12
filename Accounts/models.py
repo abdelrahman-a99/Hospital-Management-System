@@ -20,6 +20,7 @@ class BaseProfile(models.Model):
     phone_number = models.CharField(
         max_length=15,
         blank=True,
+        unique=True,
         null=True,
         validators=[
             RegexValidator(
@@ -28,6 +29,7 @@ class BaseProfile(models.Model):
             )
         ],
     )
+    phone_number_verified = models.BooleanField(default=False)
     dob = models.DateField(blank=True, null=True)
 
     class Meta:
