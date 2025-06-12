@@ -58,16 +58,7 @@ def verify_phone(request):
             return redirect('profilemenu')
         else:
             messages.error(request, 'Invalid verification code. Please try again.')
-    else:
-        # If it's a GET request and no code is stored, send a new code
-        if not cache.get(f'phone_verification_{request.user.id}'):
-            code = generate_verification_code()
-            cache.set(f'phone_verification_{request.user.id}', code, 600)  # Store for 10 minutes
-            
-            if send_verification_code(profile.phone_number, code):
-                messages.success(request, 'Verification code has been sent to your phone number.')
-            else:
-                messages.error(request, 'Failed to send verification code. Please try again later.')
+    # Removed automatic code sending on GET request to temporarily disable SMS functionality
 
     return render(request, 'Accounts/phone_verification.html')
 
