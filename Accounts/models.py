@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.core.validators import RegexValidator
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
+from allauth.account.models import EmailAddress
 
 
 class BaseProfile(models.Model):
@@ -71,3 +72,51 @@ def create_user_groups(sender, instance, created, **kwargs):
                 instance.groups.add(patient_group)
         except:
             pass  # Handle case where profile might not be created yet
+
+
+# Existing signals
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        if hasattr(instance, 'patient'):
+            Patient.objects.create(user=instance)
+        elif hasattr(instance, 'doctor'):
+            Doctor.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    if hasattr(instance, 'patient'):
+        instance.patient.save()
+    elif hasattr(instance, 'doctor'):
+        instance.doctor.save()
+
+# New signal for email deletion
+@receiver(pre_delete, sender=EmailAddress)
+def delete_user_on_email_delete(sender, instance, **kwargs):
+    """
+    Signal to delete the user and all related data when their email address is deleted
+    """
+    # Temporarily disconnect the signal to prevent recursion
+    pre_delete.disconnect(delete_user_on_email_delete, sender=EmailAddress)
+    try:
+        user = instance.user
+        
+        # Delete related profile (Patient or Doctor)
+        try:
+            Patient.objects.filter(user=user).delete()
+        except Patient.DoesNotExist:
+            pass
+            
+        try:
+            Doctor.objects.filter(user=user).delete()
+        except Doctor.DoesNotExist:
+            pass
+        
+        # Delete the user
+        user.delete()
+        
+    except User.DoesNotExist:
+        pass
+    finally:
+        # Reconnect the signal
+        pre_delete.connect(delete_user_on_email_delete, sender=EmailAddress)

@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import (authenticate, login, logout as auth_logout, get_user_model)
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from allauth.account.utils import complete_signup
+from allauth.account import app_settings as allauth_settings
 from .models import Patient, Doctor
 from datetime import datetime
 import re
@@ -147,6 +149,8 @@ def signup(request):
             first_name=first_name,
             last_name=last_name
         )
+        user.is_active = True  # Set to True as allauth will handle activation
+        user.save()
 
         # Create profile based on user type
         if user_type == 'patient':
@@ -169,8 +173,16 @@ def signup(request):
             )
             user.groups.add(Group.objects.get(name='Doctors'))
 
-        messages.success(request, 'Registration successful! Please login to continue.')
-        return redirect('login')
+        # Use allauth's complete_signup to handle email verification
+        complete_signup(
+            request,
+            user,
+            allauth_settings.EMAIL_VERIFICATION,
+            None,  # success_url
+        )
+
+        messages.success(request, 'Registration successful! Please check your email to verify your account.')
+        return redirect('account_email_verification_sent')
 
     return render(request, 'Accounts/signup.html')
 
