@@ -1,136 +1,288 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
 from Accounts.models import Patient, Doctor
+from django.contrib.auth.models import User, Group
+from datetime import datetime, timedelta
 
 User = get_user_model()
 
-class UserTests(TestCase):
-    
-    def test_signup_valid_patient(self):
-        
-        # Test the signup process for a patient with valid data.
+
+class SignupTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.signup_url = reverse("signup")
+        # Create required groups
+        Group.objects.create(name="Patients")
+        Group.objects.create(name="Doctors")
+
+    def test_valid_patient_signup(self):
         data = {
-            "username": "testpatient",
-            "email": "testpatient@example.com",
-            "password": "Testpassword123",
-            "confirm_password": "Testpassword123",
+            "email": "test@example.com",
+            "password": "Test@123",
+            "confirm_password": "Test@123",
+            "first_name": "John",
+            "last_name": "Doe",
+            "user_type": "patient",
             "gender": "Male",
-            "address": "123 Street",
-            "phonenumber": "01012345678",
-            "dob": "2010-05-15",
-            "user_type": "patient"
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 20)).strftime("%Y-%m-%d"),
         }
-        
-        response = self.client.post(reverse('signup'), data)
-        self.assertEqual(response.status_code, 302)  
-        self.assertTrue(User.objects.filter(username="testpatient").exists())
-        self.assertTrue(Patient.objects.filter(user__username="testpatient").exists())
-    
-    def test_signup_valid_doctor(self):
-        # Test the signup process for a doctor with valid data.# 
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 302)  # Redirect on success
+        self.assertTrue(User.objects.filter(email="test@example.com").exists())
+        self.assertTrue(Patient.objects.filter(user__email="test@example.com").exists())
+
+    def test_valid_doctor_signup(self):
         data = {
-            "username": "testdoctor",
-            "email": "testdoctor@example.com",
-            "password": "Testpassword123",
-            "confirm_password": "Testpassword123",
-            "gender": "Female",
-            "address": "456 Avenue",
-            "phonenumber": "01087654321",
-            "dob": "1985-08-25",
+            "email": "doctor@example.com",
+            "password": "Test@123",
+            "confirm_password": "Test@123",
+            "first_name": "Jane",
+            "last_name": "Smith",
             "user_type": "doctor",
-            "specialty": "Cardiology"
+            "gender": "Female",
+            "phone_number": "+1234567890",
+            "address": "456 Test Ave",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 30)).strftime("%Y-%m-%d"),
+            "specialty": "Cardiology",
         }
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.filter(email="doctor@example.com").exists())
+        self.assertTrue(Doctor.objects.filter(user__email="doctor@example.com").exists())
 
-        response = self.client.post(reverse('signup'), data)
-        self.assertEqual(response.status_code, 302)  
-        self.assertTrue(User.objects.filter(username="testdoctor").exists())
-        self.assertTrue(Doctor.objects.filter(user__username="testdoctor").exists())
-    
-    def test_signup_password_mismatch(self):
-        # Test the signup process when passwords don't match.# 
+    def test_invalid_first_name(self):
         data = {
-            "username": "testuser",
-            "email": "testuser@example.com",
-            "password": "Testpassword123",
-            "confirm_password": "Differentpassword123",
+            "email": "test@example.com",
+            "password": "Test@123",
+            "confirm_password": "Test@123",
+            "first_name": "J",  # Too short
+            "last_name": "Doe",
+            "user_type": "patient",
             "gender": "Male",
-            "address": "123 Street",
-            "phonenumber": "01012345678",
-            "dob": "2010-05-15",
-            "user_type": "patient"
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 20)).strftime("%Y-%m-%d"),
         }
-        
-        response = self.client.post(reverse('signup'), data)
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 200)
         messages = [m.message for m in get_messages(response.wsgi_request)]
-        self.assertIn("Your password and confirm password are not the same.", messages)
+        self.assertIn("First name should be between 3 and 50 characters", messages)
 
-    def test_signup_invalid_email(self):
-        # Test the signup process when an invalid email is provided.# 
+    def test_invalid_email(self):
         data = {
-            "username": "testuser",
             "email": "invalid-email",
-            "password": "Testpassword123",
-            "confirm_password": "Testpassword123",
+            "password": "Test@123",
+            "confirm_password": "Test@123",
+            "first_name": "John",
+            "last_name": "Doe",
+            "user_type": "patient",
             "gender": "Male",
-            "address": "123 Street",
-            "phonenumber": "01012345678",
-            "dob": "2010-05-15",
-            "user_type": "patient"
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 20)).strftime("%Y-%m-%d"),
         }
-        
-        response = self.client.post(reverse('signup'), data)
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 200)
         messages = [m.message for m in get_messages(response.wsgi_request)]
-        self.assertIn("Please enter a valid email address.", messages)
-    
-    def test_login_valid_user(self):
-        
-        # Test login functionality with valid credentials for a patient.# 
-        user = User.objects.create_user(
-            username="testpatient",
-            email="testpatient@example.com",
-            password="Testpassword123"
-        )
-        Patient.objects.create(user=user, gender="Male", address="123 Street", phone_number="01012345678", dob="2010-05-15")
-        
-        response = self.client.post(reverse('login'), {
-            'email': "testpatient@example.com",
-            'password': "Testpassword123"
-        })
-    
-    def test_login_invalid_user(self):
-        # Test login functionality with invalid credentials.#
-        response = self.client.post(reverse('login'), {
-            'email': "wrongemail@example.com",
-            'password': "Wrongpassword123"
-        })
-        messages = [m.message for m in get_messages(response.wsgi_request)]
-        self.assertIn("Email or Password is incorrect!!!", messages)
-    
-    def test_invalid_access_doctor_page(self):
-        
-        # Test invalid access to doctor page by a patient.# 
-        patient_user = User.objects.create_user(
-            username="testpatient",
-            email="testpatient@example.com",
-            password="Testpassword123"
-        )
-        Patient.objects.create(user=patient_user, gender="Male", address="123 Street", phone_number="01012345678", dob="2010-05-15")
-        
-        self.client.login(username="testpatient", password="Testpassword123")
-        response = self.client.get(reverse('doctor_page'))
-        self.assertEqual(response.status_code, 403)
-    
-    # def test_logout(self):
+        self.assertIn("Invalid email format", messages)
 
-    #     # Test logout functionality.# 
-    #     user = User.objects.create_user(
-    #         username="testuser",
-    #         email="testuser@example.com",
-    #         password="Testpassword123"
-    #     )
-    #     self.client.login(username="testuser", password="Testpassword123")
-        
-    #     response = self.client.get(reverse('logout'))
-    #     self.assertRedirects(response, reverse('index'))
+    def test_duplicate_email(self):
+        # Create a user first
+        User.objects.create_user(
+            username="existing", email="existing@example.com", password="Test@123"
+        )
+
+        data = {
+            "email": "existing@example.com",
+            "password": "Test@123",
+            "confirm_password": "Test@123",
+            "first_name": "John",
+            "last_name": "Doe",
+            "user_type": "patient",
+            "gender": "Male",
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 20)).strftime("%Y-%m-%d"),
+        }
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 200)
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Email already exists", messages)
+
+    def test_invalid_password(self):
+        data = {
+            "email": "test@example.com",
+            "password": "weak",  # Too weak
+            "confirm_password": "weak",
+            "first_name": "John",
+            "last_name": "Doe",
+            "user_type": "patient",
+            "gender": "Male",
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 20)).strftime("%Y-%m-%d"),
+        }
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 200)
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Password must be at least 8 characters long", messages)
+
+    def test_underage_user(self):
+        data = {
+            "email": "test@example.com",
+            "password": "Test@123",
+            "confirm_password": "Test@123",
+            "first_name": "John",
+            "last_name": "Doe",
+            "user_type": "patient",
+            "gender": "Male",
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 10)).strftime("%Y-%m-%d"),  # 10 years old
+        }
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 200)
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("You must be at least 12 years old to register", messages)
+
+    def test_password_mismatch(self):
+        data = {
+            "email": "test@example.com",
+            "password": "Test@123",
+            "confirm_password": "Different@123",  # Different password
+            "first_name": "John",
+            "last_name": "Doe",
+            "user_type": "patient",
+            "gender": "Male",
+            "phone_number": "+1234567890",
+            "address": "123 Test St",
+            "date_of_birth": (datetime.now() - timedelta(days=365 * 20)).strftime("%Y-%m-%d"),
+        }
+        response = self.client.post(self.signup_url, data)
+        self.assertEqual(response.status_code, 200)
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Passwords do not match", messages)
+
+    def test_login_validation(self):
+        # First create a test user
+        user = User.objects.create_user(
+            username="testuser",
+            email="test@example.com",
+            password="Test@123",
+            first_name="John",
+            last_name="Doe",
+        )
+        Patient.objects.create(
+            user=user,
+            gender="Male",
+            phone_number="+1234567890",
+            address="123 Test St",
+            dob=datetime.now().date() - timedelta(days=365 * 20),
+        )
+        user.groups.add(Group.objects.get(name="Patients"))
+
+        # Test valid login
+        login_data = {"email": "test@example.com", "password": "Test@123"}
+        response = self.client.post(reverse("login"), login_data)
+        self.assertEqual(response.status_code, 302)  # Redirect on success
+
+        # Test invalid password
+        login_data["password"] = "WrongPassword"
+        response = self.client.post(reverse("login"), login_data)
+        self.assertEqual(response.status_code, 302)  # Redirect to login
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Invalid email or password. Please try again.", messages)
+
+        # Test non-existent email
+        login_data = {"email": "nonexistent@example.com", "password": "Test@123"}
+        response = self.client.post(reverse("login"), login_data)
+        self.assertEqual(response.status_code, 302)  # Redirect to login
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Invalid email or password. Please try again.", messages)
+
+
+class LoginTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.login_url = reverse("login")
+        # Create required groups
+        Group.objects.create(name="Patients")
+        Group.objects.create(name="Doctors")
+
+        # Create a test patient user
+        self.patient_user = User.objects.create_user(
+            username="testuser",
+            email="test@example.com",
+            password="Test@123",
+            first_name="John",
+            last_name="Doe",
+        )
+        Patient.objects.create(
+            user=self.patient_user,
+            gender="Male",
+            phone_number="+1234567890",
+            address="123 Test St",
+            dob=datetime.now().date() - timedelta(days=365 * 20),
+        )
+        self.patient_user.groups.add(Group.objects.get(name="Patients"))
+
+        # Create a test doctor user
+        self.doctor_user = User.objects.create_user(
+            username="testdoctor",
+            email="doctor@example.com",
+            password="Test@123",
+            first_name="Jane",
+            last_name="Smith",
+        )
+        Doctor.objects.create(
+            user=self.doctor_user,
+            gender="Female",
+            phone_number="+1234567890",
+            address="456 Test Ave",
+            dob=datetime.now().date() - timedelta(days=365 * 30),
+            specialty="Cardiology",
+        )
+        self.doctor_user.groups.add(Group.objects.get(name="Doctors"))
+
+    def test_valid_login(self):
+        login_data = {"email": "test@example.com", "password": "Test@123"}
+        response = self.client.post(self.login_url, login_data)
+        self.assertEqual(response.status_code, 302)  # Redirect on success
+
+    def test_invalid_password(self):
+        login_data = {"email": "test@example.com", "password": "WrongPassword"}
+        response = self.client.post(self.login_url, login_data)
+        self.assertEqual(response.status_code, 302)  # Redirect to login
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Invalid email or password. Please try again.", messages)
+
+    def test_nonexistent_email(self):
+        login_data = {"email": "nonexistent@example.com", "password": "Test@123"}
+        response = self.client.post(self.login_url, login_data)
+        self.assertEqual(response.status_code, 302)  # Redirect to login
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("Invalid email or password. Please try again.", messages)
+
+    def test_logout(self):
+        # First login
+        self.client.login(email="test@example.com", password="Test@123")
+        response = self.client.get(reverse("logout"))
+        self.assertEqual(response.status_code, 302)  # Redirect on success
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn("You have been logged out successfully.", messages)
+
+    def test_invalid_access_doctor_page(self):
+        # Try to access doctor page as a patient
+        self.client.login(email="test@example.com", password="Test@123")
+        response = self.client.get(reverse("doctor_page"))
+        self.assertEqual(response.status_code, 403)  # Forbidden
+
+    def test_invalid_access_patient_page(self):
+        # Try to access patient page as a doctor
+        self.client.login(email="doctor@example.com", password="Test@123")
+        response = self.client.get(reverse("patient_page"))
+        self.assertEqual(response.status_code, 403)  # Forbidden

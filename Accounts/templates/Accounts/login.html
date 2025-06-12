@@ -36,7 +36,7 @@
 					</div>
 				{% endif %}
 
-				<form method="POST" action="{% url 'login' %}">
+				<form method="POST" action="{% url 'login' %}" id="loginForm">
 					{% csrf_token %}
 					<div class="columns">
 						<div class="column">
@@ -52,11 +52,24 @@
 									<i class="fas fa-eye"></i>
 								</span>
 							</div>
+
+							<div class="form_options">
+								<label class="remember_me">
+									<input type="checkbox" name="remember" id="remember">
+									<span>Remember me</span>
+								</label>
+								<a href="#" class="forgot_password">Forgot Password?</a>
+							</div>
 						</div>
 					</div>
 
 					<div class="button_container">
-						<input class="submit_btn" type="submit" value="Login">
+						<button type="submit" class="submit_btn" id="loginButton">
+							<span class="button_text">Login</span>
+							<span class="button_loader" style="display: none;">
+								<i class="fas fa-spinner fa-spin"></i>
+							</span>
+						</button>
 					</div>
 				</form>
 			</div>
@@ -66,5 +79,65 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const messageBox = document.getElementById("message-box");
+			if (messageBox) {
+				setTimeout(() => {
+					messageBox.style.opacity = "0";
+					messageBox.style.transition = "opacity 1s ease";
+					setTimeout(() => {
+						messageBox.style.display = "none";
+					}, 1000);
+				}, 5000);
+			}
+
+			// Password toggle functionality
+			function togglePassword(inputId) {
+				const input = document.getElementById(inputId);
+				const icon = input.nextElementSibling.querySelector('i');
+				
+				if (input.type === 'password') {
+					input.type = 'text';
+					icon.classList.remove('fa-eye');
+					icon.classList.add('fa-eye-slash');
+				} else {
+					input.type = 'password';
+					icon.classList.remove('fa-eye-slash');
+					icon.classList.add('fa-eye');
+				}
+			}
+
+			// Make togglePassword function globally available
+			window.togglePassword = togglePassword;
+
+			// // Form submission handling
+			// const loginForm = document.getElementById('loginForm');
+			// if (loginForm) {
+			// 	loginForm.addEventListener('submit', function(e) {
+			// 		const button = document.getElementById('loginButton');
+			// 		const buttonText = button.querySelector('.button_text');
+			// 		const buttonLoader = button.querySelector('.button_loader');
+			// 		
+			// 		// Show loading state
+			// 		button.disabled = true;
+			// 		buttonText.style.opacity = '0';
+			// 		buttonLoader.style.display = 'block';
+			// 	});
+			// }
+
+			// // Auto-hide messages after 5 seconds
+			// const messages = document.querySelectorAll('.message-box');
+			// messages.forEach(message => {
+			// 	setTimeout(() => {
+			// 		message.style.animation = 'slide-down 0.5s ease-out forwards';
+			// 		setTimeout(() => {
+			// 			message.style.display = 'none';
+			// 		}, 500);
+			// 	}, 5000);
+			// });
+		});
+	</script>
 </body>
 </html>

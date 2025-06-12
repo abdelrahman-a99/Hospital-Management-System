@@ -25,3 +25,4 @@ django-health-check==3.17.0
 django-prometheus==2.3.1
 django-axes==8.0.0
 phonenumbers==9.0.6
+twilio==7.17.0

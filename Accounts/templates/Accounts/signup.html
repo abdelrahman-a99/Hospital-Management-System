@@ -42,12 +42,12 @@
                         <div class="column">
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user"></i></span>
-                                <input type="text" id="username" name="username" placeholder="Username" value="{{ username }}" required>
+                                <input type="text" id="first_name" name="first_name" placeholder="First Name" value="{{ first_name }}" required>
                             </div>
-                            {% comment %} <div class="input_group">
-                                <span class="input_icon"><i class="fas fa-genderless"></i></span>
-                                <input type="text" id="gender" name="gender" placeholder="Gender" value="{{ gender }}" required>
-                            </div> {% endcomment %}
+                            <div class="input_group">
+                                <span class="input_icon"><i class="fas fa-user"></i></span>
+                                <input type="text" id="last_name" name="last_name" placeholder="Last Name" value="{{ last_name }}" required>
+                            </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-venus-mars"></i></span>
                                 <select id="gender" name="gender" required>
@@ -58,11 +58,11 @@
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-phone"></i></span>
-                                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="{{ phone_number }}" required>
+                                <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number" value="{{ phone_number }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" id="dob" name="dob" placeholder="Date of Birth" value="{{ dob }}" required>
+                                <input type="date" id="date_of_birth" name="date_of_birth" placeholder="Date of Birth" value="{{ date_of_birth }}" required>
                             </div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-map-marker-alt"></i></span>
@@ -92,7 +92,7 @@
                             <div id="password_error" class="error_message"></div>
                             <div class="input_group">
                                 <span class="input_icon"><i class="fas fa-user-md"></i></span>
-                                <select id="user_type" name="user_type" required>
+                                <select id="user_type" name="user_type" required onchange="toggleSpecialtyField()">
                                     <option value="" disabled selected>Select User Type</option>
                                     <option value="patient" {% if user_type == "patient" %} selected {% endif %}>Patient</option>
                                     <option value="doctor" {% if user_type == "doctor" %} selected {% endif %}>Doctor</option>
@@ -108,7 +108,12 @@
                     </div>
 
                     <div class="button_container">
-                        <input class="submit_btn" type="submit" value="Sign Up">
+                        <button type="submit" class="submit_btn" id="signupButton">
+                            <span class="button_text">Sign Up</span>
+                            <span class="button_loader" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -118,5 +123,148 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const messageBox = document.getElementById("message-box");
+            if (messageBox) {
+                setTimeout(() => {
+                    messageBox.style.opacity = "0";
+                    messageBox.style.transition = "opacity 1s ease";
+                    setTimeout(() => {
+                        messageBox.style.display = "none";
+                    }, 1000);
+                }, 5000);
+            }
+
+            // Function to validate the password
+            function validatePassword(password) {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumber = /\d/.test(password);
+                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+                if (password.length < 8) {
+                    return "Password must be at least 8 characters.";
+                }
+                if (!hasUpperCase) {
+                    return "Password must include at least one uppercase letter.";
+                }
+                if (!hasLowerCase) {
+                    return "Password must include at least one lowercase letter.";
+                }
+                if (!hasNumber) {
+                    return "Password must include at least one number.";
+                }
+                if (!hasSpecialChar) {
+                    return "Password must include at least one special character.";
+                }
+
+                return "";
+            }
+
+            // Get references to the password fields and error messages
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirm_password');
+            const passwordError = document.getElementById('password_error');
+            const confirmPasswordError = document.getElementById('confirm_password_error');
+            const form = document.getElementById('signupForm');
+
+            // Check password and confirm password on input
+            if (passwordField && confirmPasswordField) {
+                passwordField.addEventListener('focus', () => {
+                    if (passwordError) {
+                        passwordError.classList.remove('show');
+                    }
+                });
+
+                passwordField.addEventListener('blur', () => {
+                    const errorMessage = validatePassword(passwordField.value);
+                    if (passwordError) {
+                        passwordError.textContent = errorMessage;
+                        if (errorMessage) {
+                            passwordError.classList.add('show');
+                        } else {
+                            passwordError.classList.remove('show');
+                        }
+                    }
+                });
+
+                confirmPasswordField.addEventListener('input', () => {
+                    if (passwordField.value !== confirmPasswordField.value) {
+                        confirmPasswordError.textContent = "Passwords do not match.";
+                        confirmPasswordError.classList.add('show');
+                    } else {
+                        confirmPasswordError.textContent = "";
+                        confirmPasswordError.classList.remove('show');
+                    }
+                });
+
+                if (form) {
+                    form.addEventListener('submit', (e) => {
+                        const passwordErrorMessage = validatePassword(passwordField.value);
+                        if (passwordErrorMessage || passwordField.value !== confirmPasswordField.value) {
+                            e.preventDefault();
+                            passwordError.classList.add('show');
+                            if (passwordErrorMessage) {
+                                passwordError.textContent = passwordErrorMessage;
+                            }
+                            if (passwordField.value !== confirmPasswordField.value) {
+                                confirmPasswordError.textContent = "Passwords do not match.";
+                                confirmPasswordError.classList.add('show');
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Auto-hide messages after 5 seconds
+            const messages = document.querySelectorAll('.message-box');
+            messages.forEach(message => {
+                setTimeout(() => {
+                    message.style.animation = 'slide-down 0.5s ease-out forwards';
+                    setTimeout(() => {
+                        message.style.display = 'none';
+                    }, 500);
+                }, 5000);
+            });
+        });
+
+        // Password toggle functionality
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.nextElementSibling.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Toggle specialty field based on user type
+        function toggleSpecialtyField() {
+            const userType = document.getElementById('user_type').value;
+            const specialtyField = document.getElementById('specialty_field');
+            const specialtyInput = document.getElementById('specialty');
+            
+            if (userType === 'doctor') {
+                specialtyField.style.display = 'flex';
+                specialtyInput.required = true;
+            } else {
+                specialtyField.style.display = 'none';
+                specialtyInput.required = false;
+            }
+        }
+
+        // Call on page load to set initial state
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSpecialtyField();
+        });
+    </script>
 </body>
 </html>
