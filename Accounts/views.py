@@ -191,6 +191,7 @@ def login_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
+        remember = request.POST.get("remember")
 
         # Authenticate using email and password
         user = authenticate(request, email=email, password=password)
@@ -199,6 +200,12 @@ def login_view(request):
             # Set the backend before logging in
             user.backend = 'Accounts.backends.EmailBackend'
             login(request, user)
+
+            # Remember Me logic
+            if remember:
+                request.session.set_expiry(1209600)  # 2 weeks
+            else:
+                request.session.set_expiry(0)  # Session expires on browser close
 
             # Check if user is a doctor or patient
             try:

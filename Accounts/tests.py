@@ -286,3 +286,22 @@ class LoginTests(TestCase):
         self.client.login(email="doctor@example.com", password="Test@123")
         response = self.client.get(reverse("patient_page"))
         self.assertEqual(response.status_code, 403)  # Forbidden
+
+    def test_remember_me_checked(self):
+        login_data = {"email": "test@example.com", "password": "Test@123", "remember": "on"}
+        response = self.client.post(self.login_url, login_data)
+        self.assertEqual(response.status_code, 302)
+        session = self.client.session
+        # Should NOT expire at browser close
+        self.assertFalse(session.get_expire_at_browser_close())
+        # Should be about 2 weeks (1209600 seconds)
+        self.assertGreaterEqual(session.get_expiry_age(), 1209600 - 10)
+        self.assertLessEqual(session.get_expiry_age(), 1209600 + 10)
+
+    def test_remember_me_unchecked(self):
+        login_data = {"email": "test@example.com", "password": "Test@123"}
+        response = self.client.post(self.login_url, login_data)
+        self.assertEqual(response.status_code, 302)
+        session = self.client.session
+        # Should expire at browser close
+        self.assertTrue(session.get_expire_at_browser_close())
