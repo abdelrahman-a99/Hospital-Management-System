@@ -9,6 +9,13 @@ from allauth.account import app_settings as allauth_settings
 from .models import Patient, Doctor
 from datetime import datetime
 import re
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -191,6 +198,7 @@ def login_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
+        remember = request.POST.get("remember")
 
         # Authenticate using email and password
         user = authenticate(request, email=email, password=password)
@@ -199,6 +207,12 @@ def login_view(request):
             # Set the backend before logging in
             user.backend = 'Accounts.backends.EmailBackend'
             login(request, user)
+
+            # Remember Me logic
+            if remember:
+                request.session.set_expiry(1209600)  # 2 weeks
+            else:
+                request.session.set_expiry(0)  # Session expires on browser close
 
             # Check if user is a doctor or patient
             try:
@@ -216,6 +230,7 @@ def login_view(request):
             return redirect("login")
 
     return render(request, "Accounts/login.html")
+
 
 @login_required
 def doctor_page(request):
@@ -243,3 +258,100 @@ def custom_logout(request):
     auth_logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect("index")
+
+
+def password_reset_request(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        if not email:
+            messages.error(request, 'Please enter your email address.')
+            return render(request, 'Accounts/password_reset_request.html')
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # Don't reveal if email exists or not for security
+            messages.success(request, 'If an account with that email exists, you will receive password reset instructions.')
+            return render(request, 'Accounts/password_reset_request.html')
+
+        # Generate password reset token
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+        # Create reset URL
+        reset_url = request.build_absolute_uri(
+            reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+        )
+
+        # Send email
+        subject = 'Password Reset Request - Nile\'s Care'
+        message = render_to_string('Accounts/email/password_reset_email.html', {
+            'user': user,
+            'reset_url': reset_url,
+            'site_name': settings.SITE_NAME,
+        })
+
+        try:
+            email_message = EmailMultiAlternatives(
+                subject=subject,
+                body="Please use an HTML compatible email viewer.",  # fallback text
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[email],
+            )
+            email_message.attach_alternative(message, "text/html")
+            email_message.send()
+            messages.success(request, 'Password reset instructions have been sent to your email.')
+        except Exception as e:
+            messages.error(request, 'Failed to send password reset email. Please try again later.')
+
+        return render(request, 'Accounts/password_reset_request.html')
+
+    return render(request, 'Accounts/password_reset_request.html')
+
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            password1 = request.POST.get('password1')
+            password2 = request.POST.get('password2')
+
+            # Validate password
+            if not password1:
+                messages.error(request, 'Password is required.')
+                return render(request, 'Accounts/password_reset_confirm.html')
+
+            if len(password1) < 8:
+                messages.error(request, 'Password must be at least 8 characters long.')
+                return render(request, 'Accounts/password_reset_confirm.html')
+
+            if not re.match(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$', password1):
+                messages.error(request, 'Password must contain at least one letter, one number, and one special character.')
+                return render(request, 'Accounts/password_reset_confirm.html')
+
+            if password1 != password2:
+                messages.error(request, 'Passwords do not match.')
+                return render(request, 'Accounts/password_reset_confirm.html')
+
+            # Set new password
+            user.set_password(password1)
+            user.save()
+
+            messages.success(request, 'Your password has been reset successfully. You can now login with your new password.')
+            return redirect('login')
+
+        return render(request, 'Accounts/password_reset_confirm.html')
+    else:
+        messages.error(request, 'The password reset link is invalid or has expired.')
+        return redirect('password_reset_request')
+
+
+def password_reset_done(request):
+    """Show password reset done page"""
+    return render(request, 'Accounts/password_reset_done.html')
