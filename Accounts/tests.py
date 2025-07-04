@@ -5,6 +5,10 @@ from django.contrib.messages import get_messages
 from Accounts.models import Patient, Doctor
 from django.contrib.auth.models import User, Group
 from datetime import datetime, timedelta
+from django.core import mail
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 User = get_user_model()
 
@@ -305,3 +309,121 @@ class LoginTests(TestCase):
         session = self.client.session
         # Should expire at browser close
         self.assertTrue(session.get_expire_at_browser_close())
+
+
+class PasswordResetTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpass123!',
+            first_name='Test',
+            last_name='User'
+        )
+        self.patient = Patient.objects.create(
+            user=self.user,
+            gender='male',
+            phone_number='+1234567890',
+            address='123 Test St',
+            dob='1990-01-01'
+        )
+
+    def test_password_reset_request_page_loads(self):
+        """Test that password reset request page loads correctly"""
+        response = self.client.get(reverse('password_reset_request'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Reset Password')
+
+    def test_password_reset_request_with_valid_email(self):
+        """Test password reset request with valid email"""
+        response = self.client.post(reverse('password_reset_request'), {
+            'email': 'test@example.com'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('Password Reset Request', mail.outbox[0].subject)
+
+    def test_password_reset_request_with_invalid_email(self):
+        """Test password reset request with invalid email"""
+        response = self.client.post(reverse('password_reset_request'), {
+            'email': 'nonexistent@example.com'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_password_reset_confirm_with_valid_token(self):
+        """Test password reset confirmation with valid token"""
+        # Generate token
+        token = default_token_generator.make_token(self.user)
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+
+        # Test GET request
+        response = self.client.get(reverse('password_reset_confirm', kwargs={
+            'uidb64': uid,
+            'token': token
+        }))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Set New Password')
+
+    def test_password_reset_confirm_with_invalid_token(self):
+        """Test password reset confirmation with invalid token"""
+        response = self.client.get(reverse('password_reset_confirm', kwargs={
+            'uidb64': 'invalid',
+            'token': 'invalid'
+        }))
+        self.assertEqual(response.status_code, 302)  # Redirects to password_reset_request
+
+    def test_password_reset_confirm_post_with_valid_data(self):
+        """Test password reset confirmation POST with valid data"""
+        token = default_token_generator.make_token(self.user)
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+
+        response = self.client.post(reverse('password_reset_confirm', kwargs={
+            'uidb64': uid,
+            'token': token
+        }), {
+            'password1': 'newpass123!',
+            'password2': 'newpass123!'
+        })
+        self.assertEqual(response.status_code, 302)  # Redirects to login
+
+        # Verify password was changed
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('newpass123!'))
+
+    def test_password_reset_confirm_post_with_mismatched_passwords(self):
+        """Test password reset confirmation POST with mismatched passwords"""
+        token = default_token_generator.make_token(self.user)
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+
+        response = self.client.post(reverse('password_reset_confirm', kwargs={
+            'uidb64': uid,
+            'token': token
+        }), {
+            'password1': 'newpass123!',
+            'password2': 'differentpass123!'
+        })
+        self.assertEqual(response.status_code, 200)  # Stays on same page
+        self.assertContains(response, 'Passwords do not match')
+
+    def test_password_reset_confirm_post_with_weak_password(self):
+        """Test password reset confirmation POST with weak password"""
+        token = default_token_generator.make_token(self.user)
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+
+        response = self.client.post(reverse('password_reset_confirm', kwargs={
+            'uidb64': uid,
+            'token': token
+        }), {
+            'password1': 'weak',
+            'password2': 'weak'
+        })
+        self.assertEqual(response.status_code, 200)  # Stays on same page
+        self.assertContains(response, 'Password must be at least 8 characters long')
+
+    def test_password_reset_done_page(self):
+        """Test password reset done page"""
+        response = self.client.get(reverse('password_reset_done'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Password Reset Complete')
