@@ -8,6 +8,22 @@
     {% load static %}
 
     <title>{% block title %}Nile's Care{% endblock %}</title>
+
+    <meta name="description" content="Nile's Care - Comprehensive hospital management, healthcare services, departments, news, and patient testimonials.">
+    <meta name="keywords" content="hospital, healthcare, doctors, patients, appointments, Nile's Care, medical, services, departments, news, testimonials">
+
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:title" content="Nile's Care - Hospital Management System">
+    <meta property="og:description" content="Comprehensive hospital management, healthcare services, departments, news, and patient testimonials.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nilescare.com/">
+    <meta property="og:image" content="{% static 'home/images/doc-1.png' %}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nile's Care - Hospital Management System">
+    <meta name="twitter:description" content="Comprehensive hospital management, healthcare services, departments, news, and patient testimonials.">
+    <meta name="twitter:image" content="{% static 'home/images/doc-1.png' %}">
+
     <link rel="icon" href="{% static "home/images/favicon.ico" %}" type="image/x-icon">
 
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
@@ -19,8 +35,8 @@
 </head>
 
 <body>
-    <header>
-        <nav class="logo">
+    <header role="banner">
+        <nav class="logo" aria-label="Main logo">
             <a href="{% url 'index' %}" title="Home" {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}>Nile's Care</a>
         </nav>
 
@@ -49,8 +65,8 @@
         </nav>
     </header>
 
-    <main>
-        <div class="messages">
+    <main role="main">
+        <div class="messages" aria-live="polite">
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert {{ message.tags }}">
@@ -63,27 +79,27 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <div class="copyright">
             &copy; <span class="time"></span> <span class="company" title="Nile's Care">Nile's Care</span> all
             right reserved.
         </div>
 
         <div class="social-icons">
-            <a href="https://www.facebook.com/profile.php?id=61570642747617" target="_blank" title="Facebook">
-                <i class="fa-brands fa-facebook"></i>
+            <a href="https://www.facebook.com/profile.php?id=61570642747617" target="_blank" title="Facebook" aria-label="Facebook">
+                <i class="fa-brands fa-facebook" aria-hidden="true"></i>
             </a>
 
-            <a href="https://www.instagram.com/nilescare?igsh=MXM4bmNvYzdjd3libA==" target="_blank" title="Instagram">
-                <i class="fa-brands fa-instagram"></i>
+            <a href="https://www.instagram.com/nilescare?igsh=MXM4bmNvYzdjd3libA==" target="_blank" title="Instagram" aria-label="Instagram">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
             </a>
 
-            <a href="https://www.x.com/NilesCare" target="_blank" title="X">
-                <i class="fa-brands fa-x-twitter"></i>
+            <a href="https://www.x.com/NilesCare" target="_blank" title="X" aria-label="X (Twitter)">
+                <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
             </a>
 
-            <a href="https://eg.linkedin.com/in/niles-care-b13679301" target="_blank" title="LinkedIn">
-                <i class="fa-brands fa-linkedin"></i>
+            <a href="https://eg.linkedin.com/in/niles-care-b13679301" target="_blank" title="LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
             </a>
         </div>
     </footer>
