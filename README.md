@@ -20,6 +20,8 @@ The **Hospital Management System** is a comprehensive web-based application desi
 ### Advanced Features
 - **Real-time Notifications:** Email and in-app notifications for appointment updates
 - **Secure Authentication:** Two-factor authentication and role-based access control
+- **Password Reset:** Secure email-based password reset with strong validation
+- **SEO & Accessibility:** Meta tags, OpenGraph, and accessible HTML for public pages
 - **Medical History Tracking:** Comprehensive patient medical history management
 - **Prescription Management:** Digital prescription creation and management
 - **Billing System:** Automated billing and payment tracking
